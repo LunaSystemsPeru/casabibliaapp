@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <!-- Mirrored from fillow.dexignlab.com/xhtml/empty-page.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Oct 2021 15:06:15 GMT -->
 <head>
     <meta charset="utf-8">
@@ -114,7 +113,6 @@
                 <div class="col-xl-12">
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="AllStatus">
-
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row align-items-center">
@@ -144,7 +142,6 @@
                                             <div class="d-flex justify-content-end project-btn">
                                                 <label class="btn bgl-success text-success fs-18 font-w600"><i class="fa fa-check"></i> Activo</label>
                                                 <label class="btn bgl-danger text-danger fs-18 font-w600"><i class="fa fa-sync-alt"></i> Por Enviar</label>
-
                                             </div>
                                         </div>
                                     </div>
@@ -184,8 +181,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
@@ -195,28 +190,6 @@
     <!--**********************************
         Content body end
     ***********************************-->
-
-
-    <!--**********************************
-        Footer start
-    ***********************************-->
-    <div class="footer">
-        <div class="copyright">
-            <p>Copyright © Designed &amp; Developed by <a href="https://dexignlab.com/" target="_blank">DexignLab</a> 2021</p>
-        </div>
-    </div>
-    <!--**********************************
-        Footer end
-    ***********************************-->
-
-    <!--**********************************
-       Support ticket button start
-    ***********************************-->
-
-    <!--**********************************
-       Support ticket button end
-    ***********************************-->
-
 
 </div>
 <!--**********************************

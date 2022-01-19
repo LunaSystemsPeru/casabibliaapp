@@ -109,12 +109,10 @@
                     <a href="javascript:void(0);" class="btn btn-primary btn-rounded fs-18">Ver mis Notas de Ventas</a>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-xl-12">
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="AllStatus">
-
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row align-items-center">
@@ -181,8 +179,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
@@ -192,29 +188,6 @@
     <!--**********************************
         Content body end
     ***********************************-->
-
-
-    <!--**********************************
-        Footer start
-    ***********************************-->
-    <div class="footer">
-        <div class="copyright">
-            <p>Copyright © Designed &amp; Developed by <a href="https://dexignlab.com/" target="_blank">DexignLab</a> 2021</p>
-        </div>
-    </div>
-    <!--**********************************
-        Footer end
-    ***********************************-->
-
-    <!--**********************************
-       Support ticket button start
-    ***********************************-->
-
-    <!--**********************************
-       Support ticket button end
-    ***********************************-->
-
-
 </div>
 <!--**********************************
     Main wrapper end

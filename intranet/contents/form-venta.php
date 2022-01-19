@@ -26,7 +26,7 @@
 
 
 </head>
-<body data-typography="poppins" data-theme-version="light" data-layout="vertical" data-nav-headerbg="color_1" data-headerbg="color_1" data-sidebar-style="full" data-sibebarbg="color_1" data-sidebar-position="fixed" data-header-position="fixed" data-container="wide" direction="ltr" data-primary="color_1">
+<body data-typography="poppins" data-theme-version="light" data-layout="vertical" data-nav-headerbg="color_1" data-headerbg="color_1" data-sidebar-style="full" data-sibebarbg="color_1" data-sidebar-position="fixed" data-header-position="fixed" data-container="wide" direction="ltr" data-primary="color_5">
 
 
 <div id="main-wrapper" class="show">
@@ -101,13 +101,16 @@
                                 <ul class="nav nav-wizard">
                                     <li><a class="nav-link inactive active" href="#wizard_Agregar">
                                             <span>1</span>
-                                        </a></li>
+                                        </a>
+                                    </li>
                                     <li><a class="nav-link inactive" href="#wizard_Cliente">
                                             <span>2</span>
-                                        </a></li>
+                                        </a>
+                                    </li>
                                     <li><a class="nav-link inactive" href="#wizard_Pago">
                                             <span>3</span>
-                                        </a></li>
+                                        </a>
+                                    </li>
                                 </ul>
 
                                 <div class="tab-content" style="height: 272.15px;">
