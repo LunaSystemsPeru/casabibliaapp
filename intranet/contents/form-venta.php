@@ -17,10 +17,8 @@
     <title>Fillow Saas Admin Dashboard</title>
 
     <link rel="shortcut icon" type="image/png" href="../../assets/images/favicon.png"/>
-    <link href="form-venta_files/smart_wizard.css" rel="stylesheet">
-    <link href="form-venta_files/nice-select.css" rel="stylesheet">
-    <link href="form-venta_files/style.css" rel="stylesheet">
-    <link href="./vendor/jquery-smartwizard/dist/css/smart_wizard.min.css" rel="stylesheet">
+    <link href="../../vendor/jquery-smartwizard/dist/css/smart_wizard.css" rel="stylesheet">
+    <link href="../../vendor/jquery-smartwizard/dist/css/smart_wizard.min.css" rel="stylesheet">
     <link href="../../vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
     <link href="../../assets/css/style.css" rel="stylesheet">
 
@@ -292,235 +290,19 @@
 </div>
 
 
-<script src="form-venta_files/global.js"></script>
-<script src="form-venta_files/jquery_002.js"></script>
-<script src="form-venta_files/jquery_004.js"></script>
+<script src="../../vendor/global/global.js"></script>
+<script src="../../vendor/jquery/jquery_002.js"></script>
+<script src="../../vendor/jquery/jquery_004.js"></script>
 
-<script src="form-venta_files/jquery_003.js"></script>
+<script src="../../vendor/jquery/jquery_003.js"></script>
 
-<script src="form-venta_files/jquery.js"></script>
-<script src="form-venta_files/jquery_005.js"></script>
-<script src="form-venta_files/custom.js"></script>
-<script src="form-venta_files/dlabnav-init.js"></script>
-<script src="form-venta_files/demo.js"></script>
-<script src="form-venta_files/styleSwitcher.js"></script>
-<div class="sidebar-right">
-    <div class="bg-overlay"></div>
-    <a class="sidebar-right-trigger wave-effect wave-effect-x" data-bs-toggle="tooltip" data-placement="right" data-original-title="Change Layout" href="javascript:void(0);"><span><i class="fa fa-cog fa-spin"></i> </span></a><a class="sidebar-close-trigger" href="javascript:void(0);"><span><i class="la-times las"></i></span></a>
-    <div class="sidebar-right-inner"><h4>Pick your style <a href="javascript:void(0);" onclick="deleteAllCookie()" class="btn btn-primary btn-sm pull-right">Delete All Cookie</a></h4>
-        <div class="card-tabs">
-            <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item"><a class="nav-link active" href="#tab1" data-bs-toggle="tab">Theme</a></li>
-                <li class="nav-item"><a class="nav-link" href="#tab2" data-bs-toggle="tab">Header</a></li>
-                <li class="nav-item"><a class="nav-link" href="#tab3" data-bs-toggle="tab">Content</a></li>
-            </ul>
-        </div>
-        <div class="tab-content tab-content-default tabcontent-border">
-            <div class="fade tab-pane active show" id="tab1">
-                <div class="admin-settings">
-                    <div class="row">
-                        <div class="col-sm-12"><p>Background</p> <select class="default-select wide form-control" id="theme_version" name="theme_version" style="display: none;">
-                                <option value="light" selected="selected">Light</option>
-                                <option value="dark">Dark</option>
-                            </select>
-                            <div class="nice-select default-select wide form-control" tabindex="0"><span class="current">Light</span>
-                                <ul class="list">
-                                    <li data-value="light" class="option selected">Light</li>
-                                    <li data-value="dark" class="option">Dark</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-sm-6"><p>Primary Color</p>
-                            <div><span data-placement="top" data-bs-toggle="tooltip" title="Color 1"> <input class="chk-col-primary filled-in" id="primary_color_1" name="primary_bg" type="radio" value="color_1"> <label for="primary_color_1" class="bg-label-pattern"></label> </span> <span> <input class="chk-col-primary filled-in" id="primary_color_2" name="primary_bg" type="radio" value="color_2"> <label
-                                            for="primary_color_2"></label> </span> <span> <input class="chk-col-primary filled-in" id="primary_color_3" name="primary_bg" type="radio" value="color_3"> <label for="primary_color_3"></label> </span> <span> <input class="chk-col-primary filled-in" id="primary_color_4" name="primary_bg" type="radio" value="color_4"> <label for="primary_color_4"></label> </span>
-                                <span> <input class="chk-col-primary filled-in" id="primary_color_5" name="primary_bg" type="radio" value="color_5"> <label for="primary_color_5"></label> </span> <span> <input class="chk-col-primary filled-in" id="primary_color_6" name="primary_bg" type="radio" value="color_6"> <label for="primary_color_6"></label> </span> <span> <input
-                                            class="chk-col-primary filled-in" id="primary_color_7" name="primary_bg" type="radio" value="color_7"> <label for="primary_color_7"></label> </span> <span> <input class="chk-col-primary filled-in" id="primary_color_9" name="primary_bg" type="radio" value="color_9"> <label for="primary_color_9"></label> </span> <span> <input
-                                            class="chk-col-primary filled-in" id="primary_color_10" name="primary_bg" type="radio" value="color_10"> <label for="primary_color_10"></label> </span> <span> <input class="chk-col-primary filled-in" id="primary_color_11" name="primary_bg" type="radio" value="color_11"> <label for="primary_color_11"></label> </span> <span> <input
-                                            class="chk-col-primary filled-in" id="primary_color_12" name="primary_bg" type="radio" value="color_12"> <label for="primary_color_12"></label> </span> <span> <input class="chk-col-primary filled-in" id="primary_color_13" name="primary_bg" type="radio" value="color_13"> <label for="primary_color_13"></label> </span> <span> <input
-                                            class="chk-col-primary filled-in" id="primary_color_14" name="primary_bg" type="radio" value="color_14"> <label for="primary_color_14"></label> </span> <span> <input class="chk-col-primary filled-in" id="primary_color_15" name="primary_bg" type="radio" value="color_15"> <label for="primary_color_15"></label> </span></div>
-                        </div>
-                        <div class="col-sm-6"><p>Navigation Header</p>
-                            <div><span> <input class="chk-col-primary filled-in" id="nav_header_color_1" name="navigation_header" type="radio" value="color_1"> <label for="nav_header_color_1" class="bg-label-pattern"></label> </span> <span> <input class="chk-col-primary filled-in" id="nav_header_color_2" name="navigation_header" type="radio" value="color_2"> <label
-                                            for="nav_header_color_2"></label> </span> <span> <input class="chk-col-primary filled-in" id="nav_header_color_3" name="navigation_header" type="radio" value="color_3"> <label for="nav_header_color_3"></label> </span> <span> <input class="chk-col-primary filled-in" id="nav_header_color_4" name="navigation_header" type="radio" value="color_4"> <label
-                                            for="nav_header_color_4"></label> </span> <span> <input class="chk-col-primary filled-in" id="nav_header_color_5" name="navigation_header" type="radio" value="color_5"> <label for="nav_header_color_5"></label> </span> <span> <input class="chk-col-primary filled-in" id="nav_header_color_6" name="navigation_header" type="radio" value="color_6"> <label
-                                            for="nav_header_color_6"></label> </span> <span> <input class="chk-col-primary filled-in" id="nav_header_color_7" name="navigation_header" type="radio" value="color_7"> <label for="nav_header_color_7"></label> </span> <span> <input class="chk-col-primary filled-in" id="nav_header_color_8" name="navigation_header" type="radio" value="color_8"> <label
-                                            for="nav_header_color_8" class="border"></label> </span> <span> <input class="chk-col-primary filled-in" id="nav_header_color_9" name="navigation_header" type="radio" value="color_9"> <label for="nav_header_color_9"></label> </span> <span> <input class="chk-col-primary filled-in" id="nav_header_color_10" name="navigation_header" type="radio"
-                                                                                                                                                                                                                                                                                                   value="color_10"> <label for="nav_header_color_10"></label> </span> <span> <input
-                                            class="chk-col-primary filled-in" id="nav_header_color_11" name="navigation_header" type="radio" value="color_11"> <label for="nav_header_color_11"></label> </span> <span> <input class="chk-col-primary filled-in" id="nav_header_color_12" name="navigation_header" type="radio" value="color_12"> <label for="nav_header_color_12"></label> </span>
-                                <span> <input class="chk-col-primary filled-in" id="nav_header_color_13" name="navigation_header" type="radio" value="color_13"> <label for="nav_header_color_13"></label> </span> <span> <input class="chk-col-primary filled-in" id="nav_header_color_14" name="navigation_header" type="radio" value="color_14"> <label for="nav_header_color_14"></label> </span>
-                                <span> <input class="chk-col-primary filled-in" id="nav_header_color_15" name="navigation_header" type="radio" value="color_15"> <label for="nav_header_color_15"></label> </span></div>
-                        </div>
-                        <div class="col-sm-6"><p>Header</p>
-                            <div><span> <input class="chk-col-primary filled-in" id="header_color_1" name="header_bg" type="radio" value="color_1"> <label for="header_color_1" class="bg-label-pattern"></label> </span> <span> <input class="chk-col-primary filled-in" id="header_color_2" name="header_bg" type="radio" value="color_2"> <label for="header_color_2"></label> </span> <span> <input
-                                            class="chk-col-primary filled-in" id="header_color_3" name="header_bg" type="radio" value="color_3"> <label for="header_color_3"></label> </span> <span> <input class="chk-col-primary filled-in" id="header_color_4" name="header_bg" type="radio" value="color_4"> <label for="header_color_4"></label> </span> <span> <input class="chk-col-primary filled-in"
-                                                                                                                                                                                                                                                                                                                                                                            id="header_color_5" name="header_bg"
-                                                                                                                                                                                                                                                                                                                                                                            type="radio" value="color_5"> <label
-                                            for="header_color_5"></label> </span> <span> <input class="chk-col-primary filled-in" id="header_color_6" name="header_bg" type="radio" value="color_6"> <label for="header_color_6"></label> </span> <span> <input class="chk-col-primary filled-in" id="header_color_7" name="header_bg" type="radio" value="color_7"> <label
-                                            for="header_color_7"></label> </span> <span> <input class="chk-col-primary filled-in" id="header_color_8" name="header_bg" type="radio" value="color_8"> <label for="header_color_8" class="border"></label> </span> <span> <input class="chk-col-primary filled-in" id="header_color_9" name="header_bg" type="radio" value="color_9"> <label
-                                            for="header_color_9"></label> </span> <span> <input class="chk-col-primary filled-in" id="header_color_10" name="header_bg" type="radio" value="color_10"> <label for="header_color_10"></label> </span> <span> <input class="chk-col-primary filled-in" id="header_color_11" name="header_bg" type="radio" value="color_11"> <label for="header_color_11"></label> </span>
-                                <span> <input class="chk-col-primary filled-in" id="header_color_12" name="header_bg" type="radio" value="color_12"> <label for="header_color_12"></label> </span> <span> <input class="chk-col-primary filled-in" id="header_color_13" name="header_bg" type="radio" value="color_13"> <label for="header_color_13"></label> </span> <span> <input
-                                            class="chk-col-primary filled-in" id="header_color_14" name="header_bg" type="radio" value="color_14"> <label for="header_color_14"></label> </span> <span> <input class="chk-col-primary filled-in" id="header_color_15" name="header_bg" type="radio" value="color_15"> <label for="header_color_15"></label> </span></div>
-                        </div>
-                        <div class="col-sm-6"><p>Sidebar</p>
-                            <div><span> <input class="chk-col-primary filled-in" id="sidebar_color_1" name="sidebar_bg" type="radio" value="color_1"> <label for="sidebar_color_1" class="bg-label-pattern"></label> </span> <span> <input class="chk-col-primary filled-in" id="sidebar_color_2" name="sidebar_bg" type="radio" value="color_2"> <label for="sidebar_color_2"></label> </span> <span> <input
-                                            class="chk-col-primary filled-in" id="sidebar_color_3" name="sidebar_bg" type="radio" value="color_3"> <label for="sidebar_color_3"></label> </span> <span> <input class="chk-col-primary filled-in" id="sidebar_color_4" name="sidebar_bg" type="radio" value="color_4"> <label for="sidebar_color_4"></label> </span> <span> <input
-                                            class="chk-col-primary filled-in" id="sidebar_color_5" name="sidebar_bg" type="radio" value="color_5"> <label for="sidebar_color_5"></label> </span> <span> <input class="chk-col-primary filled-in" id="sidebar_color_6" name="sidebar_bg" type="radio" value="color_6"> <label for="sidebar_color_6"></label> </span> <span> <input
-                                            class="chk-col-primary filled-in" id="sidebar_color_7" name="sidebar_bg" type="radio" value="color_7"> <label for="sidebar_color_7"></label> </span> <span> <input class="chk-col-primary filled-in" id="sidebar_color_8" name="sidebar_bg" type="radio" value="color_8"> <label for="sidebar_color_8" class="border"></label> </span> <span> <input
-                                            class="chk-col-primary filled-in" id="sidebar_color_9" name="sidebar_bg" type="radio" value="color_9"> <label for="sidebar_color_9"></label> </span> <span> <input class="chk-col-primary filled-in" id="sidebar_color_10" name="sidebar_bg" type="radio" value="color_10"> <label for="sidebar_color_10"></label> </span> <span> <input
-                                            class="chk-col-primary filled-in" id="sidebar_color_11" name="sidebar_bg" type="radio" value="color_11"> <label for="sidebar_color_11"></label> </span> <span> <input class="chk-col-primary filled-in" id="sidebar_color_12" name="sidebar_bg" type="radio" value="color_12"> <label for="sidebar_color_12"></label> </span> <span> <input
-                                            class="chk-col-primary filled-in" id="sidebar_color_13" name="sidebar_bg" type="radio" value="color_13"> <label for="sidebar_color_13"></label> </span> <span> <input class="chk-col-primary filled-in" id="sidebar_color_14" name="sidebar_bg" type="radio" value="color_14"> <label for="sidebar_color_14"></label> </span> <span> <input
-                                            class="chk-col-primary filled-in" id="sidebar_color_15" name="sidebar_bg" type="radio" value="color_15"> <label for="sidebar_color_15"></label> </span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="fade tab-pane" id="tab2">
-                <div class="admin-settings">
-                    <div class="row">
-                        <div class="col-sm-6"><p>Layout</p> <select class="default-select wide form-control" id="theme_layout" name="theme_layout" style="display: none;">
-                                <option value="vertical" selected="selected">Vertical</option>
-                                <option value="horizontal">Horizontal</option>
-                            </select>
-                            <div class="nice-select default-select wide form-control" tabindex="0"><span class="current">Vertical</span>
-                                <ul class="list">
-                                    <li data-value="vertical" class="option selected">Vertical</li>
-                                    <li data-value="horizontal" class="option">Horizontal</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-sm-6"><p>Header position</p> <select class="default-select wide form-control" id="header_position" name="header_position" style="display: none;">
-                                <option value="static" selected="selected">Static</option>
-                                <option value="fixed">Fixed</option>
-                            </select>
-                            <div class="nice-select default-select wide form-control" tabindex="0"><span class="current">Static</span>
-                                <ul class="list">
-                                    <li data-value="static" class="option selected">Static</li>
-                                    <li data-value="fixed" class="option">Fixed</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-sm-6"><p>Sidebar</p> <select class="default-select wide form-control" id="sidebar_style" name="sidebar_style" style="display: none;">
-                                <option value="full" selected="selected">Full</option>
-                                <option value="mini">Mini</option>
-                                <option value="compact">Compact</option>
-                                <option value="modern">Modern</option>
-                                <option value="overlay">Overlay</option>
-                                <option value="icon-hover">Icon-hover</option>
-                            </select>
-                            <div class="nice-select default-select wide form-control" tabindex="0"><span class="current">Full</span>
-                                <ul class="list">
-                                    <li data-value="full" class="option selected">Full</li>
-                                    <li data-value="mini" class="option">Mini</li>
-                                    <li data-value="compact" class="option">Compact</li>
-                                    <li data-value="modern" class="option">Modern</li>
-                                    <li data-value="overlay" class="option">Overlay</li>
-                                    <li data-value="icon-hover" class="option">Icon-hover</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-sm-6"><p>Sidebar position</p> <select class="default-select wide form-control" id="sidebar_position" name="sidebar_position" style="display: none;">
-                                <option value="static" selected="selected">Static</option>
-                                <option value="fixed">Fixed</option>
-                            </select>
-                            <div class="nice-select default-select wide form-control" tabindex="0"><span class="current">Static</span>
-                                <ul class="list">
-                                    <li data-value="static" class="option selected">Static</li>
-                                    <li data-value="fixed" class="option">Fixed</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="fade tab-pane" id="tab3">
-                <div class="admin-settings">
-                    <div class="row">
-                        <div class="col-sm-6"><p>Container</p> <select class="default-select wide form-control" id="container_layout" name="container_layout" style="display: none;">
-                                <option value="wide" selected="selected">Wide</option>
-                                <option value="boxed">Boxed</option>
-                                <option value="wide-boxed">Wide Boxed</option>
-                            </select>
-                            <div class="nice-select default-select wide form-control" tabindex="0"><span class="current">Wide</span>
-                                <ul class="list">
-                                    <li data-value="wide" class="option selected">Wide</li>
-                                    <li data-value="boxed" class="option">Boxed</li>
-                                    <li data-value="wide-boxed" class="option">Wide Boxed</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-sm-6"><p>Body Font</p> <select class="default-select wide form-control" id="typography" name="typography" style="display: none;">
-                                <option value="roboto" selected="selected">Roboto</option>
-                                <option value="poppins">Poppins</option>
-                                <option value="opensans">Open Sans</option>
-                                <option value="HelveticaNeue">HelveticaNeue</option>
-                            </select>
-                            <div class="nice-select default-select wide form-control" tabindex="0"><span class="current">Roboto</span>
-                                <ul class="list">
-                                    <li data-value="roboto" class="option selected">Roboto</li>
-                                    <li data-value="poppins" class="option">Poppins</li>
-                                    <li data-value="opensans" class="option">Open Sans</li>
-                                    <li data-value="HelveticaNeue" class="option">HelveticaNeue</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="note-text"><span class="text-danger">*Note :</span> This theme switcher is not part of product. It is only for demo. you will get all guideline in documentation. please check <a href="https://fillow.dexignlab.com/documentation/" target="_blank" class="text-primary">documentation.</a></div>
-    </div>
-</div>
-<div class="dlab-demo-panel">
-    <div class="bg-close"></div>
-    <a class="dlab-demo-trigger" data-toggle="tooltip" data-placement="right" data-original-title="Check out more demos" href="javascript:void(0)"><span><i class="las la-tint"></i></span></a>
-    <div class="dlab-demo-inner"><a href="javascript:void(0);" class="btn btn-primary btn-sm px-2 py-1 mb-3" onclick="deleteAllCookie()">Delete All Cookie</a>
-        <div class="dlab-demo-header"><h4>Select A Demo</h4> <a class="dlab-demo-close" href="javascript:void(0)"><span><i class="las la-times"></i></span></a></div>
-        <div class="dlab-demo-content ps ps--active-y">
-            <div class="dlab-wrapper">
-                <div class="overlay-bx dlab-demo-bx demo-active">
-                    <div class="overlay-wrapper"><img src="form-venta_files/pic1.jpg" alt="" class="w-100"></div>
-                    <div class="overlay-layer"><a href="javascript:void(0);" data-theme="1" class="btn dlab_theme_demo btn-secondary btn-sm mr-2">Demo 1</a></div>
-                </div>
-                <h5 class="text-black mb-5">Demo 1</h5>
-                <hr>
-                <div class="overlay-bx dlab-demo-bx">
-                    <div class="overlay-wrapper"><img src="form-venta_files/pic2.jpg" alt="" class="w-100"></div>
-                    <div class="overlay-layer"><a href="javascript:void(0);" data-theme="2" class="btn dlab_theme_demo btn-secondary btn-sm mr-2">Demo 2</a></div>
-                </div>
-                <h5 class="text-black mb-5">Demo 2</h5>
-                <hr>
-                <div class="overlay-bx dlab-demo-bx">
-                    <div class="overlay-wrapper "><img src="form-venta_files/pic3.jpg" alt="" class="w-100"></div>
-                    <div class="overlay-layer"><a href="javascript:void(0);" data-theme="3" class="btn dlab_theme_demo btn-secondary btn-sm mr-2">Demo 3</a></div>
-                </div>
-                <h5 class="text-black mb-5">Demo 3</h5>
-                <hr>
-                <div class="overlay-bx dlab-demo-bx">
-                    <div class="overlay-wrapper"><img src="form-venta_files/pic4.jpg" alt="" class="w-100"></div>
-                    <div class="overlay-layer"><a href="javascript:void(0);" data-theme="4" class="btn dlab_theme_demo btn-secondary btn-sm mr-2">Demo 4</a></div>
-                </div>
-                <h5 class="text-black mb-5">Demo 4</h5>
-                <hr>
-                <div class="overlay-bx dlab-demo-bx">
-                    <div class="overlay-wrapper"><img src="form-venta_files/pic5.jpg" alt="" class="w-100"></div>
-                    <div class="overlay-layer"><a href="javascript:void(0);" data-theme="5" class="btn dlab_theme_demo btn-secondary btn-sm mr-2">Demo 5</a></div>
-                </div>
-                <h5 class="text-black mb-5">Demo 5</h5>
-                <div class="overlay-bx dlab-demo-bx">
-                    <div class="overlay-wrapper"><img src="form-venta_files/pic6.jpg" alt="" class="w-100"></div>
-                    <div class="overlay-layer"><a href="javascript:void(0);" data-theme="6" class="btn dlab_theme_demo btn-secondary btn-sm mr-2">Demo 6</a></div>
-                </div>
-                <h5 class="text-black mb-5">Demo 6</h5></div>
-            <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
-                <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
-            </div>
-            <div class="ps__rail-y" style="top: 0px; height: 446px; right: 0px;">
-                <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 129px;"></div>
-            </div>
-        </div>
-        <div class="note-text"><span class="text-danger">*Note :</span> This theme switcher is not part of product. It is only for demo. you will get all guideline in documentation. please check <a href="https://fillow.dexignlab.com/documentation/" target="_blank" class="text-primary">documentation.</a></div>
-    </div>
-</div>
+<script src="../../vendor/jquery/jquery.js"></script>
+<script src="../../vendor/jquery/jquery_005.js"></script>
+<script src="../../vendor/jquery/custom.js"></script>
+<script src="../../vendor/jquery/dlabnav-init.js"></script>
+<script src="../../vendor/jquery/demo.js"></script>
+<script src="../../vendor/jquery/styleSwitcher.js"></script>
+
 <script>
     $(document).ready(function () {
         // SmartWizard initialize
