@@ -4,8 +4,6 @@ $tdetalle = new TablaGeneralDetalle();
 ?>
 <!DOCTYPE html>
 <html lang="es" class="h-100">
-
-
 <!-- Mirrored from fillow.dexignlab.com/xhtml/page-register.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Oct 2021 15:06:14 GMT -->
 <head>
     <meta charset="utf-8">
@@ -27,9 +25,7 @@ $tdetalle = new TablaGeneralDetalle();
     <link rel="shortcut icon" type="image/png" href="../assets/images/favicon.png"/>
     <link href="../vendor/jquery-smartwizard/dist/css/smart_wizard.min.css" rel="stylesheet">
     <link href="../assets/css/style.css" rel="stylesheet">
-
 </head>
-
 <body class="vh-100">
 <div class="authincation h-100">
     <div class="container h-100">

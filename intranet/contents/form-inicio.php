@@ -24,11 +24,7 @@
 
 </head>
 <body data-typography="poppins" data-theme-version="light" data-layout="vertical" data-nav-headerbg="color_1" data-headerbg="color_1" data-sidebar-style="full" data-sibebarbg="color_1" data-sidebar-position="fixed" data-header-position="fixed" data-container="wide" direction="ltr" data-primary="color_5">
-
-
 <div id="main-wrapper" class="show">
-
-
     <!--**********************************
        Nav header start
    ***********************************-->
@@ -83,8 +79,6 @@
     <!--**********************************
         Content body start
     ***********************************-->
-
-
     <div class="content-body">
         <div class="container-fluid">
             <div class="row">
@@ -155,7 +149,6 @@
             </div>
         </div>
     </div>
-
 </div>
 <script src="../../vendor/global/global.min.js"></script>
 <script src="../../vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
@@ -167,13 +160,11 @@
 <script src="../../assets/js/jquery_003.js"></script>
 <script src="../../assets/js/jquery_005.js"></script>
 <script src="../../assets/js/styleSwitcher.js"></script>
-
 <script>
     $(document).ready(function () {
         // SmartWizard initialize
         $('#smartwizard').smartWizard();
     });
 </script>
-
 </body>
 </html>

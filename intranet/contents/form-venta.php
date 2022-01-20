@@ -26,10 +26,7 @@
 </head>
 <body data-typography="poppins" data-theme-version="light" data-layout="vertical" data-nav-headerbg="color_1" data-headerbg="color_1" data-sidebar-style="full" data-sibebarbg="color_1" data-sidebar-position="fixed" data-header-position="fixed" data-container="wide" direction="ltr" data-primary="color_5">
 
-
 <div id="main-wrapper" class="show">
-
-
     <!--**********************************
        Nav header start
    ***********************************-->
@@ -84,8 +81,6 @@
     <!--**********************************
         Content body start
     ***********************************-->
-
-
     <div class="content-body" style="min-height: 801px;">
         <div class="container-fluid">
             <div class="row">
@@ -110,7 +105,6 @@
                                         </a>
                                     </li>
                                 </ul>
-
                                 <div class="tab-content" style="height: 272.15px;">
                                     <div id="wizard_Agregar" class="tab-pane" role="tabpanel" style="display: block;">
                                         <div class="row">
@@ -146,38 +140,58 @@
                                             </div>
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-1 ms-3">
-                                                            <h5 class="font-size-16 mb-1">Producto: Libro</h5>
-                                                            <p class="text-muted mb-0">Precio Venta: 20.00</p>
-                                                            <p class="text-muted mb-0">Cantidad: 01</p>
-                                                            <p class="text-muted mb-0">Subtotal: 20.00</p>
+                                                    <div class="row align-items-center">
+                                                        <div class="col-xl-5  col-lg-6 col-sm-12 align-items-center customers">
+                                                            <div class="media-body">
+                                                                <span class="text-primary d-block fs-18 font-w500 mb-1">Cod: Producto</span>
+                                                                <h3 class="fs-18 text-black font-w600">Biblia</h3>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-2 col-lg-3 col-sm-4 col-6 mb-3 text-lg-center">
+                                                            <div class="d-flex project-image">
+                                                                <div>
+                                                                    <span class="d-block mb-lg-0 mb-0 fs-16">1</span>
+                                                                    <h3 class=" mb-0">S/ 80.00</h3>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-3  col-lg-6 col-sm-6 mb-sm-4 mb-0">
+                                                            <div class="d-flex project-image">
+                                                                <div>
+                                                                    <h2 class=" mb-0">S/ 80.00</h2>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="pt-1">
-                                                        <button class="btn btn-danger" type="button"> Eliminar
-                                                            <i class="bx bxs-trash"></i>
-                                                        </button>
-                                                    </div>
                                                 </div>
-                                            </div><!-- end card -->
+                                            </div>
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-1 ms-3">
-                                                            <h5 class="font-size-16 mb-1">Producto: Biblia</h5>
-                                                            <p class="text-muted mb-0">Precio Venta: 40.00</p>
-                                                            <p class="text-muted mb-0">Cantidad: 02</p>
-                                                            <p class="text-muted mb-0">Subtotal: 80.00</p>
+                                                    <div class="row align-items-center">
+                                                        <div class="col-xl-5  col-lg-6 col-sm-12 align-items-center customers">
+                                                            <div class="media-body">
+                                                                <span class="text-primary d-block fs-18 font-w500 mb-1">Cod: Producto</span>
+                                                                <h3 class="fs-18 text-black font-w600">Libro</h3>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-2 col-lg-3 col-sm-4 col-6 mb-3 text-lg-center">
+                                                            <div class="d-flex project-image">
+                                                                <div>
+                                                                    <span class="d-block mb-lg-0 mb-0 fs-16">2</span>
+                                                                    <h3 class=" mb-0">S/ 30.00</h3>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-3  col-lg-6 col-sm-6 mb-sm-4 mb-0">
+                                                            <div class="d-flex project-image">
+                                                                <div>
+                                                                    <h2 class=" mb-0">S/ 60.00</h2>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="pt-1">
-                                                        <button class="btn btn-danger" type="button">Eliminar
-                                                            <i class="bx bxs-trash"></i>
-                                                        </button>
-                                                    </div>
                                                 </div>
-                                            </div><!-- end card -->
+                                            </div>
                                         </div>
                                     </div>
                                     <div id="wizard_Cliente" class="tab-pane" role="tabpanel" style="display: none;">
@@ -263,6 +277,14 @@
                                                     </div>
                                                 </div><!-- end col -->
                                             </div><!-- end row -->
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="skip-email text-center">
+                                                        <p>Verificar datos antes de Grabar</p>
+                                                        <a href="javascript:void(0)">Grabar</a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div><!-- end form -->
                                     </div>
                                 </div>
@@ -278,24 +300,16 @@
 
         </div>
     </div>
-
-
     <div class="footer">
         <div class="copyright">
             <p>Copyright © Designed &amp; Developed by <a href="https://dexignlab.com/" target="_blank">DexignLab</a> 2021</p>
         </div>
     </div>
-
-
 </div>
-
-
 <script src="../../vendor/global/global.js"></script>
 <script src="../../vendor/jquery/jquery_002.js"></script>
 <script src="../../vendor/jquery/jquery_004.js"></script>
-
 <script src="../../vendor/jquery/jquery_003.js"></script>
-
 <script src="../../vendor/jquery/jquery.js"></script>
 <script src="../../vendor/jquery/jquery_005.js"></script>
 <script src="../../vendor/jquery/custom.js"></script>
@@ -309,6 +323,5 @@
         $('#smartwizard').smartWizard();
     });
 </script>
-
 </body>
 </html>

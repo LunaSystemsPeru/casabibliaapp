@@ -22,10 +22,8 @@
     <link rel="shortcut icon" type="image/png" href="../../assets/images/favicon.png"/>
     <link href="../../vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
     <link href="../../assets/css/style.css" rel="stylesheet">
-
 </head>
 <body>
-
 <!--*******************
     Preloader start
 ********************-->

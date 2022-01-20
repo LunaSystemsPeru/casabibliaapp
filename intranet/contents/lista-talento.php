@@ -5,11 +5,9 @@ require '../../models/TablaGeneralDetalle.php';
 $colaborador = new Colaborador();
 $tdetalle = new TablaGeneralDetalle();
 
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
-
 <!-- Mirrored from fillow.dexignlab.com/xhtml/empty-page.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Oct 2021 15:06:15 GMT -->
 <head>
     <meta charset="utf-8">
@@ -32,10 +30,8 @@ $tdetalle = new TablaGeneralDetalle();
     <link href="../../vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
     <link href="../../vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="../../assets/css/style.css" rel="stylesheet">
-
 </head>
 <body>
-
 <!--*******************
     Preloader start
 ********************-->
@@ -110,7 +106,6 @@ $tdetalle = new TablaGeneralDetalle();
     <div class="content-body">
         <!-- row -->
         <div class="container-fluid">
-
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
@@ -174,9 +169,6 @@ $tdetalle = new TablaGeneralDetalle();
     <!--**********************************
         Content body end
     ***********************************-->
-
-
-
 </div>
 <!--**********************************
     Main wrapper end
@@ -193,7 +185,6 @@ $tdetalle = new TablaGeneralDetalle();
 <script src="../../assets/js/dlabnav-init.js"></script>
 <script src="../../assets/js/demo.js"></script>
 <script src="../../assets/js/styleSwitcher.js"></script>
-
 <script>
     $(document).ready(function () {
         var table = $('#example').DataTable({
@@ -205,6 +196,5 @@ $tdetalle = new TablaGeneralDetalle();
 
 </script>
 </body>
-
 <!-- Mirrored from fillow.dexignlab.com/xhtml/empty-page.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Oct 2021 15:06:15 GMT -->
 </html>

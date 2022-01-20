@@ -13,10 +13,8 @@
     <meta property="og:description" content="Fillow : Fillow Saas Admin  Bootstrap 5 Template"/>
     <meta property="og:image" content="social-image.png"/>
     <meta name="format-detection" content="telephone=no">
-
     <!-- PAGE TITLE HERE -->
     <title>Casa de la Biblia</title>
-
     <!-- FAVICONS ICON -->
     <link rel="shortcut icon" type="image/png" href="../../assets/images/favicon.png"/>
     <link href="../../vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
@@ -24,7 +22,6 @@
 
 </head>
 <body>
-
 <!--*******************
     Preloader start
 ********************-->
@@ -108,7 +105,6 @@
                     <a href="javascript:void(0);" class="btn btn-primary btn-rounded fs-18">Ver Todas mis Boletas</a>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-xl-12">
                     <div class="tab-content">
