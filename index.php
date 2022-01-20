@@ -1,2 +1,2 @@
 <?php
-header("Location: contents/index.html");
+header("Location: intranet/contents/index.html");
