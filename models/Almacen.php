@@ -17,6 +17,7 @@ private $estado;
      */
     public function __construct()
     {
+        $this->conectar = conectar::getInstancia();
     }
 
     /**
@@ -145,6 +146,65 @@ private $estado;
     public function setEstado($estado)
     {
         $this->estado = $estado;
+    }
+    public function obtenerId()
+    {
+        $sql = "select ifnull(max(id) + 1, 1) as codigo 
+            from almacen";
+        $this->idalmacen = $this->conectar->get_valor_query($sql, 'codigo');
+    }
+
+    public function insertar()
+    {
+        $sql = "insert into almacen 
+        values ('$this->idalmacen', 
+                '$this->idempresa',
+                '$this->nombre',
+                '$this->direccion',   
+                '$this->ciudad',
+                '$this->ticketera',
+                '$this->telefono',                
+                '$this->estado')";
+        return $this->conectar->ejecutar_idu($sql);
+    }
+
+    public function modificar()
+    {
+        $sql = "update almacen 
+        set id_empresa = '$this->idempresa',
+            nombre = '$this->nombre', 
+            direccion = '$this->direccion'
+            ciudad = '$this->ciudad'
+            ticketera = '$this->ticketera'
+            telefono = '$this->telefono'
+            estado = '$this->estado'
+        where id = '$this->id'";
+        return $this->conectar->ejecutar_idu($sql);
+    }
+
+    public function obtenerDatos()
+    {
+        $sql = "select * from almacen 
+        where id = '$this->id'";
+        $fila = $this->conectar->get_Row($sql);
+        if ($fila) {
+            $this->idalmacen = $fila['id_almacen'];
+            $this->idempresa = $fila['id_empresa'];
+            $this->nombre = $fila['nombre'];
+            $this->direccion = $fila['direccion'];
+            $this->ciudad = $fila['ciudad'];
+            $this->ticketera = $fila['ticketera'];
+            $this->telefono = $fila['telefono'];
+            $this->estado = $fila['estado'];
+        }
+    }
+
+    public function verFilas()
+    {
+        $sql = "select * 
+                from almacen 
+                where id = '$this->id' ";
+        return $this->conectar->get_Cursor($sql);
     }
 
 }

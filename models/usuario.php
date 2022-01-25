@@ -18,6 +18,7 @@ private $estado;
      */
     public function __construct()
     {
+        $this->conectar = conectar::getInstancia();
     }
 
     /**
@@ -162,6 +163,68 @@ private $estado;
     public function setEstado($estado)
     {
         $this->estado = $estado;
+    }
+
+    public function obtenerId()
+    {
+        $sql = "select ifnull(max(id) + 1, 1) as codigo 
+            from usuarios";
+        $this->idusuario = $this->conectar->get_valor_query($sql, 'codigo');
+    }
+
+    public function insertar()
+    {
+        $sql = "insert into usuarios 
+        values ('$this->idusuario', 
+                '$this->username',
+                '$this->password',
+                '$this->nrodocumento',
+                '$this->datos',                
+                '$this->email',
+                '$this->celular',
+                '$this->idalmacen',
+                '$this->estado')";
+        return $this->conectar->ejecutar_idu($sql);
+    }
+
+    public function modificar()
+    {
+        $sql = "update usuarios 
+        set username = '$this->username',            
+            password = '$this->password',
+            nro_documento = '$this->nrodocumento',            
+            datos = '$this->datos',                     
+            email = '$this->email',
+            celular = '$this->celular',            
+            id_almacen = '$this->idalmacen',                 
+            estado = '$this->estado',
+       where id = '$this->idusuario'";
+        return $this->conectar->ejecutar_idu($sql);
+    }
+
+    public function obtenerDatos()
+    {
+        $sql = "select * from usuarios 
+        where id = '$this->idusuario'";
+        $fila = $this->conectar->get_Row($sql);
+        if ($fila) {
+            $this->idusuario = $fila['id_usuarios'];
+            $this->username = $fila['username'];
+            $this->password = $fila['password'];
+            $this->nrodocumento = $fila['nro_documento'];
+            $this->datos = $fila['datos'];
+            $this->email = $fila['email'];
+            $this->celular = $fila['celular'];
+            $this->idalmacen = $fila['id_almacen'];
+            $this->estado = $fila['estado'];
+        }
+    }
+
+    public function verFilas()
+    {
+        $sql = "select * from usuarios 
+                where id = '$this->idusuario' ";
+        return $this->conectar->get_Cursor($sql);
     }
 
 }

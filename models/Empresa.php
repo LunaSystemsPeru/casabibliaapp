@@ -1,5 +1,4 @@
 <?php
-
 require_once 'Conectar.php';
 
 class Empresa
@@ -16,6 +15,7 @@ private $condicion;
      */
     public function __construct()
     {
+        $this->conectar = conectar::getInstancia();
     }
 
     /**
@@ -112,6 +112,58 @@ private $condicion;
     public function setCondicion($condicion)
     {
         $this->condicion = $condicion;
+    }
+    public function obtenerId()
+    {
+        $sql = "select ifnull(max(id) + 1, 1) as codigo 
+            from empresa";
+        $this->idempresa = $this->conectar->get_valor_query($sql, 'codigo');
+    }
+
+    public function insertar()
+    {
+        $sql = "insert into empresa 
+        values ('$this->idempresa', 
+                '$this->ruc',
+                '$this->razon',
+                '$this->direccion',
+                '$this->estado',
+                '$this->condicion')";
+        return $this->conectar->ejecutar_idu($sql);
+    }
+
+    public function modificar()
+    {
+        $sql = "update empresa 
+        set ruc = '$this->ruc',
+            razon = '$this->razon',            
+            direccion = '$this->direccion',
+            estado = '$this->estado',            
+            condicion = '$this->condicion',
+       where id = '$this->idempresa'";
+        return $this->conectar->ejecutar_idu($sql);
+    }
+
+    public function obtenerDatos()
+    {
+        $sql = "select * from empresa 
+        where id = '$this->idempresa'";
+        $fila = $this->conectar->get_Row($sql);
+        if ($fila) {
+            $this->idempresa = $fila['id_empresa'];
+            $this->ruc = $fila['ruc'];
+            $this->razon = $fila['razon'];
+            $this->direccion = $fila['direccion'];
+            $this->estado = $fila['estado'];
+            $this->condicion = $fila['condicion'];
+        }
+    }
+
+    public function verFilas()
+    {
+        $sql = "select * from empresa 
+                where id = '$this->idempresa' ";
+        return $this->conectar->get_Cursor($sql);
     }
 
 }
