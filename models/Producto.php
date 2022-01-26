@@ -1,7 +1,7 @@
 <?php
 require_once 'Conectar.php';
 
-class producto
+class Producto
 {
     private $idproducto;
     private $descripcion;
@@ -217,14 +217,14 @@ class producto
     }
     public function obtenerId()
     {
-        $sql = "select ifnull(max(id) + 1, 1) as codigo 
-            from producto";
+        $sql = "select ifnull(max(id_producto) + 1, 1) as codigo 
+            from productos";
         $this->idproducto = $this->conectar->get_valor_query($sql, 'codigo');
     }
 
     public function insertar()
     {
-        $sql = "insert into producto
+        $sql = "insert into productos
         values ('$this->idproducto', 
                 '$this->descripcion',
                 '$this->codexterno',
@@ -242,7 +242,7 @@ class producto
 
     public function modificar()
     {
-        $sql = "update producto 
+        $sql = "update productos 
         set descripcion = '$this->descripcion',
             cod_externo = '$this->codexterno', 
             costo = '$this->costo'
@@ -260,7 +260,7 @@ class producto
 
     public function obtenerDatos()
     {
-        $sql = "select * from producto
+        $sql = "select * from productos
         where id = '$this->idproducto'";
         $fila = $this->conectar->get_Row($sql);
         if ($fila) {
@@ -281,8 +281,18 @@ class producto
 
     public function verFilas()
     {
-        $sql = "select * from producto 
+        $sql = "select * from productos 
                 where id = '$this->idproducto' ";
+        return $this->conectar->get_Cursor($sql);
+    }
+
+    public function buscarProductos($termino)
+    {
+        $sql = "select id_producto, descripcion, cod_externo, precio, afecto_igv
+                from productos
+                where descripcion like '%$termino' or cod_externo like '%$termino%' 
+                order by descripcion asc 
+                limit 50";
         return $this->conectar->get_Cursor($sql);
     }
 
