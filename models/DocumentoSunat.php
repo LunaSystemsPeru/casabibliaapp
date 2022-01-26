@@ -124,8 +124,7 @@ class DocumentoSunat
 
     public function verFilas()
     {
-        $sql = "select * 
-                from documentos_sunat 
+        $sql = "select * from documentos_sunat 
                 where id_tido = '$this->idtido' ";
         return $this->conectar->get_Cursor($sql);
     }

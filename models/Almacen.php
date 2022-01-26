@@ -202,8 +202,7 @@ private $conectar;
 
     public function verFilas()
     {
-        $sql = "select * 
-                from almacen 
+        $sql = "select * from almacen 
                 where id_almacen = '$this->idalmacen' ";
         return $this->conectar->get_Cursor($sql);
     }
