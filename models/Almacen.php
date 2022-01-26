@@ -11,6 +11,7 @@ private $ciudad;
 private $ticketera;
 private $telefono;
 private $estado;
+private $conectar;
 
     /**
      * Almacen constructor.
@@ -149,7 +150,7 @@ private $estado;
     }
     public function obtenerId()
     {
-        $sql = "select ifnull(max(id) + 1, 1) as codigo 
+        $sql = "select ifnull(max(id_almacen) + 1, 1) as codigo 
             from almacen";
         $this->idalmacen = $this->conectar->get_valor_query($sql, 'codigo');
     }
@@ -178,14 +179,14 @@ private $estado;
             ticketera = '$this->ticketera'
             telefono = '$this->telefono'
             estado = '$this->estado'
-        where id = '$this->id'";
+        where id_almacen = '$this->idalmacen'";
         return $this->conectar->ejecutar_idu($sql);
     }
 
     public function obtenerDatos()
     {
         $sql = "select * from almacen 
-        where id = '$this->id'";
+        where id_almacen = '$this->idalmacen'";
         $fila = $this->conectar->get_Row($sql);
         if ($fila) {
             $this->idalmacen = $fila['id_almacen'];
@@ -203,7 +204,7 @@ private $estado;
     {
         $sql = "select * 
                 from almacen 
-                where id = '$this->id' ";
+                where id_almacen = '$this->idalmacen' ";
         return $this->conectar->get_Cursor($sql);
     }
 
