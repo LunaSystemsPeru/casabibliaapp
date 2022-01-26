@@ -6,7 +6,7 @@
                     <span class="nav-text">Inicio</span>
                 </a>
             </li>
-            <li><a class="has-arrow " href="form-venta1.php" aria-expanded="false">
+            <li><a class="has-arrow " href="form-venta.php" aria-expanded="false">
                     <i class="fas fa-plus"></i>
                     <span class="nav-text">Agregar Documento Venta</span>
                 </a>

@@ -1,34 +1,49 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="en">
+<html lang="es">
+<!-- Mirrored from fillow.dexignlab.com/xhtml/empty-page.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Oct 2021 15:06:15 GMT -->
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="keywords" content="">
-    <meta name="author" content="">
-    <meta name="robots" content="">
+    <meta name="keywords" content=""/>
+    <meta name="author" content=""/>
+    <meta name="robots" content=""/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Fillow : Fillow Saas Admin  Bootstrap 5 Template">
-    <meta property="og:title" content="Fillow : Fillow Saas Admin  Bootstrap 5 Template">
-    <meta property="og:description" content="Fillow : Fillow Saas Admin  Bootstrap 5 Template">
-    <meta property="og:image" content="https://fillow.dexignlab.com/xhtml/social-image.png">
+    <meta name="description" content="Fillow : Fillow Saas Admin  Bootstrap 5 Template"/>
+    <meta property="og:title" content="Fillow : Fillow Saas Admin  Bootstrap 5 Template"/>
+    <meta property="og:description" content="Fillow : Fillow Saas Admin  Bootstrap 5 Template"/>
+    <meta property="og:image" content="social-image.png"/>
     <meta name="format-detection" content="telephone=no">
-
-    <title>Fillow Saas Admin Dashboard</title>
-
-    <link rel="shortcut icon" type="image/png" href="../../assets/images/favicon.png"/>
+    <!-- PAGE TITLE HERE -->
+    <title>Casa de la Biblia</title>
+    <!-- FAVICONS ICON -->
+    <link rel="shortcut icon" type="image/png" href="../../assets/images/favicon.png" />
     <link href="../../vendor/jquery-smartwizard/dist/css/smart_wizard.min.css" rel="stylesheet">
     <link href="../../vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
     <link href="../../assets/css/style.css" rel="stylesheet">
 
-
 </head>
-<body data-typography="poppins" data-theme-version="light" data-layout="vertical" data-nav-headerbg="color_1" data-headerbg="color_1" data-sidebar-style="full" data-sibebarbg="color_1" data-sidebar-position="fixed" data-header-position="fixed" data-container="wide" direction="ltr" data-primary="color_5">
+<body>
+<!--*******************
+    Preloader start
+********************-->
+<div id="preloader">
+    <div class="lds-ripple">
+        <div></div>
+        <div></div>
+    </div>
+</div>
+<!--*******************
+    Preloader end
+********************-->
 
-<div id="main-wrapper" class="show">
+<!--**********************************
+    Main wrapper start
+***********************************-->
+<div id="main-wrapper">
+
     <!--**********************************
-       Nav header start
-   ***********************************-->
+        Nav header start
+    ***********************************-->
     <div class="nav-header">
         <a href="../intranet/index.html" class="brand-logo">
             <svg class="logo-abbr" width="55" height="55" viewBox="0 0 55 55" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -38,7 +53,7 @@
                 </defs>
             </svg>
             <div class="brand-title">
-                <h2 class="">Menú.</h2>
+                <h2 class="">Menu.</h2>
                 <span class="brand-sub-title">Casa de la Biblia</span>
             </div>
         </a>
@@ -80,40 +95,38 @@
     <!--**********************************
         Content body start
     ***********************************-->
-    <div class="content-body" style="min-height: 801px;">
+    <div class="content-body">
+        <!-- row -->
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xl-12 col-xxl-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Registrar Venta</h4>
+                            <h4 class="card-title">Registrar Comprobante de Venta</h4>
                         </div>
                         <div class="card-body">
-                            <div id="smartwizard" class="form-wizard order-create sw sw-theme-default sw-justified">
+                            <div id="smartwizard" class="form-wizard order-create">
                                 <ul class="nav nav-wizard">
-                                    <li><a class="nav-link inactive active" href="#wizard_Agregar">
+                                    <li><a class="nav-link" href="#wizard_Service">
                                             <span>1</span>
-                                        </a>
-                                    </li>
-                                    <li><a class="nav-link inactive" href="#wizard_Cliente">
+                                        </a></li>
+                                    <li><a class="nav-link" href="#wizard_Time">
                                             <span>2</span>
-                                        </a>
-                                    </li>
-                                    <li><a class="nav-link inactive" href="#wizard_Pago">
+                                        </a></li>
+                                    <li><a class="nav-link" href="#wizard_Details">
                                             <span>3</span>
-                                        </a>
-                                    </li>
+                                        </a></li>
                                 </ul>
-                                <div class="tab-content" style="height: 272.15px;">
-                                    <div id="wizard_Agregar" class="tab-pane" role="tabpanel" style="display: block;">
+                                <div class="tab-content">
+                                    <div id="wizard_Service" class="tab-pane" role="tabpanel">
                                         <div class="row">
-                                            <div class="text-center mb-4">
-                                                <h3> Agregar Producto</h3>
-                                            </div>
                                             <div class="col-lg-12 mb-2">
                                                 <div class="mb-3">
                                                     <label for="input-buscar-producto" class="text-label form-label">Buscar Producto</label>
                                                     <input type="text" id="input-buscar-producto" class="form-control" placeholder="Nuevo Producto" required="">
+                                                    <input type="hidden" id="input-id-producto">
+                                                    <input type="hidden" id="input-nombre-producto">
+                                                    <input type="hidden" id="input-codexterno-producto">
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 mb-2">
@@ -130,13 +143,11 @@
                                             </div>
                                             <div class="col-lg-4 mb-2">
                                                 <div class="mb-3">
-                                                    <button type="submit" class="btn btn-primary mt-3"><i class="bx bxs-plus-circle"></i>+ Agregar</button>
+                                                    <button type="button" onclick="addProducto()" class="btn btn-primary mt-3"><i class="bx bxs-plus-circle"></i>+ Agregar</button>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12 mb-2">
-                                                <h3> Detalles de la Venta</h3>
-                                            </div>
-
+                                        </div>
+                                        <div class="row" id="contenido-detalle">
                                             <div class="card">
                                                 <div class="card-body">
                                                     <div class="row align-items-center">
@@ -144,15 +155,13 @@
                                                             <div class="media-body">
                                                                 <span class="text-primary d-block fs-18 font-w500 mb-1">Cod: Producto</span>
                                                                 <h3 class="fs-18 text-black font-w600">Biblia</h3>
-                                                                <span class="text-primary d-block fs-18 font-w500 mb-1">Cantidad</span>
-                                                                <h3 class="fs-18 text-black font-w600">1</h3>
                                                             </div>
                                                         </div>
-                                                        <div class="col-xl-2 col-lg-3 col-sm-4 col-6 mb-3 text-lg-center">
+                                                        <div class="col-xl-4 col-lg-3 col-sm-4 col-6 mb-3 text-lg-center">
                                                             <div class="d-flex project-image">
                                                                 <div>
-                                                                    <span class="d-block mb-lg-0 mb-0 fs-16">Precio Unitario</span>
-                                                                    <h3 class=" mb-0">S/ 80.00</h3>
+                                                                    <span class="d-block mb-lg-0 mb-0 fs-16">Cantidad: 1</span>
+                                                                    <h3 class=" mb-0">Precio: S/ 80.00</h3>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -167,40 +176,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div class="row align-items-center">
-                                                        <div class="col-xl-5  col-lg-6 col-sm-12 align-items-center customers">
-                                                            <div class="media-body">
-                                                                <span class="text-primary d-block fs-18 font-w500 mb-1">Cod: Producto</span>
-                                                                <h3 class="fs-18 text-black font-w600">Libro</h3>
-                                                                <span class="text-primary d-block fs-18 font-w500 mb-1">Cantidad:</span>
-                                                                <h3 class="fs-18 text-black font-w600">2</h3>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-2 col-lg-3 col-sm-4 col-6 mb-3 text-lg-center">
-                                                            <div class="d-flex project-image">
-                                                                <div>
-                                                                    <span class="d-block mb-lg-0 mb-0 fs-16">Precio Unitario:</span>
-                                                                    <h3 class=" mb-0"> S/ 30.00</h3>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-3  col-lg-6 col-sm-6 mb-sm-4 mb-0">
-                                                            <div class="d-flex project-image">
-                                                                <div>
-                                                                    <span class="d-block mb-lg-0 mb-0 fs-16">Total:</span>
-                                                                    <h2 class=" mb-0">S/ 60.00</h2>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
                                         </div>
                                     </div>
-                                    <div id="wizard_Cliente" class="tab-pane" role="tabpanel" style="display: none;">
+                                    <div id="wizard_Time" class="tab-pane" role="tabpanel">
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
@@ -237,10 +215,10 @@
                                                     <label for="input-direccion" class="form-label">Direccion</label>
                                                     <input type="text" class="form-control" placeholder="Direccion" id="input-direccion">
                                                 </div>
-                                            </div><!-- end col -->
-                                        </div><!-- end row -->
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div id="wizard_Pago" class="tab-pane" role="tabpanel" style="display: none;">
+                                    <div id="wizard_Details" class="tab-pane" role="tabpanel">
                                         <div class="text-center mb-4">
                                             <h1>Pago</h1>
                                         </div>
@@ -291,66 +269,63 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div><!-- end form -->
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="toolbar toolbar-bottom" role="toolbar" style="text-align: right;">
-                                    <button class="btn btn-primary sw-btn-prev disabled" type="button">Previous</button>
-                                    <button class="btn btn-primary sw-btn-next" type="button">Next</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <!--**********************************
+        Content body end
+    ***********************************-->
 
-        </div>
-    </div>
-    <div class="footer">
-        <div class="copyright">
-            <p>Copyright © Designed &amp; Developed by <a href="https://dexignlab.com/" target="_blank">DexignLab</a> 2021</p>
-        </div>
-    </div>
 </div>
+<!--**********************************
+    Main wrapper end
+***********************************-->
 
+<!--**********************************
+    Scripts
+***********************************-->
+<!-- Required vendors -->
+<script src="../../vendor/global/global.min.js"></script>
+<script src="../../vendor/jquery-steps/build/jquery.steps.min.js"></script>
+<script src="../../vendor/jquery-validation/jquery.validate.min.js"></script>
+
+<script src="../../assets/js/plugins-init/jquery.validate-init.js"></script>
+
+<script src="../../vendor/jquery-smartwizard/dist/js/jquery.smartWizard.min.js"></script>
+<script src="../../vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+<script src="../../assets/js/custom.min.js"></script>
+<script src="../../assets/js/dlabnav-init.js"></script>
+<script src="../../assets/js/demo.js"></script>
+<script src="../../assets/js/styleSwitcher.js"></script>
 
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" media="all"/>
-<script src="//code.jquery.com/jquery-1.10.2.js" type="text/javascript"></script>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"
         integrity="sha256-6XMVI0zB8cRzfZjqKcD01PBsAy3FlDASrlC8SxCpInY="
         crossorigin="anonymous"></script>
-<!--
-<script src="../../vendor/jquery-steps/build/jquery.steps.min.js"></script>
-<script src="../../assets/js/plugins-init/jquery.validate-init.js"></script>
-<script src="../../vendor/jquery-smartwizard/dist/js/jquery.smartWizard.js"></script>
--->
-
-<!--
-<script src="../../vendor/jquery-smartwizard/dist/js/jquery.smartWizard.min.js"></script>
-<script src="../../vendor/jquery-smartwizard/dist/js/bootstrap.min.js"></script>
-<script src="../../vendor/jquery-smartwizard/dist/js/popper.min.js"></script>
--->
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/smartwizard@5.1.1/dist/js/jquery.smartWizard.min.js"
-        integrity="sha256-ZDS9YBVOz85XYQvtiZg1ZMZOk+4dLz/MpYxxzsg5GdQ=" crossorigin="anonymous"></script>
-
 <script>
-    $(document).ready(function () {
+    //iniciano variales de array
+    var arrayProductos = Array();
+
+    $(document).ready(function(){
         // SmartWizard initialize
         $('#smartwizard').smartWizard();
 
         $("#input-buscar-producto").autocomplete({
             source: "../../ajax/lista-productos.php",
-            minLength: 2,
+            minLength: 3,
             select: function (event, ui) {
                 event.preventDefault();
                 $('#input-buscar-producto').val(ui.item.descripcion);
                 $('#input-precio-venta').val(ui.item.precio);
+                $('#input-id-producto').val(ui.item.idproducto);
+                $('#input-nombre-producto').val(ui.item.descripcion);
                 //$('#btn_add_producto').prop("disabled", false);
                 $('#input-cantidad').focus();
                 //$('#input_buscar_productos').val("");
@@ -358,6 +333,69 @@
         });
     });
 
+    function addProducto() {
+        var idproducto = $("#input-id-producto").val();
+        var nombre = $("#input-nombre-producto").val();
+        var codexterno = $("#input-codexterno-producto").val();
+        var precio = $("#input-precio-venta").val();
+        var cantidad =  $("#input-cantidad").val();
+        arrayProductos.push({'idproducto': idproducto, 'codexterno' : codexterno, 'nombre' : nombre, 'precio' : precio, 'cantidad' : cantidad});
+        mostrarItemsProductos();
+    }
+
+    function eliminaProducto(item) {
+        arrayProductos.forEach(function (car, index, object) {
+            if (car.idproducto == item) {
+                object.splice(index, 1);
+            }
+        });
+
+        mostrarItemsProductos();
+    }
+
+    function mostrarItemsProductos() {
+        $("#cuerpo_detalle").html("");
+        var totalproductos = 0;
+        var totalventa = $("#input_total_pedido").val();
+        for (var i = 0; i < arrayProductos.length; i++) {
+            totalproductos += (arrayProductos[i].precio * arrayProductos[i].cantidad);
+
+            var tr = '<div class="card">' +
+                        '<div class="card-body">' +
+                            '<div class="row align-items-center">' +
+                                '<div class="col-xl-5  col-lg-6 col-sm-12 align-items-center customers">' +
+                                    '<div class="media-body">' +
+                                    '<span class="text-primary d-block fs-18 font-w500 mb-1">Cod ' +arrayProductos[i].codexterno+ '</span>' +
+                                    '<h3 class="fs-18 text-black font-w600">' +arrayProductos[i].nombre+ '</h3>' +
+                                    '</div>' +
+                                '</div>' +
+                                '<div class="col-xl-4 col-lg-3 col-sm-4 col-6 mb-3 text-lg-center">' +
+                                    '<div class="d-flex project-image">' +
+                                        '<div>' +
+                                        '<span class="d-block mb-lg-0 mb-0 fs-16">Cantidad: ' +arrayProductos[i].cantidad+ '</span>' +
+                                        '<h3 class=" mb-0">Precio: S/ ' +arrayProductos[i].precio+ '</h3>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>' +
+                                '<div class="col-xl-3  col-lg-6 col-sm-6 mb-sm-4 mb-0">' +
+                                    '<div class="d-flex project-image">' +
+                                        '<div>' +
+                                        '<span class="d-block mb-lg-0 mb-0 fs-16">Total:</span>' +
+                                        '<h2 class=" mb-0">S/ '+totalproductos+'</h2>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>';
+            $("#det").append(tr)
+        }
+        alert(totalproductos);
+
+    }
+
 </script>
 </body>
+
+<!-- Mirrored from fillow.dexignlab.com/xhtml/empty-page.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Oct 2021 15:06:15 GMT -->
 </html>
