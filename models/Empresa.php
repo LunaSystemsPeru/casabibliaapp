@@ -9,6 +9,7 @@ private $razon;
 private $direccion;
 private $estado;
 private $condicion;
+private $conectar;
 
     /**
      * Empresa constructor.
@@ -140,14 +141,14 @@ private $condicion;
             direccion = '$this->direccion',
             estado = '$this->estado',            
             condicion = '$this->condicion',
-       where id = '$this->idempresa'";
+       where id_empresa = '$this->idempresa'";
         return $this->conectar->ejecutar_idu($sql);
     }
 
     public function obtenerDatos()
     {
         $sql = "select * from empresa 
-        where id = '$this->idempresa'";
+        where id_empresa = '$this->idempresa'";
         $fila = $this->conectar->get_Row($sql);
         if ($fila) {
             $this->idempresa = $fila['id_empresa'];
@@ -162,7 +163,7 @@ private $condicion;
     public function verFilas()
     {
         $sql = "select * from empresa 
-                where id = '$this->idempresa' ";
+                where id_empresa = '$this->idempresa' ";
         return $this->conectar->get_Cursor($sql);
     }
 

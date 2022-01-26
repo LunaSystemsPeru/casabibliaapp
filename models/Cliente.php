@@ -3,15 +3,16 @@ require_once 'Conectar.php';
 
 class Cliente
 {
-private $idcliente;
-private $documento;
-private $nombre;
-private $direccion;
-private $telefono;
-private $celular;
-private $venta;
-private $pago;
-private $ultimaventa;
+    private $idcliente;
+    private $documento;
+    private $nombre;
+    private $direccion;
+    private $telefono;
+    private $celular;
+    private $venta;
+    private $pago;
+    private $ultimaventa;
+    private $conectar;
 
     /**
      * Cliente constructor.
@@ -167,14 +168,14 @@ private $ultimaventa;
 
     public function obtenerId()
     {
-        $sql = "select ifnull(max(id) + 1, 1) as codigo 
-            from cliente";
-        $this->id = $this->conectar->get_valor_query($sql, 'codigo');
+        $sql = "select ifnull(max(id_cliente) + 1, 1) as codigo 
+            from clientes";
+        $this->idcliente = $this->conectar->get_valor_query($sql, 'codigo');
     }
 
     public function insertar()
     {
-        $sql = "insert into cliente 
+        $sql = "insert into clientes 
         values ('$this->idcliente', 
                 '$this->documento',
                 '$this->nombre',
@@ -189,7 +190,7 @@ private $ultimaventa;
 
     public function modificar()
     {
-        $sql = "update cliente 
+        $sql = "update clientes 
         set documento = '$this->documento',
             nombre = '$this->nombre', 
             direccion = '$this->direccion'
@@ -198,14 +199,14 @@ private $ultimaventa;
             venta = '$this->venta'
             pago = '$this->pago'
             ultima_venta = '$this->ultimaventa'
-        where id = '$this->id'";
+        where id_cliente = '$this->idcliente'";
         return $this->conectar->ejecutar_idu($sql);
     }
 
     public function obtenerDatos()
     {
-        $sql = "select * from cliente 
-        where id = '$this->id'";
+        $sql = "select * from clientes 
+        where id_cliente = '$this->idcliente'";
         $fila = $this->conectar->get_Row($sql);
         if ($fila) {
             $this->id = $fila['id_cliente'];
@@ -222,9 +223,8 @@ private $ultimaventa;
 
     public function verFilas()
     {
-        $sql = "select * 
-                from cliente 
-                where id = '$this->id' ";
+        $sql = "select * from clientes 
+                where id_cliente = '$this->idcliente' ";
         return $this->conectar->get_Cursor($sql);
     }
 

@@ -17,6 +17,7 @@ class venta
     private $tipoventa;
     private $estado;
     private $idpedido;
+    private $conectar;
 
     /**
      * ventas constructor.
@@ -252,7 +253,7 @@ class venta
 
     public function obtenerId()
     {
-        $sql = "select ifnull(max(id) + 1, 1) as codigo 
+        $sql = "select ifnull(max(id_ventas) + 1, 1) as codigo 
             from ventas";
         $this->idventa = $this->conectar->get_valor_query($sql, 'codigo');
     }
@@ -286,21 +287,21 @@ class venta
             serie = '$this->serie',                     
             numero = '$this->numero',
             id_cliente = '$this->idcliente',            
-            id_usuario = '$this->idusuario',                 
+            id_usuarios = '$this->idusuario',                 
             total = '$this->total',
             pagado = '$this->pagado',
             afecto_igv = '$this->afectoigv',
             tipo_venta = '$this->tipoventa',
             estado = '$this->estado',
             id_pedido = '$this->idpedido',
-       where id = '$this->idventa'";
+       where id_ventas = '$this->idventa'";
         return $this->conectar->ejecutar_idu($sql);
     }
 
     public function obtenerDatos()
     {
         $sql = "select * from ventas 
-        where id = '$this->idventa'";
+        where id_ventas = '$this->idventa'";
         $fila = $this->conectar->get_Row($sql);
         if ($fila) {
             $this->idventa = $fila['id_ventas'];
@@ -323,7 +324,7 @@ class venta
     public function verFilas()
     {
         $sql = "select * from ventas 
-                where id = '$this->idventa' ";
+                where id_ventas = '$this->idventa' ";
         return $this->conectar->get_Cursor($sql);
     }
 

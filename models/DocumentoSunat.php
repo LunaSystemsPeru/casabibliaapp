@@ -3,10 +3,12 @@ require_once 'Conectar.php';
 
 class DocumentoSunat
 {
-private $idtido;
-private $descripcion;
-private $codsunat;
-private $abreviado;
+    private $idtido;
+    private $descripcion;
+    private $codsunat;
+    private $abreviado;
+    private $conectar;
+
 
     /**
      * DocumentoSunat constructor.
@@ -103,14 +105,14 @@ private $abreviado;
         set descripcion = '$this->descripcion',            
             cod_sunat = '$this->codsunat',
             abreviado = '$this->abreviado,' ||
-       where id = '$this->idtido'";
+       where id_tido = '$this->idtido'";
         return $this->conectar->ejecutar_idu($sql);
     }
 
     public function obtenerDatos()
     {
         $sql = "select * from documentos_sunat 
-        where id = '$this->idtido'";
+        where id_tido = '$this->idtido'";
         $fila = $this->conectar->get_Row($sql);
         if ($fila) {
             $this->idtido = $fila['id_tido'];
@@ -124,7 +126,7 @@ private $abreviado;
     {
         $sql = "select * 
                 from documentos_sunat 
-                where id = '$this->idtido' ";
+                where id_tido = '$this->idtido' ";
         return $this->conectar->get_Cursor($sql);
     }
 }
