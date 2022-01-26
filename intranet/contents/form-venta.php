@@ -145,12 +145,14 @@
                                                             <div class="media-body">
                                                                 <span class="text-primary d-block fs-18 font-w500 mb-1">Cod: Producto</span>
                                                                 <h3 class="fs-18 text-black font-w600">Biblia</h3>
+                                                                <span class="text-primary d-block fs-18 font-w500 mb-1">Cantidad</span>
+                                                                <h3 class="fs-18 text-black font-w600">1</h3>
                                                             </div>
                                                         </div>
                                                         <div class="col-xl-2 col-lg-3 col-sm-4 col-6 mb-3 text-lg-center">
                                                             <div class="d-flex project-image">
                                                                 <div>
-                                                                    <span class="d-block mb-lg-0 mb-0 fs-16">1</span>
+                                                                    <span class="d-block mb-lg-0 mb-0 fs-16">Precio Unitario</span>
                                                                     <h3 class=" mb-0">S/ 80.00</h3>
                                                                 </div>
                                                             </div>
@@ -158,6 +160,7 @@
                                                         <div class="col-xl-3  col-lg-6 col-sm-6 mb-sm-4 mb-0">
                                                             <div class="d-flex project-image">
                                                                 <div>
+                                                                    <span class="d-block mb-lg-0 mb-0 fs-16">Total:</span>
                                                                     <h2 class=" mb-0">S/ 80.00</h2>
                                                                 </div>
                                                             </div>
@@ -172,19 +175,22 @@
                                                             <div class="media-body">
                                                                 <span class="text-primary d-block fs-18 font-w500 mb-1">Cod: Producto</span>
                                                                 <h3 class="fs-18 text-black font-w600">Libro</h3>
+                                                                <span class="text-primary d-block fs-18 font-w500 mb-1">Cantidad:</span>
+                                                                <h3 class="fs-18 text-black font-w600">2</h3>
                                                             </div>
                                                         </div>
                                                         <div class="col-xl-2 col-lg-3 col-sm-4 col-6 mb-3 text-lg-center">
                                                             <div class="d-flex project-image">
                                                                 <div>
-                                                                    <span class="d-block mb-lg-0 mb-0 fs-16">2</span>
-                                                                    <h3 class=" mb-0">S/ 30.00</h3>
+                                                                    <span class="d-block mb-lg-0 mb-0 fs-16">Precio Unitario:</span>
+                                                                    <h3 class=" mb-0"> S/ 30.00</h3>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-xl-3  col-lg-6 col-sm-6 mb-sm-4 mb-0">
                                                             <div class="d-flex project-image">
                                                                 <div>
+                                                                    <span class="d-block mb-lg-0 mb-0 fs-16">Total:</span>
                                                                     <h2 class=" mb-0">S/ 60.00</h2>
                                                                 </div>
                                                             </div>
