@@ -1,7 +1,7 @@
 <?php
 require_once 'Conectar.php';
 
-class producto
+class Producto
 {
     private $idproducto;
     private $descripcion;
@@ -15,7 +15,6 @@ class producto
     private $imagen;
     private $estado;
     private $idproveedor;
-    private $conectar;
 
     /**
      * producto constructor.
@@ -216,7 +215,6 @@ class producto
     {
         $this->idproveedor = $idproveedor;
     }
-
     public function obtenerId()
     {
         $sql = "select ifnull(max(id_producto) + 1, 1) as codigo 
@@ -256,14 +254,14 @@ class producto
             imagen = '$this->imagen'
             estado = '$this->estado'
             id_proveedor = '$this->idproveedor'
-        where id_producto = '$this->idproducto'";
+        where id = '$this->idproducto'";
         return $this->conectar->ejecutar_idu($sql);
     }
 
     public function obtenerDatos()
     {
         $sql = "select * from productos
-        where id_producto = '$this->idproducto'";
+        where id = '$this->idproducto'";
         $fila = $this->conectar->get_Row($sql);
         if ($fila) {
             $this->idproducto = $fila['id_producto'];
@@ -284,7 +282,17 @@ class producto
     public function verFilas()
     {
         $sql = "select * from productos 
-                where id_producto = '$this->idproducto' ";
+                where id = '$this->idproducto' ";
+        return $this->conectar->get_Cursor($sql);
+    }
+
+    public function buscarProductos($termino)
+    {
+        $sql = "select id_producto, descripcion, cod_externo, precio, afecto_igv
+                from productos
+                where descripcion like '%$termino' or cod_externo like '%$termino%' 
+                order by descripcion asc 
+                limit 50";
         return $this->conectar->get_Cursor($sql);
     }
 
