@@ -250,6 +250,83 @@ class venta
         $this->idpedido = $idpedido;
     }
 
+    public function obtenerId()
+    {
+        $sql = "select ifnull(max(id) + 1, 1) as codigo 
+            from ventas";
+        $this->idventa = $this->conectar->get_valor_query($sql, 'codigo');
+    }
+
+    public function insertar()
+    {
+        $sql = "insert into ventas 
+        values ('$this->idventa', 
+                '$this->idalmacen',
+                '$this->fecha',
+                '$this->idtido',
+                '$this->serie',                
+                '$this->numero',
+                '$this->idcliente',
+                '$this->idusuario',                           
+                '$this->total',
+                '$this->pagado',
+                '$this->afectoigv',                           
+                '$this->tipoventa',
+                '$this->estado',
+                '$this->idpedido')";
+        return $this->conectar->ejecutar_idu($sql);
+    }
+
+    public function modificar()
+    {
+        $sql = "update ventas 
+        set id_almacen = '$this->idalmacen',            
+            fecha = '$this->fecha',
+            id_tido = '$this->idtido',            
+            serie = '$this->serie',                     
+            numero = '$this->numero',
+            id_cliente = '$this->idcliente',            
+            id_usuario = '$this->idusuario',                 
+            total = '$this->total',
+            pagado = '$this->pagado',
+            afecto_igv = '$this->afectoigv',
+            tipo_venta = '$this->tipoventa',
+            estado = '$this->estado',
+            id_pedido = '$this->idpedido',
+       where id = '$this->idventa'";
+        return $this->conectar->ejecutar_idu($sql);
+    }
+
+    public function obtenerDatos()
+    {
+        $sql = "select * from ventas 
+        where id = '$this->idventa'";
+        $fila = $this->conectar->get_Row($sql);
+        if ($fila) {
+            $this->idventa = $fila['id_ventas'];
+            $this->idalmacen = $fila['id_almacen'];
+            $this->fecha = $fila['fecha'];
+            $this->idtido = $fila['id_tido'];
+            $this->serie = $fila['serie'];
+            $this->numero = $fila['numero'];
+            $this->idcliente = $fila['id_cliente'];
+            $this->idusuario = $fila['id_usuarios'];
+            $this->total = $fila['total'];
+            $this->pagado = $fila['pagado'];
+            $this->afectoigv = $fila['afecto_igv'];
+            $this->tipoventa = $fila['tipo_venta'];
+            $this->estado = $fila['estado'];
+            $this->idpedido = $fila['id_pedido'];
+        }
+    }
+
+    public function verFilas()
+    {
+        $sql = "select * from ventas 
+                where id = '$this->idventa' ";
+        return $this->conectar->get_Cursor($sql);
+    }
+
 
 
 }

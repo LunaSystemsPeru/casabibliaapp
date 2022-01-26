@@ -3,25 +3,25 @@ require_once 'Conectar.php';
 
 class producto
 {
-private $idproducto;
-private $descripcion;
-private $codexterno;
-private $costo;
-private $precio;
-private $ctotal;
-private $tipoproducto;
-private $afectoigv;
-private $idsubclasificacion;
-private $imagen;
-private $estado;
-private $idproveedor;
+    private $idproducto;
+    private $descripcion;
+    private $codexterno;
+    private $costo;
+    private $precio;
+    private $ctotal;
+    private $tipoproducto;
+    private $afectoigv;
+    private $idsubclasificacion;
+    private $imagen;
+    private $estado;
+    private $idproveedor;
 
     /**
      * producto constructor.
      */
     public function __construct()
     {
-
+        $this->conectar = conectar::getInstancia();
     }
 
     /**
@@ -214,6 +214,76 @@ private $idproveedor;
     public function setIdproveedor($idproveedor)
     {
         $this->idproveedor = $idproveedor;
+    }
+    public function obtenerId()
+    {
+        $sql = "select ifnull(max(id) + 1, 1) as codigo 
+            from producto";
+        $this->idproducto = $this->conectar->get_valor_query($sql, 'codigo');
+    }
+
+    public function insertar()
+    {
+        $sql = "insert into producto
+        values ('$this->idproducto', 
+                '$this->descripcion',
+                '$this->codexterno',
+                '$this->costo',   
+                '$this->precio',
+                '$this->ctotal',
+                '$this->tipoproducto',
+                '$this->afectoigv',   
+                '$this->idsubclasificacion',
+                '$this->imagen',
+                '$this->estado',
+                '$this->idproveedor')";
+        return $this->conectar->ejecutar_idu($sql);
+    }
+
+    public function modificar()
+    {
+        $sql = "update producto 
+        set descripcion = '$this->descripcion',
+            cod_externo = '$this->codexterno', 
+            costo = '$this->costo'
+            precio = '$this->precio'
+            ctotal = '$this->ctotal'
+            tipo_producto = '$this->tipoproducto'
+            afecto_igv = '$this->afectoigv', 
+            id_subclasificacion = '$this->idsubclasificacion'
+            imagen = '$this->imagen'
+            estado = '$this->estado'
+            id_proveedor = '$this->idproveedor'
+        where id = '$this->idproducto'";
+        return $this->conectar->ejecutar_idu($sql);
+    }
+
+    public function obtenerDatos()
+    {
+        $sql = "select * from producto
+        where id = '$this->idproducto'";
+        $fila = $this->conectar->get_Row($sql);
+        if ($fila) {
+            $this->idproducto = $fila['id_producto'];
+            $this->descripcion = $fila['descripcion'];
+            $this->codexterno = $fila['cod_externo'];
+            $this->costo = $fila['costo'];
+            $this->precio = $fila['precio'];
+            $this->ctotal = $fila['ctotal'];
+            $this->tipoproducto = $fila['tipo_producto'];
+            $this->afectoigv = $fila['afecto_igv'];
+            $this->idsubclasificacion = $fila['id_subclasificacion'];
+            $this->imagen = $fila['imagen'];
+            $this->estado = $fila['estado'];
+            $this->idproveedor = $fila['id_proveedor'];
+        }
+    }
+
+    public function verFilas()
+    {
+        $sql = "select * from producto 
+                where id = '$this->idproducto' ";
+        return $this->conectar->get_Cursor($sql);
     }
 
 }
