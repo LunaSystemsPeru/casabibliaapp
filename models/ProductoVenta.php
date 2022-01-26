@@ -8,6 +8,7 @@ private $idventa;
 private $cantidad;
 private $costo;
 private $precio;
+private $conectar;
 
     /**
      * ProductoVenta constructor.
@@ -122,14 +123,14 @@ private $precio;
             cantidad = '$this->cantidad',            
             costo = '$this->costo',
             precio = '$this->precio',      
-       where id = '$this->idproducto'";
+       where id_producto = '$this->idproducto'";
         return $this->conectar->ejecutar_idu($sql);
     }
 
     public function obtenerDatos()
     {
         $sql = "select * from productos_ventas 
-        where id = '$this->idproducto'";
+        where id_producto = '$this->idproducto'";
         $fila = $this->conectar->get_Row($sql);
         if ($fila) {
             $this->idproducto = $fila['id_producto'];
@@ -143,7 +144,7 @@ private $precio;
     public function verFilas()
     {
         $sql = "select * from productos_ventas 
-                where id = '$this->idproducto' ";
+                where id_producto = '$this->idproducto' ";
         return $this->conectar->get_Cursor($sql);
     }
 

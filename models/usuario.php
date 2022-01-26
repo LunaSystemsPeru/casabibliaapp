@@ -12,6 +12,7 @@ private $email;
 private $celular;
 private $idalmacen;
 private $estado;
+private $conectar;
 
     /**
      * usuario constructor.
@@ -198,14 +199,14 @@ private $estado;
             celular = '$this->celular',            
             id_almacen = '$this->idalmacen',                 
             estado = '$this->estado',
-       where id = '$this->idusuario'";
+       where id_usuarios = '$this->idusuario'";
         return $this->conectar->ejecutar_idu($sql);
     }
 
     public function obtenerDatos()
     {
         $sql = "select * from usuarios 
-        where id = '$this->idusuario'";
+        where id_usuarios = '$this->idusuario'";
         $fila = $this->conectar->get_Row($sql);
         if ($fila) {
             $this->idusuario = $fila['id_usuarios'];
@@ -223,7 +224,7 @@ private $estado;
     public function verFilas()
     {
         $sql = "select * from usuarios 
-                where id = '$this->idusuario' ";
+                where id_usuarios = '$this->idusuario' ";
         return $this->conectar->get_Cursor($sql);
     }
 

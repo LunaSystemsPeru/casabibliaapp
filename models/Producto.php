@@ -15,6 +15,7 @@ class producto
     private $imagen;
     private $estado;
     private $idproveedor;
+    private $conectar;
 
     /**
      * producto constructor.
@@ -215,16 +216,17 @@ class producto
     {
         $this->idproveedor = $idproveedor;
     }
+
     public function obtenerId()
     {
-        $sql = "select ifnull(max(id) + 1, 1) as codigo 
-            from producto";
+        $sql = "select ifnull(max(id_producto) + 1, 1) as codigo 
+            from productos";
         $this->idproducto = $this->conectar->get_valor_query($sql, 'codigo');
     }
 
     public function insertar()
     {
-        $sql = "insert into producto
+        $sql = "insert into productos
         values ('$this->idproducto', 
                 '$this->descripcion',
                 '$this->codexterno',
@@ -242,7 +244,7 @@ class producto
 
     public function modificar()
     {
-        $sql = "update producto 
+        $sql = "update productos 
         set descripcion = '$this->descripcion',
             cod_externo = '$this->codexterno', 
             costo = '$this->costo'
@@ -254,14 +256,14 @@ class producto
             imagen = '$this->imagen'
             estado = '$this->estado'
             id_proveedor = '$this->idproveedor'
-        where id = '$this->idproducto'";
+        where id_producto = '$this->idproducto'";
         return $this->conectar->ejecutar_idu($sql);
     }
 
     public function obtenerDatos()
     {
-        $sql = "select * from producto
-        where id = '$this->idproducto'";
+        $sql = "select * from productos
+        where id_producto = '$this->idproducto'";
         $fila = $this->conectar->get_Row($sql);
         if ($fila) {
             $this->idproducto = $fila['id_producto'];
@@ -281,8 +283,8 @@ class producto
 
     public function verFilas()
     {
-        $sql = "select * from producto 
-                where id = '$this->idproducto' ";
+        $sql = "select * from productos 
+                where id_producto = '$this->idproducto' ";
         return $this->conectar->get_Cursor($sql);
     }
 
