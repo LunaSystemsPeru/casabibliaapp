@@ -13,11 +13,11 @@ class conectar
     private static $_instancia;
     private $_connection;
     private $_link;
-    private $_host = "localhost";
-    private $_user = "goempres_root";
-    private $_pass = "k;6?6,m{7ePs";
+    private $_host = "artemisa.servidoresph.com";
+    private $_user = "brunoasc_luis_bd";
+    private $_pass = "C]6&TN4Bt@&I";
     // Almacenar una unica instancia
-    private $_db = "goempres_gth";
+    private $_db = "brunoasc_casabiblia_new";
 
     /**
      * constructor de la clase Base de datos

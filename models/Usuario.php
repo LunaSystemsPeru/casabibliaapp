@@ -166,6 +166,19 @@ private $conectar;
         $this->estado = $estado;
     }
 
+    public function validarUsuario () {
+        $sql = "select id_usuarios, password, estado 
+                from usuarios 
+                where username = '$this->username'";
+        echo $sql;
+        $fila = $this->conectar->get_Row($sql);
+        if ($fila) {
+            $this->idusuario = $fila['id_usuario'];
+            $this->password = $fila['password'];
+            $this->estado = $fila['estado'];
+        }
+    }
+
     public function obtenerId()
     {
         $sql = "select ifnull(max(id) + 1, 1) as codigo 

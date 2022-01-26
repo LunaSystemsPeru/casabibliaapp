@@ -31,7 +31,7 @@
 
             </li>
 
-            <li><a class="has-arrow " href="close" aria-expanded="false">
+            <li><a class="has-arrow " href="../controller/logout.php" aria-expanded="false">
                     <i class="fas fa-door-closed"></i>
                     <span class="nav-text">Salir</span>
                 </a>
