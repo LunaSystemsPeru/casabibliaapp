@@ -1,23 +1,25 @@
 <?php
 require_once 'Conectar.php';
 
-class usuario
+class Usuario
 {
-private $idusuario;
-private $username;
-private $password;
-private $nrodocumento;
-private $datos;
-private $email;
-private $celular;
-private $idalmacen;
-private $estado;
+    private $idusuario;
+    private $username;
+    private $password;
+    private $nrodocumento;
+    private $datos;
+    private $email;
+    private $celular;
+    private $idalmacen;
+    private $estado;
+    private $conectar;
 
     /**
      * usuario constructor.
      */
     public function __construct()
     {
+        $this->conectar = Conectar::getInstancia();
     }
 
     /**
@@ -162,6 +164,19 @@ private $estado;
     public function setEstado($estado)
     {
         $this->estado = $estado;
+    }
+
+    public function validarUsuario () {
+        $sql = "select id_usuarios, password, estado 
+                from usuarios 
+                where username = '$this->username'";
+        echo $sql;
+        $fila = $this->conectar->get_Row($sql);
+        if ($fila) {
+            $this->idusuario = $fila['id_usuarios'];
+            $this->password = $fila['password'];
+            $this->estado = $fila['estado'];
+        }
     }
 
 }
