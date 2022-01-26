@@ -39,6 +39,7 @@
                             </svg>
                         </a>
                     </div>
+                    <!--
                     <div class="card-body contacts_body p-0 dlab-scroll  " id="DLAB_W_Contacts_Body">
                         <ul class="contacts">
                             <li class="name-first-letter">A</li>
@@ -228,6 +229,7 @@
                             </li>
                         </ul>
                     </div>
+                    -->
                 </div>
                 <div class="card chat dlab-chat-history-box d-none">
                     <div class="card-header chat-list-header text-center">
@@ -264,6 +266,7 @@
                             </ul>
                         </div>
                     </div>
+                    <!--
                     <div class="card-body msg_card_body dlab-scroll" id="DLAB_W_Contacts_Body3">
                         <div class="d-flex justify-content-start mb-4">
                             <div class="img_cont_msg">
@@ -392,6 +395,7 @@
                             </div>
                         </div>
                     </div>
+                    -->
                     <div class="card-footer type_msg">
                         <div class="input-group">
                             <textarea class="form-control" placeholder="Type your message..."></textarea>

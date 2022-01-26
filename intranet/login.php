@@ -1,5 +1,8 @@
 <?php
-
+$error ="";
+if (filter_input(INPUT_GET, 'error')) {
+    $error = filter_input(INPUT_GET, 'error');
+}
 ?>
 <!DOCTYPE html>
 <html lang="es" class="h-100">
@@ -34,9 +37,41 @@
                         <div class="col-xl-12">
                             <div class="auth-form">
                                 <div class="text-center mb-3">
-                                    <a href="index.html">
+                                    <a href="index.php">
                                         <img src="../assets/images/logo1.jpeg" alt="" width="70%">
                                     </a>
+                                </div>
+                                <div class="text-center mb-3">
+                                    <?php
+                                    if ($error == 1) {
+                                        ?>
+                                        <div class="alert alert-light alert-dismissible fade show">
+                                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                                            <strong>Error!</strong> Usuario ha sido bloqueado.
+                                            </button>
+                                        </div>
+                                    <?php
+                                    }
+                                    if ($error == 2) {
+                                        ?>
+                                        <div class="alert alert-danger alert-dismissible fade show">
+                                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                                            <strong>Error!</strong> Contraseña incorrecta.
+                                            </button>
+                                        </div>
+                                        <?php
+                                    }
+                                    if ($error == 3) {
+                                        ?>
+                                        <div class="alert alert-info alert-dismissible fade show">
+                                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                                            <strong>Error!</strong> Usuario no existe.
+                                            </button>
+                                        </div>
+                                        <?php
+                                    }
+                                    ?>
+
                                 </div>
                                 <h4 class="text-center mb-4">Ingresar al Sistema</h4>
                                 <form action="controller/login.php" method="post">

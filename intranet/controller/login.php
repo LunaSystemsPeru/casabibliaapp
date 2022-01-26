@@ -20,6 +20,15 @@ if ($Usuario->getIdusuario()) {
         //verificar estado
         if ($Usuario->getEstado() == 1) {
             header("Location: ../contents/form-venta.php");
+        } else {
+            //usuario bloqueado
+            header("Location: ../login.php?error=1");
         }
+    } else {
+        //echo "contraseña incorrecta";
+        header("Location: ../login.php?error=2");
     }
+} else {
+    echo "usuario no existe";
+    header("Location: ../login.php?error=3");
 }

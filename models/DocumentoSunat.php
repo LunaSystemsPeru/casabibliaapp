@@ -84,7 +84,7 @@ class DocumentoSunat
 
     public function obtenerId()
     {
-        $sql = "select ifnull(max(id) + 1, 1) as codigo 
+        $sql = "select ifnull(max(id_tido) + 1, 1) as codigo 
             from documentos_sunat";
         $this->idtido = $this->conectar->get_valor_query($sql, 'codigo');
     }

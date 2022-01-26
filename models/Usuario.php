@@ -173,7 +173,7 @@ private $conectar;
         echo $sql;
         $fila = $this->conectar->get_Row($sql);
         if ($fila) {
-            $this->idusuario = $fila['id_usuario'];
+            $this->idusuario = $fila['id_usuarios'];
             $this->password = $fila['password'];
             $this->estado = $fila['estado'];
         }
@@ -181,7 +181,7 @@ private $conectar;
 
     public function obtenerId()
     {
-        $sql = "select ifnull(max(id) + 1, 1) as codigo 
+        $sql = "select ifnull(max(id_usuarios) + 1, 1) as codigo 
             from usuarios";
         $this->idusuario = $this->conectar->get_valor_query($sql, 'codigo');
     }
