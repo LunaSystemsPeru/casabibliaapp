@@ -11,6 +11,7 @@ $array_resultado = array();
 foreach ($resultados as $value) {
     $fila = array();
     $fila['value'] = trim($value['descripcion']) . " COD: " . $value['cod_externo']  . " | P.Venta S/ : " . $value['precio'];
+    $fila['codexterno'] = $value['cod_externo'];
     $fila['idproducto'] = $value['id_producto'];
     $fila['descripcion'] = trim($value['descripcion']);
     $fila['precio'] = $value['precio'];

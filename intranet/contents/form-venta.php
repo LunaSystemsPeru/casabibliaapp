@@ -148,34 +148,7 @@
                                             </div>
                                         </div>
                                         <div class="row" id="contenido-detalle">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div class="row align-items-center">
-                                                        <div class="col-xl-5  col-lg-6 col-sm-12 align-items-center customers">
-                                                            <div class="media-body">
-                                                                <span class="text-primary d-block fs-18 font-w500 mb-1">Cod: Producto</span>
-                                                                <h3 class="fs-18 text-black font-w600">Biblia</h3>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-4 col-lg-3 col-sm-4 col-6 mb-3 text-lg-center">
-                                                            <div class="d-flex project-image">
-                                                                <div>
-                                                                    <span class="d-block mb-lg-0 mb-0 fs-16">Cantidad: 1</span>
-                                                                    <h3 class=" mb-0">Precio: S/ 80.00</h3>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-3  col-lg-6 col-sm-6 mb-sm-4 mb-0">
-                                                            <div class="d-flex project-image">
-                                                                <div>
-                                                                    <span class="d-block mb-lg-0 mb-0 fs-16">Total:</span>
-                                                                    <h2 class=" mb-0">S/ 80.00</h2>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+
                                         </div>
                                     </div>
                                     <div id="wizard_Time" class="tab-pane" role="tabpanel">
@@ -183,7 +156,7 @@
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label for="input-fecha" class="form-label">Fecha</label>
-                                                    <input type="date" class="form-control" placeholder="Enter Pan Card" id="input-fecha">
+                                                    <input type="date" class="form-control" placeholder="Enter Pan Card" id="input-fecha" value="<?php echo date("Y-m-d") ?>">
                                                 </div>
                                             </div><!-- end col -->
                                             <div class="col-lg-6">
@@ -226,7 +199,7 @@
                                             <div class="card">
                                                 <div class="card-header">
                                                     <th scope="row" colspan="4" class="border-0 text-end">Total</th>
-                                                    <td class="border-0 text-end"><h4 class="m-0 fw-semibold">$739.00</h4></td>
+                                                    <td class="border-0 text-end"><h4 class="m-0 fw-semibold" id="input-valor-tota">S/ 0.00</h4></td>
                                                 </div><!-- end card header -->
                                             </div>
                                             <div class="row">
@@ -265,7 +238,7 @@
                                                 <div class="col-12">
                                                     <div class="skip-email text-center">
                                                         <p>Verificar datos antes de Grabar</p>
-                                                        <a href="javascript:void(0)">Grabar</a>
+                                                        <button class="btn btn-success" type="button"><i class="fa fa-save"></i> Generar Documento</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -326,6 +299,7 @@
                 $('#input-precio-venta').val(ui.item.precio);
                 $('#input-id-producto').val(ui.item.idproducto);
                 $('#input-nombre-producto').val(ui.item.descripcion);
+                $('#input-codexterno-producto').val(ui.item.codexterno);
                 //$('#btn_add_producto').prop("disabled", false);
                 $('#input-cantidad').focus();
                 //$('#input_buscar_productos').val("");
@@ -354,10 +328,11 @@
     }
 
     function mostrarItemsProductos() {
-        $("#cuerpo_detalle").html("");
+        $("#contenido-detalle").html("");
         var totalproductos = 0;
-        var totalventa = $("#input_total_pedido").val();
+        //var totalventa = $("#input_total_pedido").val();
         for (var i = 0; i < arrayProductos.length; i++) {
+            var totalitem = arrayProductos[i].precio * arrayProductos[i].cantidad;
             totalproductos += (arrayProductos[i].precio * arrayProductos[i].cantidad);
 
             var tr = '<div class="card">' +
@@ -369,7 +344,7 @@
                                     '<h3 class="fs-18 text-black font-w600">' +arrayProductos[i].nombre+ '</h3>' +
                                     '</div>' +
                                 '</div>' +
-                                '<div class="col-xl-4 col-lg-3 col-sm-4 col-6 mb-3 text-lg-center">' +
+                                '<div class="col-xl-4 col-sm-4 col-6 mb-3 text-lg-center">' +
                                     '<div class="d-flex project-image">' +
                                         '<div>' +
                                         '<span class="d-block mb-lg-0 mb-0 fs-16">Cantidad: ' +arrayProductos[i].cantidad+ '</span>' +
@@ -377,21 +352,43 @@
                                         '</div>' +
                                     '</div>' +
                                 '</div>' +
-                                '<div class="col-xl-3  col-lg-6 col-sm-6 mb-sm-4 mb-0">' +
+                                '<div class="col-xl-2  col-lg-6 col-sm-6 mb-sm-4 mb-0">' +
                                     '<div class="d-flex project-image">' +
                                         '<div>' +
                                         '<span class="d-block mb-lg-0 mb-0 fs-16">Total:</span>' +
-                                        '<h2 class=" mb-0">S/ '+totalproductos+'</h2>' +
+                                        '<h2 class=" mb-0">S/ ' +totalitem.toFixed(2)+ '</h2>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>' +
+                                '<div class="col-xl-1 mb-sm-4 mb-0">' +
+                                    '<div class="d-flex project-image">' +
+                                        '<div>' +
+                                            '<button class="btn btn-danger" type="button"><i class="fa fa-trash"></i> </button>' +
                                         '</div>' +
                                     '</div>' +
                                 '</div>' +
                             '</div>' +
                         '</div>' +
                     '</div>';
-            $("#det").append(tr)
+            $("#contenido-detalle").append(tr)
         }
-        alert(totalproductos);
+        //alert(totalproductos);
+        cleanBusqueda();
+        var alturacontents = $(".form-wizard #wizard_Service").height();
+        $(".form-wizard .tab-content").css('height',alturacontents);
 
+        //cargar total
+        $("#input-valor-tota").html("S/ " + totalproductos.toFixed(2));
+
+    }
+
+    function cleanBusqueda () {
+        $("#input-id-producto").val("");
+        $("#input-nombre-producto").val("");
+        $("#input-buscar-producto").val("");
+        $("#input-codexterno-producto").val("");
+        $("#input-precio-venta").val("");
+        $("#input-cantidad").val("");
     }
 
 </script>
