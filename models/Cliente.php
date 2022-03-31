@@ -228,4 +228,13 @@ class Cliente
         return $this->conectar->get_Cursor($sql);
     }
 
+    public function buscarClientes($term) {
+        $sql = "select * 
+        from clientes 
+        where documento like '%$term%' or nombre like '%$term%'  
+        order by nombre asc
+        limit 30";
+        return $this->conectar->get_Cursor($sql);
+    }
+
 }

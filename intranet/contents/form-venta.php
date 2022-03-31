@@ -1,3 +1,14 @@
+<?php
+session_start();
+require '../../models/DocumentoTienda.php';
+$DocumentoTienda = new DocumentoTienda();
+$DocumentoTienda->setIdtienda($_SESSION['tiendaid']);
+$arraydocventas = $DocumentoTienda->verDocumentosVenta();
+
+//fecha limite fe
+$fecha_actual = date("Y-m-d");
+$fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
+?>
 <!DOCTYPE html>
 <html lang="es">
 <!-- Mirrored from fillow.dexignlab.com/xhtml/empty-page.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Oct 2021 15:06:15 GMT -->
@@ -16,7 +27,7 @@
     <!-- PAGE TITLE HERE -->
     <title>Casa de la Biblia</title>
     <!-- FAVICONS ICON -->
-    <link rel="shortcut icon" type="image/png" href="../../assets/images/favicon.png" />
+    <link rel="shortcut icon" type="image/png" href="../../assets/images/favicon.png"/>
     <link href="../../vendor/jquery-smartwizard/dist/css/smart_wizard.min.css" rel="stylesheet">
     <link href="../../vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
     <link href="../../assets/css/style.css" rel="stylesheet">
@@ -138,7 +149,7 @@
                                             <div class="col-lg-4 mb-2">
                                                 <div class="mb-3">
                                                     <label for="input-cantidad" class="text-label form-label">Cantidad</label>
-                                                    <input type="text" id="input-cantidad" class="form-control" placeholder="00" required="">
+                                                    <input type="number" id="input-cantidad" class="form-control" step="1" value="1" required>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 mb-2">
@@ -156,24 +167,27 @@
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label for="input-fecha" class="form-label">Fecha</label>
-                                                    <input type="date" class="form-control" placeholder="Enter Pan Card" id="input-fecha" value="<?php echo date("Y-m-d") ?>">
+                                                    <input type="date" class="form-control" placeholder="Enter Pan Card" id="input-fecha" value="<?php echo date("Y-m-d") ?>" min="<?php echo $fecha_limite ?>" max="<?php echo $fecha_actual ?>">
                                                 </div>
                                             </div><!-- end col -->
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label for="select_tipo_comprobante" class="form-label">Tipo comprobante</label>
                                                     <select class="form-control form-select" title="Country" id="select_tipo_comprobante">
-                                                        <option value="B">Boleta</option>
-                                                        <option value="F">Factura</option>
-                                                        <option value="NV">Nota Venta</option>
+                                                        <?php
+                                                        foreach ($arraydocventas as $item) {
+                                                            echo '<option value="' . $item['id_tido'] . '">' . $item['descripcion'] . '</option>';
+                                                        }
+                                                        ?>
                                                     </select>
                                                 </div>
                                             </div><!-- end col -->
                                             <div class="col-lg-6">
                                                 <label for="input-nro-documento" class="form-label">Nro Documento</label>
                                                 <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" placeholder="87654321" id="input-nro-documento">
-                                                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Comprobar</button>
+                                                    <input type="text" class="form-control" placeholder="Buscar por RUC, DNI o Nombre" id="input-nro-documento">
+                                                    <input type="hidden" id="hidden-id-cliente">
+                                                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" data-bs-toggle="modal" data-bs-target="#basicModal">Agregar</button>
                                                 </div>
                                             </div><!-- end col -->
 
@@ -190,6 +204,48 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="basicModal">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <form method="post" action="#">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Agregar nuevo Cliente</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="mb-3 col-md-12">
+                                                                <label for="input-nro-documento" class="form-label">Nro Documento</label>
+                                                                <div class="input-group mb-3">
+                                                                    <input type="text" class="form-control" placeholder="Buscar por RUC, DNI o Nombre" id="input-add-nro-documento" minlength="8" maxlength="11">
+                                                                    <input type="hidden" id="hidden-id-cliente">
+                                                                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="obtenerDatosCliente()">Consultar Datos</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-3 col-md-12">
+                                                                <label class="form-label">Razon Social o Apellidos y Nombres *</label>
+                                                                <input type="text" class="form-control" id="input-add-datos-cliente" required>
+                                                            </div>
+                                                            <div class="mb-3 col-md-12">
+                                                                <label class="form-label">Direccion *</label>
+                                                                <input type="text" class="form-control" id="input-add-direccion-cliente" required>
+                                                            </div>
+                                                            <div class="mb-3 col-md-12">
+                                                                <label class="form-label">Telefono / Celular</label>
+                                                                <input type="text" class="form-control" id="input-add-telefono-cliente">
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Cancelar</button>
+                                                            <button type="button" onclick="guardarCliente()" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--  end modal -->
                                     </div>
                                     <div id="wizard_Details" class="tab-pane" role="tabpanel">
                                         <div class="text-center mb-4">
@@ -251,6 +307,7 @@
                 </div>
             </div>
         </div>
+
     </div>
     <!--**********************************
         Content body end
@@ -285,11 +342,13 @@
 <script>
     //iniciano variales de array
     var arrayProductos = Array();
+    var totalproductos = 0;
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         // SmartWizard initialize
         $('#smartwizard').smartWizard();
 
+        //buscar prooductos
         $("#input-buscar-producto").autocomplete({
             source: "../../ajax/lista-productos.php",
             minLength: 3,
@@ -305,6 +364,20 @@
                 //$('#input_buscar_productos').val("");
             }
         });
+
+        //buscar clientes
+        $("#input-nro-documento").autocomplete({
+            source: "../../ajax/lista-clientes.php",
+            minLength: 3,
+            select: function (event, ui) {
+                event.preventDefault();
+                $('#input-nro-documento').val(ui.item.documento);
+                $('#input-nombre').val(ui.item.nombre);
+                $('#input-direccion').val(ui.item.direccion);
+                $('#hidden-id-cliente').val(ui.item.clienteid);
+                $('#input-cantidad').focus();
+            }
+        });
     });
 
     function addProducto() {
@@ -312,8 +385,8 @@
         var nombre = $("#input-nombre-producto").val();
         var codexterno = $("#input-codexterno-producto").val();
         var precio = $("#input-precio-venta").val();
-        var cantidad =  $("#input-cantidad").val();
-        arrayProductos.push({'idproducto': idproducto, 'codexterno' : codexterno, 'nombre' : nombre, 'precio' : precio, 'cantidad' : cantidad});
+        var cantidad = $("#input-cantidad").val();
+        arrayProductos.push({'idproducto': idproducto, 'codexterno': codexterno, 'nombre': nombre, 'precio': precio, 'cantidad': cantidad});
         mostrarItemsProductos();
     }
 
@@ -329,67 +402,130 @@
 
     function mostrarItemsProductos() {
         $("#contenido-detalle").html("");
-        var totalproductos = 0;
         //var totalventa = $("#input_total_pedido").val();
         for (var i = 0; i < arrayProductos.length; i++) {
             var totalitem = arrayProductos[i].precio * arrayProductos[i].cantidad;
             totalproductos += (arrayProductos[i].precio * arrayProductos[i].cantidad);
 
             var tr = '<div class="card">' +
-                        '<div class="card-body">' +
-                            '<div class="row align-items-center">' +
-                                '<div class="col-xl-5  col-lg-6 col-sm-12 align-items-center customers">' +
-                                    '<div class="media-body">' +
-                                    '<span class="text-primary d-block fs-18 font-w500 mb-1">Cod ' +arrayProductos[i].codexterno+ '</span>' +
-                                    '<h3 class="fs-18 text-black font-w600">' +arrayProductos[i].nombre+ '</h3>' +
-                                    '</div>' +
-                                '</div>' +
-                                '<div class="col-xl-4 col-sm-4 col-6 mb-3 text-lg-center">' +
-                                    '<div class="d-flex project-image">' +
-                                        '<div>' +
-                                        '<span class="d-block mb-lg-0 mb-0 fs-16">Cantidad: ' +arrayProductos[i].cantidad+ '</span>' +
-                                        '<h3 class=" mb-0">Precio: S/ ' +arrayProductos[i].precio+ '</h3>' +
-                                        '</div>' +
-                                    '</div>' +
-                                '</div>' +
-                                '<div class="col-xl-2  col-lg-6 col-sm-6 mb-sm-4 mb-0">' +
-                                    '<div class="d-flex project-image">' +
-                                        '<div>' +
-                                        '<span class="d-block mb-lg-0 mb-0 fs-16">Total:</span>' +
-                                        '<h2 class=" mb-0">S/ ' +totalitem.toFixed(2)+ '</h2>' +
-                                        '</div>' +
-                                    '</div>' +
-                                '</div>' +
-                                '<div class="col-xl-1 mb-sm-4 mb-0">' +
-                                    '<div class="d-flex project-image">' +
-                                        '<div>' +
-                                            '<button class="btn btn-danger" type="button"><i class="fa fa-trash"></i> </button>' +
-                                        '</div>' +
-                                    '</div>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>' +
-                    '</div>';
+                '<div class="card-body">' +
+                '<div class="row align-items-center">' +
+                '<div class="col-xl-5  col-lg-6 col-sm-12 align-items-center customers">' +
+                '<div class="media-body">' +
+                '<span class="text-primary d-block fs-18 font-w500 mb-1">Cod ' + arrayProductos[i].codexterno + '</span>' +
+                '<h3 class="fs-18 font-w600">' + arrayProductos[i].nombre + '</h3>' +
+                '</div>' +
+                '</div>' +
+                '<div class="col-xl-4 col-sm-4 col-6 mb-3 text-lg-center">' +
+                '<div class="d-flex project-image">' +
+                '<div>' +
+                '<span class="d-block mb-lg-0 mb-0 fs-16">Cantidad: ' + arrayProductos[i].cantidad + '</span>' +
+                '<h3 class=" mb-0">Precio: S/ ' + arrayProductos[i].precio + '</h3>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<div class="col-xl-2  col-lg-6 col-sm-6 mb-sm-4 mb-0">' +
+                '<div class="d-flex project-image">' +
+                '<div>' +
+                '<span class="d-block mb-lg-0 mb-0 fs-16">Total:</span>' +
+                '<h2 class=" mb-0">S/ ' + totalitem.toFixed(2) + '</h2>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<div class="col-xl-1 mb-sm-4 mb-0">' +
+                '<div class="d-flex project-image">' +
+                '<div>' +
+                '<button class="btn btn-danger" type="button"><i class="fa fa-trash"></i> </button>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
             $("#contenido-detalle").append(tr)
         }
         //alert(totalproductos);
         cleanBusqueda();
         var alturacontents = $(".form-wizard #wizard_Service").height();
-        $(".form-wizard .tab-content").css('height',alturacontents);
+        $(".form-wizard .tab-content").css('height', alturacontents);
 
         //cargar total
         $("#input-valor-tota").html("S/ " + totalproductos.toFixed(2));
 
     }
 
-    function cleanBusqueda () {
+    function cleanBusqueda() {
         $("#input-id-producto").val("");
         $("#input-nombre-producto").val("");
         $("#input-buscar-producto").val("");
         $("#input-codexterno-producto").val("");
         $("#input-precio-venta").val("");
-        $("#input-cantidad").val("");
+        $("#input-cantidad").val("1");
+        $("#input-buscar-producto").focus();
     }
+
+    function abrirModal() {
+        $("#basicModal").modal('toogle');
+    }
+
+    function obtenerDatosCliente() {
+        var nrodocumento = $("#input-add-nro-documento").val();
+        /*if (nrodocumento.lenght != 8 && nrodocumento.lenght != 11) {
+            alert("Nro de DNI o RUC incorrecto");
+            $("#input-add-nro-documento").focus();
+            return false;
+        }*/
+        alert("Cargando Datos espere un momento por favor");
+        var arraypost = {documento: nrodocumento};
+        $.post("../../ajax/obtener-datos-cliente.php", arraypost, function (data) {
+            var jsonresultado = JSON.parse(data);
+            if (jsonresultado.success == "error") {
+                alert("Error en el dni o ruc");
+                return false;
+            }
+            $("#input-add-datos-cliente").val(jsonresultado.datos);
+            $("#input-add-direccion-cliente").val(jsonresultado.direccion);
+            $("#input-add-telefono-cliente").focus();
+        });
+    }
+
+    function guardarCliente() {
+        var nrodocumento = $("#input-add-nro-documento").val();
+        var nombrecliente = $("#input-add-datos-cliente").val();
+        var direccioncliente = $("#input-add-direccion-cliente").val();
+        var telefonocliente = $("#input-add-telefono-cliente").val();
+
+        //enviar variables para reigstrar cliente
+        var arraypost = {nrodocumento: nrodocumento,
+        nombrecliente: nombrecliente,
+        direccioncliente: direccioncliente,
+        telefonocliente: telefonocliente};
+
+        $.post("../controller/registrar-cliente.php", arraypost, function (data) {
+            var jsonresultado = JSON.parse(data);
+            $("#hidden-id-cliente").val(jsonresultado.id);
+
+            //mostrar client en form venta
+            $("#input-nro-documento").val(nrodocumento);
+            $("#input-nombre").val(nombrecliente);
+            $("#input-direccion").val(direccioncliente);
+            $("#basicModal").modal("toggle");
+        });
+    }
+
+    function calcularPago() {
+        //obtenerefectivo
+        //obtenertarjeta
+        //sumarpagos
+        //obtener vuelto o faltante
+        //mostrar totalpagado
+    }
+
+    //agregar cliente
+    //al finalizar de agregar al cliente debe cargar los input correspondientes
+
+    //modificar cliente
+    //al grabar modificacion debe cargar los inputs con sus datos correspondientes
 
 </script>
 </body>

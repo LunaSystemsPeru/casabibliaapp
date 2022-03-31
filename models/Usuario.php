@@ -170,7 +170,7 @@ private $conectar;
         $sql = "select id_usuarios, password, estado 
                 from usuarios 
                 where username = '$this->username'";
-        echo $sql;
+        //echo $sql;
         $fila = $this->conectar->get_Row($sql);
         if ($fila) {
             $this->idusuario = $fila['id_usuarios'];
