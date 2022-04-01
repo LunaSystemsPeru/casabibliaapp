@@ -262,31 +262,31 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="input-efectivo" class="form-label">Efectivo</label>
-                                                        <input type="text" class="form-control" placeholder="0.00" id="input-efectivo">
+                                                        <input type="text" class="form-control" placeholder="0.00" id="input-efectivo" onkeyup="calcularPago()">
                                                     </div>
                                                 </div><!-- end col -->
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="input-tarjeta" class="form-label">Tarjeta</label>
-                                                        <input type="text" class="form-control" placeholder="0.00" id="input-tarjeta">
+                                                        <input type="text" class="form-control" placeholder="0.00" id="input-tarjeta" onkeyup="calcularPago()">
                                                     </div>
                                                 </div><!-- end col -->
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="input-vuelto" class="form-label">Vuelto</label>
-                                                        <input type="text" class="form-control" placeholder="0.00" id="input-vuelto">
+                                                        <input type="text" class="form-control" placeholder="0.00" id="input-vuelto" readonly>
                                                     </div>
                                                 </div><!-- end col -->
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="input-falta" class="form-label">Falta</label>
-                                                        <input type="text" class="form-control" placeholder="0.00" id="input-falta">
+                                                        <input type="text" class="form-control" placeholder="0.00" id="input-falta" readonly>
                                                     </div>
                                                 </div><!-- end col -->
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label for="input-totalpagado" class="form-label">Total Pagado</label>
-                                                        <input type="text" class="form-control" placeholder="0.00" id="input-totalpagado">
+                                                        <input type="text" class="form-control" placeholder="0.00" id="input-totalpagado" readonly>
                                                     </div>
                                                 </div><!-- end col -->
                                             </div><!-- end row -->
@@ -515,10 +515,21 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
 
     function calcularPago() {
         //obtenerefectivo
-        //obtenertarjeta
-        //sumarpagos
-        //obtener vuelto o faltante
-        //mostrar totalpagado
+        var efectivopagado = parseFloat($("#input-efectivo").val());
+        var tarjetapagado = parseFloat($("#input-tarjeta").val());
+        var sumapagado = efectivopagado + tarjetapagado;
+        var vuelto = sumapagado - totalproductos;
+        if (vuelto<0) {
+            vuelto = 0;
+        }
+        var faltante = totalproductos - sumapagado;
+        if (faltante <0) {
+            faltante = 0;
+        }
+
+        $("#input-totalpagado").val(sumapagado);
+        $("#input-vuelto").val(vuelto);
+        $("#input-falta").val(faltante);
     }
 
     //agregar cliente
