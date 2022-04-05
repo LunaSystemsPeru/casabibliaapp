@@ -173,7 +173,7 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label for="select_tipo_comprobante" class="form-label">Tipo comprobante</label>
-                                                    <select class="form-control form-select" title="Country" id="select_tipo_comprobante">
+                                                    <select class="form-control form-select" title="Country" id="select_tipo_comprobante" onchange="validarDocumentoSunat()">
                                                         <?php
                                                         foreach ($arraydocventas as $item) {
                                                             echo '<option value="' . $item['id_tido'] . '">' . $item['descripcion'] . '</option>';
@@ -348,6 +348,8 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
         // SmartWizard initialize
         $('#smartwizard').smartWizard();
 
+        validarDocumentoSunat();
+
         //buscar prooductos
         $("#input-buscar-producto").autocomplete({
             source: "../../ajax/lista-productos.php",
@@ -371,6 +373,20 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
             minLength: 3,
             select: function (event, ui) {
                 event.preventDefault();
+                var tidocid = $("#select_tipo_comprobante").val();
+                //solo deben seleccionar ruc
+                if (tidocid == 4 && ui.item.documento.length != 11) {
+                    alert("Debe seleccionar una empresa o numero de ruc");
+                    $("#input-nro-documento").val();
+                    $("#input-nro-documento").focus();
+                    return false;
+                }
+                if (tidocid == 5 && ui.item.documento.length < 8) {
+                    alert("Error al selecionar cliente debe ser DNI o RUC");
+                    $("#input-nro-documento").val();
+                    $("#input-nro-documento").focus();
+                    return false;
+                }
                 $('#input-nro-documento').val(ui.item.documento);
                 $('#input-nombre').val(ui.item.nombre);
                 $('#input-direccion').val(ui.item.direccion);
@@ -410,7 +426,7 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
             var tr = '<div class="card">' +
                 '<div class="card-body">' +
                 '<div class="row align-items-center">' +
-                '<div class="col-xl-5  col-lg-6 col-sm-12 align-items-center customers">' +
+                '<div class="col-xl-5  col-lg-5 col-sm-12 align-items-center customers">' +
                 '<div class="media-body">' +
                 '<span class="text-primary d-block fs-18 font-w500 mb-1">Cod ' + arrayProductos[i].codexterno + '</span>' +
                 '<h3 class="fs-18 font-w600">' + arrayProductos[i].nombre + '</h3>' +
@@ -424,7 +440,7 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
                 '</div>' +
                 '</div>' +
                 '</div>' +
-                '<div class="col-xl-2  col-lg-6 col-sm-6 mb-sm-4 mb-0">' +
+                '<div class="col-xl-2  col-lg-2 col-sm-6 mb-sm-4 mb-0">' +
                 '<div class="d-flex project-image">' +
                 '<div>' +
                 '<span class="d-block mb-lg-0 mb-0 fs-16">Total:</span>' +
@@ -432,7 +448,7 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
                 '</div>' +
                 '</div>' +
                 '</div>' +
-                '<div class="col-xl-1 mb-sm-4 mb-0">' +
+                '<div class="col-xl-1 col-lg-1 col-sm-1 col-md-1 mb-sm-4 mb-0">' +
                 '<div class="d-flex project-image">' +
                 '<div>' +
                 '<button class="btn btn-danger" type="button"><i class="fa fa-trash"></i> </button>' +
@@ -496,10 +512,12 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
         var telefonocliente = $("#input-add-telefono-cliente").val();
 
         //enviar variables para reigstrar cliente
-        var arraypost = {nrodocumento: nrodocumento,
-        nombrecliente: nombrecliente,
-        direccioncliente: direccioncliente,
-        telefonocliente: telefonocliente};
+        var arraypost = {
+            nrodocumento: nrodocumento,
+            nombrecliente: nombrecliente,
+            direccioncliente: direccioncliente,
+            telefonocliente: telefonocliente
+        };
 
         $.post("../controller/registrar-cliente.php", arraypost, function (data) {
             var jsonresultado = JSON.parse(data);
@@ -515,15 +533,25 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
 
     function calcularPago() {
         //obtenerefectivo
-        var efectivopagado = parseFloat($("#input-efectivo").val());
-        var tarjetapagado = parseFloat($("#input-tarjeta").val());
+        var efectivopagado = $("#input-efectivo").val();
+        if (efectivopagado == "") {
+            efectivopagado = 0;
+        }
+        efectivopagado = parseFloat(efectivopagado);
+
+        var tarjetapagado = $("#input-tarjeta").val();
+        if (tarjetapagado == "") {
+            tarjetapagado = 0;
+        }
+        tarjetapagado = parseFloat(tarjetapagado);
+
         var sumapagado = efectivopagado + tarjetapagado;
         var vuelto = sumapagado - totalproductos;
-        if (vuelto<0) {
+        if (vuelto < 0) {
             vuelto = 0;
         }
         var faltante = totalproductos - sumapagado;
-        if (faltante <0) {
+        if (faltante < 0) {
             faltante = 0;
         }
 
@@ -532,11 +560,40 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
         $("#input-falta").val(faltante);
     }
 
-    //agregar cliente
-    //al finalizar de agregar al cliente debe cargar los input correspondientes
+    function bloquearInputCliente() {
+        $("#input-nro-documento").val("00000000")
+        $("#input-nombre").val("CLIENTES VARIOS")
+        $("#input-direccion").val("-")
+        $("#input-nro-documento").prop("readonly", true);
+        $("#input-nombre").prop("readonly", true);
+        $("#input-direccion").prop("readonly", true);
+        $("#button-addon2").prop("disabled", true)
+    }
 
-    //modificar cliente
-    //al grabar modificacion debe cargar los inputs con sus datos correspondientes
+    function habilitarInputClient() {
+        $("#input-nro-documento").val("")
+        $("#input-nombre").val("")
+        $("#input-direccion").val("")
+        $("#input-nro-documento").prop("readonly", false);
+        $("#input-nombre").prop("readonly", false);
+        $("#input-direccion").prop("readonly", false);
+        $("#button-addon2").prop("disabled", false)
+    }
+
+    function validarDocumentoSunat() {
+        var tidoid = $("#select_tipo_comprobante").val();
+        if (tidoid == 4) {
+            habilitarInputClient();
+            $("#input-nro-documento").focus();
+        }
+        if (tidoid == 5) {
+            habilitarInputClient();
+            $("#input-nro-documento").focus();
+        }
+        if (tidoid == 2) {
+            bloquearInputCliente();
+        }
+    }
 
 </script>
 </body>
