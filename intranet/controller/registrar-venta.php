@@ -1,12 +1,14 @@
 <?php
 require '../fixed/SessionActiva.php';
 require '../../models/Venta.php';
-require '../../models/ProductoVenta.php';
+require '../../models/VentaProducto.php';
 require '../../models/DocumentoTienda.php';
+require '../../models/VentaPago.php';
 
 $Venta = new Venta();
-$ProductoVenta = new ProductoVenta();
+$ProductoVenta = new VentaProducto();
 $DocumentoTienda = new DocumentoTienda();
+$PagoVenta = new VentaPago();
 
 $Venta->setFecha(filter_input(INPUT_POST,'inputFecha'));
 $Venta->setIdalmacen($_SESSION['tiendaid']);
@@ -34,8 +36,36 @@ $Venta->insertar();
 $jsonProductos = filter_input(INPUT_POST, 'arrayProductos');
 $arrayProductos = json_decode($jsonProductos, false);
 
-foreach ($arrayProductos as $item) {
+$ProductoVenta->setIdventa($Venta->getIdventa());
 
+foreach ($arrayProductos as $item) {
+    $ProductoVenta->setIdproducto($item->idproducto);
+    $ProductoVenta->setCantidad($item->cantidad);
+    $ProductoVenta->setPrecio($item->precio);
+    $ProductoVenta->setCosto($item->costo);
+    $ProductoVenta->insertar();
 }
 
-echo json_encode(["id" => $Venta->getIdventa()]);
+//guardar pagos;
+$PagoVenta->setIdventa($Venta->getIdventa());
+$PagoVenta->setFecha($Venta->getFecha());
+
+if (filter_input(INPUT_POST,'pagoEfectivo') > 0) {
+    $PagoVenta->setTipopago(1);
+    $PagoVenta->setMonto(filter_input(INPUT_POST,'pagoEfectivo'));
+    $PagoVenta->obtenerId();
+    $PagoVenta->insertar();
+}
+
+if (filter_input(INPUT_POST,'pagoTarjeta') > 0) {
+    $PagoVenta->setTipopago(1);
+    $PagoVenta->setMonto(filter_input(INPUT_POST,'pagoTarjeta'));
+    $PagoVenta->obtenerId();
+    $PagoVenta->insertar();
+}
+
+if ($Venta->getIdventa()) {
+    echo json_encode(["id" => $Venta->getIdventa()]);
+} else {
+    echo json_encode(["id" => 0]);
+}

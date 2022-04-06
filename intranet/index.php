@@ -1,2 +1,2 @@
 <?php
-header("Location: contents/index.html");
+header("Location: contents/form-venta.php");

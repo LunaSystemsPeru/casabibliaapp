@@ -11,6 +11,10 @@ private $ciudad;
 private $ticketera;
 private $telefono;
 private $estado;
+private $departamento;
+private $provincia;
+private $distrito;
+private $ubigeo;
 private $conectar;
 
     /**
@@ -148,6 +152,72 @@ private $conectar;
     {
         $this->estado = $estado;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDepartamento()
+    {
+        return $this->departamento;
+    }
+
+    /**
+     * @param mixed $departamento
+     */
+    public function setDepartamento($departamento)
+    {
+        $this->departamento = $departamento;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProvincia()
+    {
+        return $this->provincia;
+    }
+
+    /**
+     * @param mixed $provincia
+     */
+    public function setProvincia($provincia)
+    {
+        $this->provincia = $provincia;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDistrito()
+    {
+        return $this->distrito;
+    }
+
+    /**
+     * @param mixed $distrito
+     */
+    public function setDistrito($distrito)
+    {
+        $this->distrito = $distrito;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUbigeo()
+    {
+        return $this->ubigeo;
+    }
+
+    /**
+     * @param mixed $ubigeo
+     */
+    public function setUbigeo($ubigeo)
+    {
+        $this->ubigeo = $ubigeo;
+    }
+
+
     public function obtenerId()
     {
         $sql = "select ifnull(max(id_almacen) + 1, 1) as codigo 
@@ -165,7 +235,11 @@ private $conectar;
                 '$this->ciudad',
                 '$this->ticketera',
                 '$this->telefono',                
-                '$this->estado')";
+                '$this->estado',
+                '$this->departamento',
+                '$this->provincia',
+                '$this->distrito',
+                '$this->ubigeo')";
         return $this->conectar->ejecutar_idu($sql);
     }
 
@@ -174,11 +248,15 @@ private $conectar;
         $sql = "update almacen 
         set id_empresa = '$this->idempresa',
             nombre = '$this->nombre', 
-            direccion = '$this->direccion'
-            ciudad = '$this->ciudad'
-            ticketera = '$this->ticketera'
-            telefono = '$this->telefono'
-            estado = '$this->estado'
+            direccion = '$this->direccion',
+            ciudad = '$this->ciudad',
+            ticketera = '$this->ticketera',
+            telefono = '$this->telefono',
+            estado = '$this->estado',
+            distrito = '$this->distrito',
+            provincia = '$this->provincia',
+            departamento = '$this->departamento',
+            ubigeo = '$this->ubigeo'
         where id_almacen = '$this->idalmacen'";
         return $this->conectar->ejecutar_idu($sql);
     }
@@ -197,6 +275,10 @@ private $conectar;
             $this->ticketera = $fila['ticketera'];
             $this->telefono = $fila['telefono'];
             $this->estado = $fila['estado'];
+            $this->departamento = $fila['departamento'];
+            $this->provincia = $fila['provincia'];
+            $this->distrito = $fila['distrito'];
+            $this->ubigeo = $fila['ubigeo'];
         }
     }
 

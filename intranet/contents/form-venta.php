@@ -33,7 +33,7 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
     <link href="../../assets/css/style.css" rel="stylesheet">
 
 </head>
-<body>
+<body data-primary="color_5">
 <!--*******************
     Preloader start
 ********************-->
@@ -56,7 +56,7 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
         Nav header start
     ***********************************-->
     <div class="nav-header">
-        <a href="../intranet/index.html" class="brand-logo">
+        <a href="../contents/form-inicio.php" class="brand-logo">
             <svg class="logo-abbr" width="55" height="55" viewBox="0 0 55 55" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
                       d="M27.5 0C12.3122 0 0 12.3122 0 27.5C0 42.6878 12.3122 55 27.5 55C42.6878 55 55 42.6878 55 27.5C55 12.3122 42.6878 0 27.5 0ZM28.0092 46H19L19.0001 34.9784L19 27.5803V24.4779C19 14.3752 24.0922 10 35.3733 10V17.5571C29.8894 17.5571 28.0092 19.4663 28.0092 24.4779V27.5803H36V34.9784H28.0092V46Z" fill="url(#paint0_linear)"/>
@@ -249,7 +249,7 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
                                     </div>
                                     <div id="wizard_Details" class="tab-pane" role="tabpanel">
                                         <div class="text-center mb-4">
-                                            <h1>Pago</h1>
+                                            <h1 id="h1-label">Pago</h1>
                                         </div>
                                         <div>
                                             <div class="card">
@@ -402,7 +402,8 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
         var codexterno = $("#input-codexterno-producto").val();
         var precio = $("#input-precio-venta").val();
         var cantidad = $("#input-cantidad").val();
-        arrayProductos.push({'idproducto': idproducto, 'codexterno': codexterno, 'nombre': nombre, 'precio': precio, 'cantidad': cantidad});
+        var costo = 0;
+        arrayProductos.push({'idproducto': idproducto, 'codexterno': codexterno, 'nombre': nombre, 'precio': precio, 'cantidad': cantidad, 'costo' : costo});
         mostrarItemsProductos();
     }
 
@@ -468,6 +469,7 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
 
         //cargar total
         $("#input-valor-tota").html("S/ " + totalproductos.toFixed(2));
+        $("#h1-label").html("por Pagar: S/ " + totalproductos.toFixed(2));
 
     }
 
@@ -627,9 +629,14 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
             arrayProductos: JSON.stringify(arrayProductos)
         };
         $.post("../controller/registrar-venta.php", arraypost, function (data) {
-          //  var jsonresultado = JSON.parse(data);
-            alert(data);
+            var jsonresultado = JSON.parse(data);
             //si todo correcto enviar a imprimir ticket
+            if (jsonresultado.id > 0) {
+                alert("venta Registrada, por favor imprima el ticket");
+                location.href = "reporte-pdf-documento-venta.php?ventaid=" + jsonresultado.id;
+            } else {
+                alert("error al registrar venta" + data)
+            }
         });
     }
 

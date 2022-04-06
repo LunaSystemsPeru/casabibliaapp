@@ -7,7 +7,7 @@ try {
     $zebra = new Zebra_Session($link, 'sEcUr1tY_c0dE');
     if (!isset($_SESSION["tiendaid"])) {
         $zebra->stop();
-        header("location:../../login.php");
+        header("location:../login.php");
     }
 } catch (Exception $e) {
     echo $e;

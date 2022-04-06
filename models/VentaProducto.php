@@ -1,7 +1,7 @@
 <?php
 require_once 'Conectar.php';
 
-class ProductoVenta
+class VentaProducto
 {
 private $idproducto;
 private $idventa;
@@ -11,7 +11,7 @@ private $precio;
 private $conectar;
 
     /**
-     * ProductoVenta constructor.
+     * VentaProducto constructor.
      */
     public function __construct()
     {
@@ -143,8 +143,10 @@ private $conectar;
 
     public function verFilas()
     {
-        $sql = "select * from productos_ventas 
-                where id_producto = '$this->idproducto' ";
+        $sql = "select pv.cantidad, pv.precio, pv.id_producto, p.cod_externo, p.descripcion, p.afecto_igv
+                from productos_ventas as pv
+                inner join productos p on pv.id_producto = p.id_producto
+                where pv.id_ventas = '$this->idventa' ";
         return $this->conectar->get_Cursor($sql);
     }
 

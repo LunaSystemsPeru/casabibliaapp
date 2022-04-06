@@ -75,18 +75,18 @@ if (filter_input(INPUT_GET, 'error')) {
                                 </div>
                                 <h4 class="text-center mb-4">Ingresar al Sistema</h4>
                                 <form action="controller/login.php" method="post">
-                                    <div class="col-md-12">
-                                        <label class="mb-1"><strong>Usuario</strong>
+                                    <div class="col-12">
+                                        <label class="mb-1 col-12"><strong>Usuario</strong>
                                             <input type="text" class="form-control" placeholder="Usuario" name="inputUsuario">
                                         </label>
                                     </div>
-                                    <div class="mb-3 col-md-12">
-                                        <label class="mb-1"> <strong>Password</strong>
+                                    <div class="mb-3">
+                                        <label class="mb-1 col-12"> <strong>Password</strong>
                                             <input class="form-control" type="password" name="inputPassword">
                                         </label>
                                     </div>
                                     <div class="text-center mt-4">
-                                        <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+                                        <button type="submit" class="btn btn-danger btn-block">Ingresar</button>
                                     </div>
                                 </form>
                             </div>

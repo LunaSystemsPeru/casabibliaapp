@@ -19,6 +19,23 @@
 @import "../../vendor/perfect-scrollbar/css/perfect-scrollbar.css";
 @import "../../vendor/metismenu/css/metisMenu.min.css";
 
+/*
+    --primary: #886CC0;
+    --secondary: #FFA7D7;
+    --primary-light: #a590cf;
+    --primary-hover: #6c4bae;
+    --primary-dark: #402c67;
+    --rgba-primary-1: rgba(136, 108, 192, 0.1);
+    --rgba-primary-2: rgba(136, 108, 192, 0.2);
+    --rgba-primary-3: rgba(136, 108, 192, 0.3);
+    --rgba-primary-4: rgba(136, 108, 192, 0.4);
+    --rgba-primary-5: rgba(136, 108, 192, 0.5);
+    --rgba-primary-6: rgba(136, 108, 192, 0.6);
+    --rgba-primary-7: rgba(136, 108, 192, 0.7);
+    --rgba-primary-8: rgba(136, 108, 192, 0.8);
+    --rgba-primary-9: rgba(136, 108, 192, 0.9);
+    */
+
 :root {
     --primary: #886CC0;
     --secondary: #FFA7D7;
@@ -3051,6 +3068,9 @@ textarea.form-control-lg {
     background-color: #a089cd;
     border-color: #947bc6
 }
+
+/*a089cd*/
+/*947bc6*/
 
 .btn-check:checked + .btn-primary:focus, .btn-check:active + .btn-primary:focus, .btn-primary:active:focus, .btn-primary.active:focus, .show > .btn-primary.dropdown-toggle:focus {
     box-shadow: 0 0 0 .25rem rgba(116, 92, 163, .5)
