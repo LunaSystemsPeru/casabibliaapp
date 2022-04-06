@@ -89,4 +89,15 @@ private $conectar;
                 where da.id_almacen = '$this->idtienda' and da.id_tido in (2,4,5)";
         return $this->conectar->get_Cursor($sql);
     }
+
+    public function obtenerDatos()
+    {
+        $sql = "select * from documentos_almacen
+        where id_tido = '$this->iddocumento' and id_almacen = '$this->idtienda'";
+        $fila = $this->conectar->get_Row($sql);
+        if ($fila) {
+            $this->serie = $fila['serie'];
+            $this->numero = $fila['numero'];
+        }
+    }
 }

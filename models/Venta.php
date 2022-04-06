@@ -1,7 +1,7 @@
 <?php
 require_once 'Conectar.php';
 
-class venta
+class Venta
 {
     private $idventa;
     private $idalmacen;
