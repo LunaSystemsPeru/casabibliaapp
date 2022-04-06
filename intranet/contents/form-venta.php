@@ -1,5 +1,5 @@
 <?php
-session_start();
+require '../fixed/SessionActiva.php';
 require '../../models/DocumentoTienda.php';
 $DocumentoTienda = new DocumentoTienda();
 $DocumentoTienda->setIdtienda($_SESSION['tiendaid']);
@@ -628,7 +628,7 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
         };
         $.post("../controller/registrar-venta.php", arraypost, function (data) {
           //  var jsonresultado = JSON.parse(data);
-            console.log(data);
+            alert(data);
             //si todo correcto enviar a imprimir ticket
         });
     }

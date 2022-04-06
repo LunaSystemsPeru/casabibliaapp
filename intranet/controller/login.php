@@ -2,11 +2,14 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-session_start();
+
+require '../../tools/Zebra_Session.php';
+require_once '../../models/Conectar.php';
 
 require '../../models/Usuario.php';
 
 $Usuario = new Usuario;
+$conectar = Conectar::getInstancia();
 
 $Usuario->setUsername(filter_input(INPUT_POST, 'inputUsuario'));
 $password = filter_input(INPUT_POST, 'inputPassword');
@@ -19,6 +22,15 @@ if ($Usuario->getIdusuario()) {
         //verificar estado
         if ($Usuario->getEstado() == 1) {
             $Usuario->obtenerDatos();
+
+            $link = $conectar->getLink();
+            try {
+                $zebra = new Zebra_Session($link, 'sEcUr1tY_c0dE');
+                $activesession = $zebra->get_active_sessions();
+            } catch (Exception $e) {
+                echo $e;
+            }
+
             $_SESSION['tiendaid'] = $Usuario->getIdalmacen();
             $_SESSION['usuarioid'] = $Usuario->getIdusuario();
             header("Location: ../contents/form-venta.php");

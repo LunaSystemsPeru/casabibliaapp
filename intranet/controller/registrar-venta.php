@@ -1,5 +1,5 @@
 <?php
-session_start();
+require '../fixed/SessionActiva.php';
 require '../../models/Venta.php';
 require '../../models/ProductoVenta.php';
 require '../../models/DocumentoTienda.php';
@@ -9,12 +9,12 @@ $ProductoVenta = new ProductoVenta();
 $DocumentoTienda = new DocumentoTienda();
 
 $Venta->setFecha(filter_input(INPUT_POST,'inputFecha'));
-$Venta->setIdalmacen($_SESSION['almacenid']);
-$Venta->setIdalmacen($_SESSION['usuarioid']);
+$Venta->setIdalmacen($_SESSION['tiendaid']);
+$Venta->setIdusuario($_SESSION['usuarioid']);
 $Venta->setIdtido(filter_input(INPUT_POST, 'inputTido'));
 
 //get serie y numero
-$DocumentoTienda->setIdtienda($Venta->getIdventa());
+$DocumentoTienda->setIdtienda($Venta->getIdalmacen());
 $DocumentoTienda->setIddocumento($Venta->getIdtido());
 $DocumentoTienda->obtenerDatos();
 $Venta->setSerie($DocumentoTienda->getSerie());

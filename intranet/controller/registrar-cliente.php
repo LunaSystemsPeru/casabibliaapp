@@ -1,4 +1,5 @@
 <?php
+require '../fixed/SessionActiva.php';
 require '../../models/Cliente.php';
 
 $Cliente = new Cliente();

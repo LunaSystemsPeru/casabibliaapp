@@ -290,7 +290,7 @@ class Producto
     {
         $sql = "select id_producto, descripcion, cod_externo, precio, afecto_igv
                 from productos
-                where descripcion like '%$termino%' or cod_externo like '%$termino%' 
+                where descripcion like '%$termino%' or cod_externo like '%$termino%' or id_producto = '$termino'  
                 order by descripcion asc 
                 limit 50";
         return $this->conectar->get_Cursor($sql);

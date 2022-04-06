@@ -86,7 +86,8 @@ private $conectar;
         $sql = "select da.id_tido, ds.descripcion, ds.cod_sunat 
                 from documentos_almacen as da 
                 inner join documentos_sunat ds on da.id_tido = ds.id_tido
-                where da.id_almacen = '$this->idtienda' and da.id_tido in (2,4,5)";
+                where da.id_almacen = '$this->idtienda' and da.id_tido in (2,4,5) 
+                order by ds.descripcion asc";
         return $this->conectar->get_Cursor($sql);
     }
 
