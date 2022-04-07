@@ -9,6 +9,8 @@ private $razon;
 private $direccion;
 private $estado;
 private $condicion;
+private $usersol;
+private $clavesol;
 private $conectar;
 
     /**
@@ -114,6 +116,39 @@ private $conectar;
     {
         $this->condicion = $condicion;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUsersol()
+    {
+        return $this->usersol;
+    }
+
+    /**
+     * @param mixed $usersol
+     */
+    public function setUsersol($usersol)
+    {
+        $this->usersol = $usersol;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClavesol()
+    {
+        return $this->clavesol;
+    }
+
+    /**
+     * @param mixed $clavesol
+     */
+    public function setClavesol($clavesol)
+    {
+        $this->clavesol = $clavesol;
+    }
+
     public function obtenerId()
     {
         $sql = "select ifnull(max(id_empresa) + 1, 1) as codigo 
@@ -157,6 +192,8 @@ private $conectar;
             $this->direccion = $fila['direccion'];
             $this->estado = $fila['estado'];
             $this->condicion = $fila['condicion'];
+            $this->usersol = $fila['usersol'];
+            $this->clavesol = $fila['clavesol'];
         }
     }
 

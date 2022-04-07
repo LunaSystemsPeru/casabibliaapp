@@ -1,4 +1,4 @@
 /.idea/
-/greenter/vendor/
 /nbproject/private/
-/greenter/vendor/
+/composer/vendor/
+/generate_qr/temp/*
