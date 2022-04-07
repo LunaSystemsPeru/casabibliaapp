@@ -2,3 +2,6 @@
 /nbproject/private/
 /composer/vendor/
 /generate_qr/temp/*
+/public/cdr/
+/public/pdf/
+/public/xml/
