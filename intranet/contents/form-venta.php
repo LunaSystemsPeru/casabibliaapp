@@ -186,7 +186,7 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
                                                 <label for="input-nro-documento" class="form-label">Nro Documento</label>
                                                 <div class="input-group mb-3">
                                                     <input type="text" class="form-control" placeholder="Buscar por RUC, DNI o Nombre" id="input-nro-documento">
-                                                    <input type="hidden" id="hidden-id-cliente">
+                                                    <input type="hidden" id="hidden-id-cliente" value="2">
                                                     <button class="btn btn-outline-secondary" type="button" id="button-addon2" data-bs-toggle="modal" data-bs-target="#basicModal">Agregar</button>
                                                 </div>
                                             </div><!-- end col -->
@@ -220,7 +220,6 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
                                                                 <label for="input-nro-documento" class="form-label">Nro Documento</label>
                                                                 <div class="input-group mb-3">
                                                                     <input type="text" class="form-control" placeholder="Buscar por RUC, DNI o Nombre" id="input-add-nro-documento" minlength="8" maxlength="11">
-                                                                    <input type="hidden" id="hidden-id-cliente">
                                                                     <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="obtenerDatosCliente()">Consultar Datos</button>
                                                                 </div>
                                                             </div>
@@ -377,13 +376,13 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
                 //solo deben seleccionar ruc
                 if (tidocid == 4 && ui.item.documento.length != 11) {
                     alert("Debe seleccionar una empresa o numero de ruc");
-                    $("#input-nro-documento").val();
+                    $("#input-nro-documento").val("");
                     $("#input-nro-documento").focus();
                     return false;
                 }
                 if (tidocid == 5 && ui.item.documento.length < 8) {
                     alert("Error al selecionar cliente debe ser DNI o RUC");
-                    $("#input-nro-documento").val();
+                    $("#input-nro-documento").val("");
                     $("#input-nro-documento").focus();
                     return false;
                 }
@@ -563,9 +562,10 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
     }
 
     function bloquearInputCliente() {
-        $("#input-nro-documento").val("00000000")
-        $("#input-nombre").val("CLIENTES VARIOS")
-        $("#input-direccion").val("-")
+        $("#input-nro-documento").val("00000000");
+        $("#hidden-id-cliente").val("2");
+        $("#input-nombre").val("CLIENTES VARIOS");
+        $("#input-direccion").val("-");
         $("#input-nro-documento").prop("readonly", true);
         $("#input-nombre").prop("readonly", true);
         $("#input-direccion").prop("readonly", true);
@@ -573,9 +573,10 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
     }
 
     function habilitarInputClient() {
-        $("#input-nro-documento").val("")
-        $("#input-nombre").val("")
-        $("#input-direccion").val("")
+        $("#input-nro-documento").val("");
+        $("#hidden-id-cliente").val("");
+        $("#input-nombre").val("");
+        $("#input-direccion").val("");
         $("#input-nro-documento").prop("readonly", false);
         $("#input-nombre").prop("readonly", false);
         $("#input-direccion").prop("readonly", false);
@@ -628,8 +629,9 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
             inputClienteId: $("#hidden-id-cliente").val(),
             arrayProductos: JSON.stringify(arrayProductos)
         };
-        alert("se registrata el comprobante");
+        alert("se registrata el comprobante, acepte y espere un momento");
         $.post("../controller/registrar-venta.php", arraypost, function (data) {
+            alert(data);
             var jsonresultado = JSON.parse(data);
             //si todo correcto enviar a imprimir ticket
             if (jsonresultado.id > 0) {

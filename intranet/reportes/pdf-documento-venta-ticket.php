@@ -88,17 +88,21 @@ foreach ($arrayProducto as $item) {
 }
 $pdf->Ln();
 
-$pdf->Cell(35, $altura_linea, "OP. GRAVADA: ", 0, 0, 'L');
-$pdf->Cell(5, $altura_linea, "S/", 0, 0, 'L');
-$pdf->Cell(24, $altura_linea, number_format($totalBaseIGV,2), 0, 1, 'R');
+if ($Venta->getIdtido() != 2) {
 
-$pdf->Cell(35, $altura_linea, "OP. EXONERADA: ", 0, 0, 'L');
-$pdf->Cell(5, $altura_linea, "S/", 0, 0, 'L');
-$pdf->Cell(24, $altura_linea, number_format($totalBase,2), 0, 1, 'R');
+    $pdf->Cell(35, $altura_linea, "OP. GRAVADA: ", 0, 0, 'L');
+    $pdf->Cell(5, $altura_linea, "S/", 0, 0, 'L');
+    $pdf->Cell(24, $altura_linea, number_format($totalBaseIGV,2), 0, 1, 'R');
 
-$pdf->Cell(35, $altura_linea, "IGV: ", 0, 0, 'L');
-$pdf->Cell(5, $altura_linea, "S/", 0, 0, 'L');
-$pdf->Cell(24, $altura_linea, number_format($totalBaseIGV * 0.18,2), 0, 1, 'R');
+    $pdf->Cell(35, $altura_linea, "OP. EXONERADA: ", 0, 0, 'L');
+    $pdf->Cell(5, $altura_linea, "S/", 0, 0, 'L');
+    $pdf->Cell(24, $altura_linea, number_format($totalBase,2), 0, 1, 'R');
+
+    $pdf->Cell(35, $altura_linea, "IGV: ", 0, 0, 'L');
+    $pdf->Cell(5, $altura_linea, "S/", 0, 0, 'L');
+    $pdf->Cell(24, $altura_linea, number_format($totalBaseIGV * 0.18,2), 0, 1, 'R');
+
+}
 
 $totalGeneral = $totalBaseIGV * 1.18 + $totalBase;
 
@@ -114,7 +118,9 @@ if ($SunatVenta->getNombreDocumento()) {
     $pdf->Ln(25);
 }
 
-$pdf->MultiCell(64, $altura_linea, "Representacion Impresora de la " . $DocumentoSunat->getDescripcion() . " Electronica, esta puede ser consultada en www.casabibliachimbote.ga",0, 'C');
+if ($Venta->getIdtido() != 2) {
+    $pdf->MultiCell(64, $altura_linea, "Representacion Impresora de la " . $DocumentoSunat->getDescripcion() . " Electronica, esta puede ser consultada en www.casabibliachimbote.ga",0, 'C');
+}
 
 $nombrePDF = $Empresa->getRuc()."-".$DocumentoSunat->getAbreviado()."-".$Venta->getSerie()."-".$Venta->getNumero().".pdf";
 $pdf->Output('I', $nombrePDF);

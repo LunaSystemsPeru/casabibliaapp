@@ -117,7 +117,7 @@ $ventaid = filter_input(INPUT_GET, 'ventaid');
                                         <path d="M16 10a4 4 0 0 1-8 0"></path>
                                     </svg>
                                     <h4 class="my-2">Ya se genero el Ticket</h4>
-                                    <a href="../reportes/pdf-documento-venta-ticket.php?ventaid=<?php echo $ventaid ?>" class="btn my-2 btn-success btn-lg px-4"><i class="fa fa-print"></i> Imprimir Ticket</a>
+                                    <a href="../reportes/pdf-documento-venta-ticket.php?ventaid=<?php echo $ventaid ?>" target="_blank" class="btn my-2 btn-success btn-lg px-4"><i class="fa fa-print"></i> Imprimir Ticket</a>
                                 </div>
                             </div>
                             <div class="card">
