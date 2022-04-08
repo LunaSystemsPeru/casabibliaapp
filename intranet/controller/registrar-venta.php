@@ -64,8 +64,26 @@ if (filter_input(INPUT_POST,'pagoTarjeta') > 0) {
     $PagoVenta->insertar();
 }
 
-if ($Venta->getIdventa()) {
-    echo json_encode(["id" => $Venta->getIdventa()]);
+$url="http://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
+$rutabase= dirname(dirname(dirname($url))) . DIRECTORY_SEPARATOR;
+
+$ch = curl_init($rutabase."composer/generateXML/factura.php?id=" . $Venta->getIdventa());
+
+curl_setopt($ch, CURLOPT_HEADER, 0);
+$result = curl_exec($ch);
+$errorcurl = "";
+$respuestaCurl = "";
+
+if($result === false)
+{
+    $erroremail = 'Curl error: ' . curl_error($ch);
 } else {
-    echo json_encode(["id" => 0]);
+    $respuestaCurl = json_decode($result,false);
+}
+curl_close($ch);
+
+if ($Venta->getIdventa()) {
+    echo json_encode(["id" => $Venta->getIdventa(), "respuesta" => $respuestaCurl]);
+} else {
+    echo json_encode(["id" => 0, "respuesta" => ""]);
 }

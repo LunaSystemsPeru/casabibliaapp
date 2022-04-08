@@ -16,6 +16,7 @@ require '../../models/Cliente.php';
 require '../../models/Empresa.php';
 require '../../models/Almacen.php';
 require '../../models/DocumentoSunat.php';
+require '../../models/VentaSunat.php';
 require '../../tools/NumerosaLetras.php';
 
 require '../../generate_qr/class/GenerarQr.php';
@@ -27,6 +28,10 @@ $ventaid = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 $Venta = new Venta();
 $Venta->setIdventa($ventaid);
 $Venta->obtenerDatos();
+
+$SunatVenta = new VentaSunat();
+$SunatVenta->setVentaid($Venta->getIdventa());
+$SunatVenta->setFechaEnvio(date("Y-m-d"));
 
 $Tienda = new Almacen();
 $Tienda->setIdalmacen($Venta->getIdalmacen());
@@ -84,7 +89,7 @@ foreach ($arrayProductos as $item) {
         ->setCodProducto($item['id_producto'])
         ->setUnidad('NIU') // Unidad - Catalog. 03
         ->setCantidad($item['cantidad'])
-        ->setDescripcion( utf8_decode($item['descripcion']));
+        ->setDescripcion( utf8_encode($item['descripcion']));
 
     $itemSinIGV = 0;
     $base = 0;
@@ -168,11 +173,19 @@ $result = $see->send($invoice);
 file_put_contents("../../public/xml/".$invoice->getName().'.xml',
     $see->getFactory()->getLastXml());
 
+$aceptadosunat = true;
+$indiceaceptado = 1;
+$observaciones  ="";
+$code ="";
+
 // Verificamos que la conexión con SUNAT fue exitosa.
 if (!$result->isSuccess()) {
+    $indiceaceptado = 3;
     // Mostrar error al conectarse a SUNAT.
-    echo 'Codigo Error: '.$result->getError()->getCode();
-    echo 'Mensaje Error: '.$result->getError()->getMessage();
+    $observaciones = 'Codigo Error: '.$result->getError()->getCode();
+    $aceptadosunat = false;
+    //echo 'Codigo Error: '.$result->getError()->getCode();
+    //echo 'Mensaje Error: '.$result->getError()->getMessage();
     exit();
 }
 
@@ -184,19 +197,33 @@ $cdr = $result->getCdrResponse();
 $code = (int)$cdr->getCode();
 
 if ($code === 0) {
-    echo 'ESTADO: ACEPTADA'.PHP_EOL;
+   // echo 'ESTADO: ACEPTADA'.PHP_EOL;
     if (count($cdr->getNotes()) > 0) {
-        echo 'OBSERVACIONES:'.PHP_EOL;
+       // echo 'OBSERVACIONES:'.PHP_EOL;
         // Corregir estas observaciones en siguientes emisiones.
-        var_dump($cdr->getNotes());
+       // var_dump($cdr->getNotes());
+        $observaciones = $cdr->getNotes();
+        $indiceaceptado = 2;
     }
 } else if ($code >= 2000 && $code <= 3999) {
-    echo 'ESTADO: RECHAZADA'.PHP_EOL;
+   // echo 'ESTADO: RECHAZADA'.PHP_EOL;
+    $aceptadosunat = false;
+    $indiceaceptado = 4;
 } else {
     /* Esto no debería darse, pero si ocurre, es un CDR inválido que debería tratarse como un error-excepción. */
     /*code: 0100 a 1999 */
-    echo 'Excepción';
+    $aceptadosunat = false;
+    $indiceaceptado = 4;
+   // echo 'Excepción';
 }
 
-echo $cdr->getDescription().PHP_EOL;
+//echo $cdr->getDescription().PHP_EOL;
+
+$SunatVenta->setCodigoSunat($code);
+$SunatVenta->setEstadoAceptado($indiceaceptado);
+$SunatVenta->setNombreDocumento($invoice->getName());
+$SunatVenta->setRespuesta($observaciones);
+$SunatVenta->insertar();
+
+return json_encode(["aceptado" => $aceptadosunat, "observaciones" => $observaciones, "nombreDocumento" => $invoice->getName(), "codigoSunat" => $code]);
 
