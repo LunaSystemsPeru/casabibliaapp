@@ -23,6 +23,9 @@ require '../../generate_qr/class/GenerarQr.php';
 $NumeroLetras = new NumerosaLetras();
 
 $ventaid = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+if (!$ventaid) {
+    echo "no se encontro el id de venta";
+}
 
 $Venta = new Venta();
 $Venta->setIdventa($ventaid);
@@ -145,7 +148,7 @@ $invoice = (new Invoice())
 
 $legend = (new Legend())
     ->setCode('1000') // Monto en letras - Catalog. 52
-    ->setValue($NumeroLetras->to_word($totalGeneral, "PEN"));
+    ->setValue($NumeroLetras->to_word(floatval($totalGeneral), "PEN"));
 
 $invoice->setDetails($arrayItems)
     ->setLegends([$legend]);
@@ -182,21 +185,27 @@ file_put_contents("../../public/cdr/".'R-'.$invoice->getName().'.zip', $result->
 $cdr = $result->getCdrResponse();
 
 $code = (int)$cdr->getCode();
+$estadosunat = true;
+$observaciones = "";
 
 if ($code === 0) {
     echo 'ESTADO: ACEPTADA'.PHP_EOL;
     if (count($cdr->getNotes()) > 0) {
-        echo 'OBSERVACIONES:'.PHP_EOL;
+        //echo 'OBSERVACIONES:'.PHP_EOL;
         // Corregir estas observaciones en siguientes emisiones.
-        var_dump($cdr->getNotes());
+       // var_dump($cdr->getNotes());
+        $observaciones = $cdr->getNotes();
     }
 } else if ($code >= 2000 && $code <= 3999) {
-    echo 'ESTADO: RECHAZADA'.PHP_EOL;
+    $estadosunat = false;
+    //echo 'ESTADO: RECHAZADA'.PHP_EOL;
 } else {
+    $estadosunat = false;
     /* Esto no debería darse, pero si ocurre, es un CDR inválido que debería tratarse como un error-excepción. */
     /*code: 0100 a 1999 */
-    echo 'Excepción';
+    //echo 'Excepción';
 }
 
-echo $cdr->getDescription().PHP_EOL;
+//echo $cdr->getDescription().PHP_EOL;
 
+echo json_encode(["aceptado" => $estadosunat, "nombredocumento" => $invoice->getName(), "codestatus" => $code, "observaciones" => $observaciones]);

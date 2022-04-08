@@ -78,7 +78,7 @@ class NumerosaLetras
     {
         if (strpos($number, $this->decimal_mark) === FALSE) {
             $convertedNumber = array(
-                $this->convertNumber($number, $miMoneda, 'entero')
+                $this->convertNumber($number, $miMoneda)
             );
         } else {
             $number = explode($this->decimal_mark, str_replace($this->separator, '', trim($number)));
@@ -100,7 +100,7 @@ class NumerosaLetras
                 }
             }
             $convertedNumber = array(
-                $this->convertNumber($number[0], NULL, 'entero'),
+                $this->convertNumber($number[0], NULL),
                 $number[1] . '/100 ' . $moneda
                 //$this->convertNumber($number[1], $miMoneda, 'decimal'),
             );
@@ -112,12 +112,10 @@ class NumerosaLetras
      * Convierte número a letras
      * @param $number
      * @param $miMoneda
-     * @param $type tipo de dígito (entero/decimal)
      * @return $converted string convertido
      */
-    private function convertNumber($number, $miMoneda = null, $type)
+    private function convertNumber($number, $miMoneda = null)
     {
-
         $converted = '';
         if ($miMoneda !== null) {
             try {
