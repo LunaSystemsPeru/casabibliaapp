@@ -10,7 +10,7 @@ $ProductoVenta = new VentaProducto();
 $DocumentoTienda = new DocumentoTienda();
 $PagoVenta = new VentaPago();
 
-$Venta->setFecha(filter_input(INPUT_POST,'inputFecha'));
+$Venta->setFecha(filter_input(INPUT_POST, 'inputFecha'));
 $Venta->setIdalmacen($_SESSION['tiendaid']);
 $Venta->setIdusuario($_SESSION['usuarioid']);
 $Venta->setIdtido(filter_input(INPUT_POST, 'inputTido'));
@@ -50,22 +50,45 @@ foreach ($arrayProductos as $item) {
 $PagoVenta->setIdventa($Venta->getIdventa());
 $PagoVenta->setFecha($Venta->getFecha());
 
-if (filter_input(INPUT_POST,'pagoEfectivo') > 0) {
+if (filter_input(INPUT_POST, 'pagoEfectivo') > 0) {
     $PagoVenta->setTipopago(1);
-    $PagoVenta->setMonto(filter_input(INPUT_POST,'pagoEfectivo'));
+    $PagoVenta->setMonto(filter_input(INPUT_POST, 'pagoEfectivo'));
     $PagoVenta->obtenerId();
     $PagoVenta->insertar();
 }
 
-if (filter_input(INPUT_POST,'pagoTarjeta') > 0) {
+if (filter_input(INPUT_POST, 'pagoTarjeta') > 0) {
     $PagoVenta->setTipopago(1);
-    $PagoVenta->setMonto(filter_input(INPUT_POST,'pagoTarjeta'));
+    $PagoVenta->setMonto(filter_input(INPUT_POST, 'pagoTarjeta'));
     $PagoVenta->obtenerId();
     $PagoVenta->insertar();
+}
+
+$url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+$rutabase = dirname(dirname(dirname($url))) . DIRECTORY_SEPARATOR;
+$respuestaCurl = "";
+if ($Venta->getIdtido() == 5 && $Venta->getIdtido() == 4) {
+    $nombreXML = "factura";
+    if ($Venta->getIdtido() == 5) {
+        $nombreXML = "boleta";
+    }
+
+    $ch = curl_init($rutabase . "composer/generateXML/" . $nombreXML . ".php?id=" . $Venta->getIdventa());
+
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    $result = curl_exec($ch);
+    $errorcurl = "";
+
+    if ($result === false) {
+        $erroremail = 'Curl error: ' . curl_error($ch);
+    } else {
+        $respuestaCurl = json_decode($result, false);
+    }
+    curl_close($ch);
 }
 
 if ($Venta->getIdventa()) {
-    echo json_encode(["id" => $Venta->getIdventa()]);
+    echo json_encode(["id" => $Venta->getIdventa(), "respuesta" => $respuestaCurl]);
 } else {
-    echo json_encode(["id" => 0]);
+    echo json_encode(["id" => 0, "respuesta" => ""]);
 }

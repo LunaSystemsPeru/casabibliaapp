@@ -131,7 +131,7 @@ $totalGeneral = $totalBaseIGV * 1.18 + $totalBase;
 $invoice = (new Invoice())
     ->setUblVersion('2.1')
     ->setTipoOperacion('0101') // Venta - Catalog. 51
-    ->setTipoDoc('01') // Factura - Catalog. 01
+    ->setTipoDoc('03') // Factura - Catalog. 01
     ->setSerie($Venta->getSerie())
     ->setCorrelativo($Venta->getNumero())
     ->setFechaEmision(\DateTime::createFromFormat('Y-m-d', $Venta->getFecha())) // Zona horaria: Lima
@@ -159,9 +159,9 @@ $igv = number_format($totalBaseIGV*0.18,2);
 $totalGeneral = number_format($totalGeneral,2);
 
 $nombre_archivo = $invoice->getName();
-$tipoDoc = 6;
+$tipoDoc = 1;
 //generar qr
-$qr = $Empresa->getRuc() . "|" . "01" . "|" . $Venta->getSerie() . "|" . $Venta->getNumero() . "|" . $igv . "|" . $totalGeneral . "|" . $Venta->getFecha() . "|" . $tipoDoc . "|" . $Cliente->getDocumento();
+$qr = $Empresa->getRuc() . "|" . "03" . "|" . $Venta->getSerie() . "|" . $Venta->getNumero() . "|" . $igv . "|" . $totalGeneral . "|" . $Venta->getFecha() . "|" . $tipoDoc . "|" . $Cliente->getDocumento();
 $generarQR = new generarQr();
 $generarQR->setTexto_qr($qr);
 $generarQR->setNombre_archivo($nombre_archivo);
@@ -178,52 +178,11 @@ $indiceaceptado = 1;
 $observaciones  ="";
 $code ="";
 
-// Verificamos que la conexión con SUNAT fue exitosa.
-if (!$result->isSuccess()) {
-    $indiceaceptado = 3;
-    // Mostrar error al conectarse a SUNAT.
-    $observaciones = 'Codigo Error: '.$result->getError()->getCode();
-    $aceptadosunat = false;
-    //echo 'Codigo Error: '.$result->getError()->getCode();
-    //echo 'Mensaje Error: '.$result->getError()->getMessage();
-    exit();
-}
-
-// Guardamos el CDR
-file_put_contents("../../public/cdr/".'R-'.$invoice->getName().'.zip', $result->getCdrZip());
-
-$cdr = $result->getCdrResponse();
-
-$code = (int)$cdr->getCode();
-
-if ($code === 0) {
-   // echo 'ESTADO: ACEPTADA'.PHP_EOL;
-    if (count($cdr->getNotes()) > 0) {
-       // echo 'OBSERVACIONES:'.PHP_EOL;
-        // Corregir estas observaciones en siguientes emisiones.
-       // var_dump($cdr->getNotes());
-        $observaciones = $cdr->getNotes();
-        $indiceaceptado = 2;
-    }
-} else if ($code >= 2000 && $code <= 3999) {
-   // echo 'ESTADO: RECHAZADA'.PHP_EOL;
-    $aceptadosunat = false;
-    $indiceaceptado = 4;
-} else {
-    /* Esto no debería darse, pero si ocurre, es un CDR inválido que debería tratarse como un error-excepción. */
-    /*code: 0100 a 1999 */
-    $aceptadosunat = false;
-    $indiceaceptado = 4;
-   // echo 'Excepción';
-}
-
-//echo $cdr->getDescription().PHP_EOL;
-
 $SunatVenta->setCodigoSunat($code);
 $SunatVenta->setEstadoAceptado($indiceaceptado);
 $SunatVenta->setNombreDocumento($invoice->getName());
 $SunatVenta->setRespuesta($observaciones);
 $SunatVenta->insertar();
 
-return json_encode(["aceptado" => $aceptadosunat, "observaciones" => $observaciones, "nombreDocumento" => $invoice->getName(), "codigoSunat" => $code]);
+echo json_encode(["aceptado" => $aceptadosunat, "observaciones" => $observaciones, "nombreDocumento" => $invoice->getName(), "codigoSunat" => $code]);
 
