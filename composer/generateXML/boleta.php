@@ -173,6 +173,7 @@ $result = $see->send($invoice);
 file_put_contents("../../public/xml/".$invoice->getName().'.xml',
     $see->getFactory()->getLastXml());
 
+
 $aceptadosunat = true;
 $indiceaceptado = 1;
 $observaciones  ="";
@@ -182,6 +183,7 @@ $SunatVenta->setCodigoSunat($code);
 $SunatVenta->setEstadoAceptado($indiceaceptado);
 $SunatVenta->setNombreDocumento($invoice->getName());
 $SunatVenta->setRespuesta($observaciones);
+$SunatVenta->setHash($Config->getHash($invoice));
 $SunatVenta->insertar();
 
 echo json_encode(["aceptado" => $aceptadosunat, "observaciones" => $observaciones, "nombreDocumento" => $invoice->getName(), "codigoSunat" => $code]);

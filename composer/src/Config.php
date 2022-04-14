@@ -1,6 +1,8 @@
 <?php
 use Greenter\Ws\Services\SunatEndpoints;
 use Greenter\See;
+use Greenter\Model\DocumentInterface;
+use Greenter\Report\XmlUtils;
 
 class Config
 {
@@ -52,5 +54,15 @@ class Config
 
         return $see;
     }
+
+    public function getHash(DocumentInterface $document): ?string
+    {
+        $see = $this->getSee('');
+        $xml = $see->getXmlSigned($document);
+
+        return (new XmlUtils())->getHashSign($xml);
+    }
+
+
 
 }

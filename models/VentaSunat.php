@@ -9,6 +9,7 @@ private $respuesta;
 private $estadoAceptado;
 private $nombreDocumento;
 private $codigoSunat;
+private $hash;
 private $conectar;
 
     /**
@@ -115,6 +116,22 @@ private $conectar;
         $this->codigoSunat = $codigoSunat;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getHash()
+    {
+        return $this->hash;
+    }
+
+    /**
+     * @param mixed $hash
+     */
+    public function setHash($hash): void
+    {
+        $this->hash = $hash;
+    }
+
     public function insertar()
     {
         $sql = "insert into ventas_sunat 
@@ -123,7 +140,8 @@ private $conectar;
                 '$this->respuesta',
                 '$this->estadoAceptado',   
                 '$this->nombreDocumento',
-                '$this->codigoSunat')";
+                '$this->codigoSunat',
+                '$this->hash')";
         return $this->conectar->ejecutar_idu($sql);
     }
 
@@ -138,6 +156,7 @@ private $conectar;
             $this->estadoAceptado = $fila['estado_aceptado'];
             $this->nombreDocumento = $fila['nombre_documento'];
             $this->codigoSunat = $fila['codigo_sunat'];
+            $this->hash = $fila['hash'];
         }
     }
 

@@ -17,6 +17,8 @@ class Venta
     private $tipoventa;
     private $estado;
     private $idpedido;
+    private $igv;
+    private $aceptadoSunat;
     private $conectar;
 
     /**
@@ -251,6 +253,38 @@ class Venta
         $this->idpedido = $idpedido;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getIgv()
+    {
+        return $this->igv;
+    }
+
+    /**
+     * @param mixed $igv
+     */
+    public function setIgv($igv): void
+    {
+        $this->igv = $igv;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAceptadoSunat()
+    {
+        return $this->aceptadoSunat;
+    }
+
+    /**
+     * @param mixed $aceptadoSunat
+     */
+    public function setAceptadoSunat($aceptadoSunat): void
+    {
+        $this->aceptadoSunat = $aceptadoSunat;
+    }
+
     public function obtenerId()
     {
         $sql = "select ifnull(max(id_ventas) + 1, 1) as codigo 
@@ -274,7 +308,16 @@ class Venta
                 '$this->afectoigv',                           
                 '$this->tipoventa',
                 '$this->estado',
-                '$this->idpedido')";
+                '$this->idpedido',
+                '$this->igv',
+                '$this->aceptadoSunat')";
+        return $this->conectar->ejecutar_idu($sql);
+    }
+
+    public function aceptacionSunat() {
+        $sql = "update ventas set 
+                  aceptadosunat = '$this->aceptadoSunat' 
+                where id_ventas = '$this->idventa'";
         return $this->conectar->ejecutar_idu($sql);
     }
 
@@ -321,10 +364,18 @@ class Venta
         }
     }
 
-    public function verFilas()
+    public function verFilas($inicialserie)
     {
-        $sql = "select * from ventas 
-                where id_ventas = '$this->idventa' ";
+        $sql = "select v.fecha, v.serie, v.numero, ds.abreviado, c.documento, c.nombre, v.estado, v.total, a.nombre as ntienda 
+                from ventas as v 
+                inner join documentos_sunat ds on v.id_tido = ds.id_tido
+                inner join clientes c on v.id_cliente = c.id_cliente
+                inner join almacen a on v.id_almacen = a.id_almacen
+                where v.serie like '$inicialserie%' and v.fecha > '$this->fecha' and v.id_almacen = '$this->idalmacen' 
+                limit 50";
+        //echo $sql;
+
+        //where v.serie like '$inicialserie%' and v.fecha > '$this->fecha' and v.id_almacen = '$this->idalmacen'";
         return $this->conectar->get_Cursor($sql);
     }
 

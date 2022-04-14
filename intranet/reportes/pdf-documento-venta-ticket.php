@@ -116,6 +116,8 @@ $pdf->Ln(2);
 if ($SunatVenta->getNombreDocumento()) {
     $pdf->Image('../../generate_qr/temp/'. $SunatVenta->getNombreDocumento().'.png', $pdf->GetX(), $pdf->GetY(), 22, 22);
     $pdf->Ln(25);
+    $pdf->MultiCell(64, $altura_linea, "Hash: " . $SunatVenta->getHash(),0, 'C');
+    $pdf->Ln(3);
 }
 
 if ($Venta->getIdtido() != 2) {

@@ -1,5 +1,6 @@
 {
     "require": {
-        "greenter/lite": "^4.3"
+        "greenter/lite": "^4.3",
+        "greenter/report": "^4.3"
     }
 }

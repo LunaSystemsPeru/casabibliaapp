@@ -1,3 +1,19 @@
+<?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+require '../fixed/SessionActiva.php';
+require '../../models/Venta.php';
+$Venta = new Venta();
+$Venta->setIdalmacen($_SESSION['tiendaid']);
+$fecha_actual = date("Y-m-d");
+$fecha_busqueda = date("Y-m-d", strtotime($fecha_actual . "- 7 days"));
+$Venta->setFecha($fecha_busqueda);
+$arrayventas = $Venta->verFilas("F");
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -104,27 +120,30 @@
                     <h3>Mis Ventas - Ultima Semana</h3>
                 </div>
                 <div class="mb-4">
-                    <a href="javascript:void(0);" class="btn btn-primary btn-rounded fs-18">Ver Todas mis Facturas</a>
+                    <a href="javascript:void(0);" class="btn btn-primary btn-rounded fs-18">Buscar acturas</a>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xl-12">
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="AllStatus">
+                            <?php
+                            foreach ($arrayventas as $fila) {
+                                ?>
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row align-items-center">
                                         <div class="col-xl-5  col-lg-6 col-sm-12 align-items-center customers">
                                             <div class="media-body">
-                                                <span class="text-primary d-block fs-18 font-w500 mb-1">FE | F011-0111</span>
-                                                <h3 class="fs-18 text-black font-w600">10176268909 | Querevalu Morante</h3>
-                                                <span class="d-block mb-lg-0 mb-0 fs-16"><i class="fas fa-map-marked-alt me-3"></i>Chimbote</span>
+                                                <span class="text-primary d-block fs-18 font-w500 mb-1"><?php echo $fila['abreviado']." | " . $fila['serie'] . "-". $fila['numero'] ?></span>
+                                                <h3 class="fs-18 text-black font-w600"><?php echo $fila['documento'] . " | ". $fila['nombre'] ?></h3>
+                                                <span class="d-block mb-lg-0 mb-0 fs-16"><i class="fas fa-map-marked-alt me-3"></i><?php echo $fila['ntienda'] ?></span>
                                             </div>
                                         </div>
                                         <div class="col-xl-2 col-lg-3 col-sm-4 col-6 mb-3 text-lg-center">
                                             <div class="d-flex project-image">
                                                 <div>
-                                                    <h2 class=" mb-0">S/ 800.00</h2>
+                                                    <h2 class=" mb-0">S/ <?php echo number_format($fila['total'] ,2)?></h2>
                                                 </div>
                                             </div>
                                         </div>
@@ -132,7 +151,7 @@
                                             <div class="d-flex project-image">
                                                 <div>
                                                     <small class="d-block fs-16 font-w400"><i class="fa fa-calendar"></i> Lunes</small>
-                                                    <span class="fs-18 font-w500">17/01/2022</span>
+                                                    <span class="fs-18 font-w500"><?php echo $fila['fecha'] ?></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -145,40 +164,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-xl-5  col-lg-6 col-sm-12 align-items-center customers">
-                                            <div class="media-body">
-                                                <span class="text-primary d-block fs-18 font-w500 mb-1">FE | F011-0112</span>
-                                                <h3 class="fs-18 text-black font-w600">10414477155 | Galvez Marrufo</h3>
-                                                <span class="d-block mb-lg-0 mb-0 fs-16"><i class="fas fa-map-marked-alt  me-3"></i>Chimbote</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-2 col-lg-3 col-sm-4 col-6 mb-3 text-lg-center">
-                                            <div class="d-flex project-image">
-                                                <div>
-                                                    <h2 class=" mb-0">S/ 900.00</h2>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-3  col-lg-6 col-sm-6 mb-sm-4 mb-0">
-                                            <div class="d-flex project-image">
-                                                <div>
-                                                    <small class="d-block fs-16 font-w400"><i class="fa fa-calendar"></i> Lunes</small>
-                                                    <span class="fs-18 font-w500">17/01/2022</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-2  col-lg-6 col-sm-4 mb-sm-3 mb-3 text-end">
-                                            <div class="d-flex justify-content-end project-btn">
-                                                <label class="btn bgl-success text-success fs-18 font-w600"><i class="fa fa-check"></i> Activo</label>
-                                                <label class="btn bgl-danger text-danger fs-18 font-w600"><i class="fa fa-sync-alt"></i> Por Enviar</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                <?php
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -202,7 +190,6 @@
 <script src="../../assets/js/custom.min.js"></script>
 <script src="../../assets/js/dlabnav-init.js"></script>
 <script src="../../assets/js/demo.js"></script>
-<script src="../../assets/js/styleSwitcher.js"></script>
 </body>
 
 <!-- Mirrored from fillow.dexignlab.com/xhtml/empty-page.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Oct 2021 15:06:15 GMT -->
