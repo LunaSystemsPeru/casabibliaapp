@@ -31,7 +31,7 @@ $Venta->setTotal(0); //llenar por trigger en producto venta
 $Venta->setPagado(0);
 $Venta->setAfectoigv(0);
 $Venta->setTipoventa(1);
-$Venta->setEstado(0);
+$Venta->setEstado(1);
 $Venta->setIdpedido(0);
 $Venta->setIgv(0);
 $Venta->setAceptadoSunat(0);
@@ -73,7 +73,7 @@ if (filter_input(INPUT_POST, 'pagoTarjeta') > 0) {
 $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
 $rutabase = dirname(dirname(dirname($url))) . DIRECTORY_SEPARATOR;
 $respuestaCurl = "";
-if ($Venta->getIdtido() == 5 && $Venta->getIdtido() == 4) {
+if ($Venta->getIdtido() == 5 || $Venta->getIdtido() == 4) {
     $nombreXML = "factura";
     if ($Venta->getIdtido() == 5) {
         $nombreXML = "boleta";
@@ -88,13 +88,13 @@ if ($Venta->getIdtido() == 5 && $Venta->getIdtido() == 4) {
     if ($result === false) {
         $erroremail = 'Curl error: ' . curl_error($ch);
     } else {
-        $respuestaCurl = json_decode($result, false);
+        $respuestaCurl = $result;
     }
     curl_close($ch);
 }
 
 if ($Venta->getIdventa()) {
-    echo json_encode(["id" => $Venta->getIdventa(), "respuesta" => $respuestaCurl]);
+    echo json_encode(["id" => $Venta->getIdventa(), "respuesta" =>$respuestaCurl]);
 } else {
-    echo json_encode(["id" => 0, "respuesta" => ""]);
+    echo json_encode(["id" => 0, "respuesta" => false]);
 }

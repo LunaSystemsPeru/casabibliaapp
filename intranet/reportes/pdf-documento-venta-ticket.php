@@ -121,7 +121,7 @@ if ($SunatVenta->getNombreDocumento()) {
 }
 
 if ($Venta->getIdtido() != 2) {
-    $pdf->MultiCell(64, $altura_linea, "Representacion Impresora de la " . $DocumentoSunat->getDescripcion() . " Electronica, esta puede ser consultada en www.casabibliachimbote.ga",0, 'C');
+    $pdf->MultiCell(64, $altura_linea, "Representacion Impresa de la " . $DocumentoSunat->getDescripcion() . " Electronica, esta puede ser consultada en www.casabibliachimbote.ga",0, 'C');
 }
 
 $nombrePDF = $Empresa->getRuc()."-".$DocumentoSunat->getAbreviado()."-".$Venta->getSerie()."-".$Venta->getNumero().".pdf";

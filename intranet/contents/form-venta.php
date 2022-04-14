@@ -631,7 +631,7 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
         };
         alert("se registrata el comprobante, acepte y espere un momento");
         $.post("../controller/registrar-venta.php", arraypost, function (data) {
-            alert(data);
+            //alert(data);
             var jsonresultado = JSON.parse(data);
             //si todo correcto enviar a imprimir ticket
             if (jsonresultado.id > 0) {

@@ -7,8 +7,13 @@ require '../../tools/Zebra_Session.php';
 require_once '../../models/Conectar.php';
 
 require '../../models/Usuario.php';
+require '../../models/Almacen.php';
+require '../../models/Empresa.php';
 
 $Usuario = new Usuario;
+$Tienda = new Almacen();
+$Empresa = new Empresa();
+
 $conectar = Conectar::getInstancia();
 
 $Usuario->setUsername(filter_input(INPUT_POST, 'inputUsuario'));
@@ -31,7 +36,13 @@ if ($Usuario->getIdusuario()) {
                 echo $e;
             }
 
+            $Tienda->setIdalmacen($Usuario->getIdalmacen());
+            $Tienda->obtenerDatos();
+            $Empresa->setIdempresa($Tienda->getIdempresa());
+            $Empresa->obtenerDatos();
+
             $_SESSION['tiendaid'] = $Usuario->getIdalmacen();
+            $_SESSION['empresaruc'] = $Empresa->getRuc();
             $_SESSION['usuarioid'] = $Usuario->getIdusuario();
             header("Location: ../contents/form-venta.php");
         } else {

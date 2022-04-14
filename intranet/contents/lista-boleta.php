@@ -1,8 +1,14 @@
 <?php
 require '../fixed/SessionActiva.php';
+
 require '../../models/Venta.php';
+require '../../tools/Util.php';
+
 $Venta = new Venta();
+$Util = new Util();
+
 $Venta->setIdalmacen($_SESSION['tiendaid']);
+$empresaruc = $_SESSION['empresaruc'];
 $fecha_actual = date("Y-m-d");
 $Venta->setFecha($fecha_actual);
 $arrayventas = $Venta->verFilas("B");
@@ -10,6 +16,7 @@ $arrayventas = $Venta->verFilas("B");
 //fecha limite fe
 $fecha_actual = date("Y-m-d");
 $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
+$a = strtotime($fecha_limite);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -112,10 +119,10 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
         <div class="container-fluid">
             <div class="project-page d-flex justify-content-between align-items-center flex-wrap">
                 <div class="project mb-4">
-                    <h3>Mis Ventas - Ultima Semana</h3>
+                    <h3>Mis Boletas </h3>
                 </div>
                 <div class="mb-4">
-                    <a href="javascript:void(0);" class="btn btn-primary btn-rounded fs-18">Ver Todas mis Boletas</a>
+                    <a href="javascript:void(0);" class="btn btn-primary btn-rounded fs-18">Buscar Boletas</a>
                 </div>
             </div>
             <div class="row">
@@ -124,21 +131,23 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
                         <div class="tab-pane fade active show" id="AllStatus">
                             <?php
                             foreach ($arrayventas as $fila) {
+                                $nombre_xml = $empresaruc . "-" . $Util->zerofill($fila['cod_sunat'], 2) . "-" . $fila['serie'] . "-" . $fila['numero'];
+                                $b = strtotime($fila['fecha']);
                                 ?>
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row align-items-center">
                                             <div class="col-xl-5  col-lg-6 col-sm-12 align-items-center customers">
                                                 <div class="media-body">
-                                                    <span class="text-primary d-block fs-18 font-w500 mb-1"><?php echo $fila['abreviado']." | " . $fila['serie'] . "-". $fila['numero'] ?></span>
-                                                    <h3 class="fs-18 text-black font-w600"><?php echo $fila['documento'] . " | ". $fila['nombre'] ?></h3>
+                                                    <span class="text-primary d-block fs-18 font-w500 mb-1"><?php echo $fila['abreviado'] . " | " . $fila['serie'] . "-" . $fila['numero'] ?></span>
+                                                    <h3 class="fs-18 text-black font-w600"><?php echo $fila['documento'] . " | " . $fila['nombre'] ?></h3>
                                                     <span class="d-block mb-lg-0 mb-0 fs-16"><i class="fas fa-map-marked-alt me-3"></i><?php echo $fila['ntienda'] ?></span>
                                                 </div>
                                             </div>
                                             <div class="col-xl-2 col-lg-3 col-sm-4 col-6 mb-3 text-lg-center">
                                                 <div class="d-flex project-image">
                                                     <div>
-                                                        <h2 class=" mb-0">S/ <?php echo number_format($fila['total'] ,2)?></h2>
+                                                        <h2 class=" mb-0">S/ <?php echo number_format($fila['total'], 2) ?></h2>
                                                     </div>
                                                 </div>
                                             </div>
@@ -152,8 +161,45 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
                                             </div>
                                             <div class="col-xl-2  col-lg-6 col-sm-4 mb-sm-3 mb-3 text-end">
                                                 <div class="d-flex justify-content-end project-btn">
-                                                    <label class="btn bgl-success text-success fs-18 font-w600"><i class="fa fa-check"></i> Activo</label>
-                                                    <button class="btn bgl-info text-info fs-18 font-w600" type="button" onclick="abrirOpcioness()"><i class="fa fa-mouse-pointer"></i> Opciones</button>
+                                                    <?php
+                                                    if ($fila['estado'] == 1) {
+                                                        ?>
+                                                        <label class="btn bgl-success text-success fs-18 font-w600"><i class="fa fa-check"></i> Activo</label>
+                                                        <?php
+                                                    } else {
+                                                        ?>
+                                                        <label class="btn bgl-danger text-danger fs-18 font-w600"><i class="fa fa-arrow-down"></i> Anulado</label>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                    <!-- <button class="btn bgl-info text-info fs-18 font-w600" type="button" onclick="abrirOpcioness('<?php echo $fila['id_ventas'] ?>')" ><i class="fa fa-mouse-pointer"></i> Opciones</button>-->
+
+                                                    <div class="dropdown ms-4  mt-auto mb-auto">
+                                                        <div class="btn-link" data-bs-toggle="dropdown">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12Z" stroke="#737B8B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                <path d="M18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12Z" stroke="#737B8B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                <path d="M4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12Z" stroke="#737B8B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                            </svg>
+                                                        </div>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <a class="dropdown-item" href="../reportes/pdf-documento-venta-ticket.php?ventaid=<?php echo $fila['id_ventas'] ?>" target="_blank">Imprimir</a>
+                                                            <a class="dropdown-item" href="../../public/xml/<?php echo $nombre_xml ?>.xml" download="<?php echo $nombre_xml . ".xml" ?>">Ver XML</a>
+                                                            <?php
+                                                            if ($fila['estado'] == 1) {
+                                                                if ($b > $a) {
+                                                                    ?>
+                                                                    <a class="dropdown-item" href="javascript:void(0);">dar de Baja</a>
+                                                                    <?php
+                                                                } else {
+                                                                    ?>
+                                                                    <a class="dropdown-item" href="javascript:void(0);">Anular con Nota de Credito</a>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -172,33 +218,27 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
                     <div class="modal-content">
                         <form method="post" action="#">
                             <div class="modal-header">
-                                <h5 class="modal-title">Agregar nuevo Cliente</h5>
+                                <h5 class="modal-title">Opciones</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal">
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="mb-3 col-md-12">
-                                    <label for="input-nro-documento" class="form-label">Nro Documento</label>
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="Buscar por RUC, DNI o Nombre" id="input-add-nro-documento" minlength="8" maxlength="11">
-                                    </div>
+                                <input type="hidden" id="hidden_fecha_limite" value="<?php echo $fecha_limite ?>">
+                                <input type="hidden" id="hidden_id_venta_opciones">
+                                <div class="card">
+                                    <button class="btn my-2 btn-success btn-lg px-4"><i class="fa fa-file-pdf"></i> Imprimir</button>
                                 </div>
-                                <div class="mb-3 col-md-12">
-                                    <label class="form-label">Razon Social o Apellidos y Nombres *</label>
-                                    <input type="text" class="form-control" id="input-add-datos-cliente" required>
+
+                                <div class="card">
+                                    <button class="btn my-2 btn-danger btn-lg px-4"><i class="fa fa-trash"></i> dar de Baja</button>
                                 </div>
-                                <div class="mb-3 col-md-12">
-                                    <label class="form-label">Direccion *</label>
-                                    <input type="text" class="form-control" id="input-add-direccion-cliente" required>
-                                </div>
-                                <div class="mb-3 col-md-12">
-                                    <label class="form-label">Telefono / Celular</label>
-                                    <input type="text" class="form-control" id="input-add-telefono-cliente">
+
+                                <div class="card">
+                                    <button class="btn my-2 btn-warning btn-lg px-4"><i class="fa fa-sign-out-alt"></i> Anular</button>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="button" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
                             </div>
                         </form>
                     </div>
@@ -226,9 +266,19 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
 <script src="../../assets/js/dlabnav-init.js"></script>
 <script src="../../assets/js/demo.js"></script>
 <script>
-    function abrirOpcioness () {
-        $("#basicModal").modal("toggle");
+    function abrirOpcioness(idventa) {
+        //enviar datos
+        var arraypost = {
+            id: idventa
+        };
+        $.post("../../ajax/obtener-datos-venta.php", arraypost, function (data) {
+            var jsonresultado = JSON.parse(data);
+            console.log(jsonresultado)
+            var fechadocumento = jsonresultado.fecha;
+        })
+        //$("#basicModal").modal("toggle");
     }
+
 </script>
 </body>
 

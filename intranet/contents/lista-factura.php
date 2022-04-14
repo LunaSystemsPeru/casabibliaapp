@@ -117,7 +117,7 @@ $arrayventas = $Venta->verFilas("F");
         <div class="container-fluid">
             <div class="project-page d-flex justify-content-between align-items-center flex-wrap">
                 <div class="project mb-4">
-                    <h3>Mis Ventas - Ultima Semana</h3>
+                    <h3>Mis Facturas</h3>
                 </div>
                 <div class="mb-4">
                     <a href="javascript:void(0);" class="btn btn-primary btn-rounded fs-18">Buscar acturas</a>

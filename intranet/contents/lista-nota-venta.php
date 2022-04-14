@@ -1,3 +1,17 @@
+<?php
+require '../fixed/SessionActiva.php';
+require '../../models/Venta.php';
+$Venta = new Venta();
+$Venta->setIdalmacen($_SESSION['tiendaid']);
+$fecha_actual = date("Y-m-d");
+$Venta->setFecha($fecha_actual);
+$Venta->setIdtido(2);
+$arrayventas = $Venta->verNotas();
+
+//fecha limite fe
+$fecha_actual = date("Y-m-d");
+$fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -104,83 +118,96 @@
                     <h3>Mis Ventas - Ultima Semana</h3>
                 </div>
                 <div class="mb-4">
-                    <a href="javascript:void(0);" class="btn btn-primary btn-rounded fs-18">Ver mis Notas de Ventas</a>
+                    <a href="javascript:void(0);" class="btn btn-primary btn-rounded fs-18">Buscar por Fecha</a>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xl-12">
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="AllStatus">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-xl-5  col-lg-6 col-sm-12 align-items-center customers">
-                                            <div class="media-body">
-                                                <span class="text-primary d-block fs-18 font-w500 mb-1">NV| N011-0111</span>
-                                                <h3 class="fs-18 text-black font-w600">17626890 | Querevalu Morante</h3>
-                                                <span class="d-block mb-lg-0 mb-0 fs-16"><i class="fas fa-map-marked-alt me-3"></i>Chimbote</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-2 col-lg-3 col-sm-4 col-6 mb-3 text-lg-center">
-                                            <div class="d-flex project-image">
-                                                <div>
-                                                    <h2 class=" mb-0">S/ 500.00</h2>
+                            <?php
+                            foreach ($arrayventas as $fila) {
+                                ?>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div class="col-xl-5  col-lg-6 col-sm-12 align-items-center customers">
+                                                <div class="media-body">
+                                                    <span class="text-primary d-block fs-18 font-w500 mb-1"><?php echo $fila['abreviado']." | " . $fila['serie'] . "-". $fila['numero'] ?></span>
+                                                    <h3 class="fs-18 text-black font-w600"><?php echo $fila['documento'] . " | ". $fila['nombre'] ?></h3>
+                                                    <span class="d-block mb-lg-0 mb-0 fs-16"><i class="fas fa-map-marked-alt me-3"></i><?php echo $fila['ntienda'] ?></span>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-xl-3  col-lg-6 col-sm-6 mb-sm-4 mb-0">
-                                            <div class="d-flex project-image">
-                                                <div>
-                                                    <small class="d-block fs-16 font-w400"><i class="fa fa-calendar"></i> Lunes</small>
-                                                    <span class="fs-18 font-w500">17/01/2022</span>
+                                            <div class="col-xl-2 col-lg-3 col-sm-4 col-6 mb-3 text-lg-center">
+                                                <div class="d-flex project-image">
+                                                    <div>
+                                                        <h2 class=" mb-0">S/ <?php echo number_format($fila['total'] ,2)?></h2>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-xl-2  col-lg-6 col-sm-4 mb-sm-3 mb-3 text-end">
-                                            <div class="d-flex justify-content-end project-btn">
-                                                <label class="btn bgl-success text-success fs-18 font-w600"><i class="fa fa-check"></i> Activo</label>
+                                            <div class="col-xl-3  col-lg-6 col-sm-6 mb-sm-4 mb-0">
+                                                <div class="d-flex project-image">
+                                                    <div>
+                                                        <small class="d-block fs-16 font-w400"><i class="fa fa-calendar"></i> Lunes</small>
+                                                        <span class="fs-18 font-w500"><?php echo $fila['fecha'] ?></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-2  col-lg-6 col-sm-4 mb-sm-3 mb-3 text-end">
+                                                <div class="d-flex justify-content-end project-btn">
+                                                    <label class="btn bgl-success text-success fs-18 font-w600"><i class="fa fa-check"></i> Activo</label>
+                                                    <button class="btn bgl-info text-info fs-18 font-w600" type="button" onclick="abrirOpcioness()"><i class="fa fa-mouse-pointer"></i> Opciones</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-xl-5  col-lg-6 col-sm-12 align-items-center customers">
-                                            <div class="media-body">
-                                                <span class="text-primary d-block fs-18 font-w500 mb-1">NV | N011-0112</span>
-                                                <h3 class="fs-18 text-black font-w600">41447715 | Galvez Marrufo</h3>
-                                                <span class="d-block mb-lg-0 mb-0 fs-16"><i class="fas fa-map-marked-alt  me-3"></i>Chimbote</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-2 col-lg-3 col-sm-4 col-6 mb-3 text-lg-center">
-                                            <div class="d-flex project-image">
-                                                <div>
-                                                    <h2 class=" mb-0">S/ 250.00</h2>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-3  col-lg-6 col-sm-6 mb-sm-4 mb-0">
-                                            <div class="d-flex project-image">
-                                                <div>
-                                                    <small class="d-block fs-16 font-w400"><i class="fa fa-calendar"></i> Lunes</small>
-                                                    <span class="fs-18 font-w500">17/01/2022</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-2  col-lg-6 col-sm-4 mb-sm-3 mb-3 text-end">
-                                            <div class="d-flex justify-content-end project-btn">
-                                                <label class="btn bgl-success text-success fs-18 font-w600"><i class="fa fa-check"></i> Activo</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                <?php
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- Modal -->
+            <div class="modal fade" id="basicModal">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form method="post" action="#">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Agregar nuevo Cliente</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3 col-md-12">
+                                    <label for="input-nro-documento" class="form-label">Nro Documento</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="Buscar por RUC, DNI o Nombre" id="input-add-nro-documento" minlength="8" maxlength="11">
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-md-12">
+                                    <label class="form-label">Razon Social o Apellidos y Nombres *</label>
+                                    <input type="text" class="form-control" id="input-add-datos-cliente" required>
+                                </div>
+                                <div class="mb-3 col-md-12">
+                                    <label class="form-label">Direccion *</label>
+                                    <input type="text" class="form-control" id="input-add-direccion-cliente" required>
+                                </div>
+                                <div class="mb-3 col-md-12">
+                                    <label class="form-label">Telefono / Celular</label>
+                                    <input type="text" class="form-control" id="input-add-telefono-cliente">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--  end modal -->
         </div>
     </div>
     <!--**********************************
