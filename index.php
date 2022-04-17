@@ -1,2 +1,2 @@
 <?php
-header("Location: intranet/login.php");
+header("Location: landing/index.html");

@@ -167,7 +167,9 @@ $generarQR->setTexto_qr($qr);
 $generarQR->setNombre_archivo($nombre_archivo);
 $generarQR->generar_qr();
 
-$result = $see->send($invoice);
+//boletas no se envian xml a sunat
+//$result = $see->send($invoice);
+$see->getXmlSigned($invoice);
 
 // Guardar XML firmado digitalmente.
 file_put_contents("../../public/xml/".$invoice->getName().'.xml',

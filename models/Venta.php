@@ -368,6 +368,8 @@ class Venta
             $this->tipoventa = $fila['tipo_venta'];
             $this->estado = $fila['estado'];
             $this->idpedido = $fila['id_pedido'];
+            $this->igv = $fila['igv'];
+            $this->aceptadoSunat = $fila['aceptadosunat'];
         }
     }
 

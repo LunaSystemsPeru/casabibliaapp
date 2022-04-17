@@ -10,6 +10,9 @@ $Util = new Util();
 $Venta->setIdalmacen($_SESSION['tiendaid']);
 $empresaruc = $_SESSION['empresaruc'];
 $fecha_actual = date("Y-m-d");
+if (filter_input(INPUT_GET, 'inputFecha')) {
+    $fecha_actual = filter_input(INPUT_GET, 'inputFecha');
+}
 $Venta->setFecha($fecha_actual);
 $arrayventas = $Venta->verFilas("B");
 
@@ -36,7 +39,7 @@ $a = strtotime($fecha_limite);
     <!-- PAGE TITLE HERE -->
     <title>Casa de la Biblia</title>
     <!-- FAVICONS ICON -->
-    <link rel="shortcut icon" type="image/png" href="../../assets/images/favicon.png"/>
+    <link rel="shortcut icon" type="image/png" href="../../assets/icons/logosbs.png"/>
     <link href="../../vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
     <link href="../../assets/css/style.css" rel="stylesheet">
 
@@ -122,7 +125,7 @@ $a = strtotime($fecha_limite);
                     <h3>Mis Boletas </h3>
                 </div>
                 <div class="mb-4">
-                    <a href="javascript:void(0);" class="btn btn-primary btn-rounded fs-18">Buscar Boletas</a>
+                    <button onclick="abrirBusqueda()" class="btn btn-primary btn-rounded fs-18">Buscar Boletas</button>
                 </div>
             </div>
             <div class="row">
@@ -189,11 +192,11 @@ $a = strtotime($fecha_limite);
                                                             if ($fila['estado'] == 1) {
                                                                 if ($b > $a) {
                                                                     ?>
-                                                                    <a class="dropdown-item" href="javascript:void(0);">dar de Baja</a>
+                                                                    <a class="dropdown-item" href="../controller/anular-venta.php?tipo=b&id=<?php echo $fila['id_ventas'] ?>">dar de Baja</a>
                                                                     <?php
                                                                 } else {
                                                                     ?>
-                                                                    <a class="dropdown-item" href="javascript:void(0);">Anular con Nota de Credito</a>
+                                                                    <a class="dropdown-item" href="form-nota-credito-anula.php?tipo=b&id=<?php echo $fila['id_ventas'] ?>">Anular con Nota de Credito</a>
                                                                     <?php
                                                                 }
                                                             }
@@ -216,29 +219,21 @@ $a = strtotime($fecha_limite);
             <div class="modal fade" id="basicModal">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <form method="post" action="#">
+                        <form method="get" action="lista-boleta.php">
                             <div class="modal-header">
-                                <h5 class="modal-title">Opciones</h5>
+                                <h5 class="modal-title">Buscar</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal">
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <input type="hidden" id="hidden_fecha_limite" value="<?php echo $fecha_limite ?>">
-                                <input type="hidden" id="hidden_id_venta_opciones">
-                                <div class="card">
-                                    <button class="btn my-2 btn-success btn-lg px-4"><i class="fa fa-file-pdf"></i> Imprimir</button>
-                                </div>
-
-                                <div class="card">
-                                    <button class="btn my-2 btn-danger btn-lg px-4"><i class="fa fa-trash"></i> dar de Baja</button>
-                                </div>
-
-                                <div class="card">
-                                    <button class="btn my-2 btn-warning btn-lg px-4"><i class="fa fa-sign-out-alt"></i> Anular</button>
-                                </div>
+                                        <div class="col-md-12">
+                                            <label for="input-fecha" class="form-label">Seleccionar Fecha</label>
+                                            <input type="date" class="form-control" id="input-fecha" name="inputFecha" value="<?php echo date("Y-m-d") ?>" >
+                                        </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-success light" >Buscar</button>
                             </div>
                         </form>
                     </div>
@@ -266,17 +261,8 @@ $a = strtotime($fecha_limite);
 <script src="../../assets/js/dlabnav-init.js"></script>
 <script src="../../assets/js/demo.js"></script>
 <script>
-    function abrirOpcioness(idventa) {
-        //enviar datos
-        var arraypost = {
-            id: idventa
-        };
-        $.post("../../ajax/obtener-datos-venta.php", arraypost, function (data) {
-            var jsonresultado = JSON.parse(data);
-            console.log(jsonresultado)
-            var fechadocumento = jsonresultado.fecha;
-        })
-        //$("#basicModal").modal("toggle");
+    function abrirBusqueda () {
+        $("#basicModal").modal("toggle");
     }
 
 </script>

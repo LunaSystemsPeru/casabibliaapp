@@ -1,8 +1,25 @@
 <?php
-$ventaid = filter_input(INPUT_GET, 'ventaid');
+require '../fixed/SessionActiva.php';
+require '../../models/Venta.php';
+require '../../models/Cliente.php';
+require '../../models/DocumentoSunat.php';
+
+$Venta = new Venta();
+$Documento = new DocumentoSunat();
+$Cliente = new Cliente();
+
+$Venta->setIdventa(filter_input(INPUT_GET,'id'));
+$Venta->obtenerDatos();
+
+$Cliente->setIdcliente($Venta->getIdcliente());
+$Cliente->obtenerDatos();
+
+$Documento->setIdtido($Venta->getIdtido());
+$Documento->obtenerDatos();
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <!-- Mirrored from fillow.dexignlab.com/xhtml/empty-page.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Oct 2021 15:06:15 GMT -->
 <head>
     <meta charset="utf-8">
@@ -16,8 +33,10 @@ $ventaid = filter_input(INPUT_GET, 'ventaid');
     <meta property="og:description" content="Fillow : Fillow Saas Admin  Bootstrap 5 Template"/>
     <meta property="og:image" content="social-image.png"/>
     <meta name="format-detection" content="telephone=no">
+
     <!-- PAGE TITLE HERE -->
     <title>Casa de la Biblia</title>
+
     <!-- FAVICONS ICON -->
     <link rel="shortcut icon" type="image/png" href="../../assets/icons/logosbs.png"/>
     <link href="../../vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
@@ -42,7 +61,6 @@ $ventaid = filter_input(INPUT_GET, 'ventaid');
     Main wrapper start
 ***********************************-->
 <div id="main-wrapper">
-
     <!--**********************************
         Nav header start
     ***********************************-->
@@ -102,7 +120,7 @@ $ventaid = filter_input(INPUT_GET, 'ventaid');
         <div class="container-fluid">
             <div class="project-page d-flex justify-content-between align-items-center flex-wrap">
                 <div class="project mb-4">
-                    <h3>Imprimir ticket</h3>
+                    <h3>Anular con Nota de Credito</h3>
                 </div>
             </div>
             <div class="row">
@@ -110,32 +128,38 @@ $ventaid = filter_input(INPUT_GET, 'ventaid');
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="AllStatus">
                             <div class="card">
-                                <div class="card-body text-center ai-icon  text-primary">
-                                    <svg id="rocket-icon" class="my-2" viewBox="0 0 24 24" width="80" height="80" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                                        <path d="M16 10a4 4 0 0 1-8 0"></path>
-                                    </svg>
-                                    <h4 class="my-2">Ya se genero el Ticket</h4>
-                                    <a href="../reportes/pdf-documento-venta-ticket.php?ventaid=<?php echo $ventaid ?>" target="_blank" class="btn my-2 btn-success btn-lg px-4"><i class="fa fa-print"></i> Imprimir Ticket</a>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4>Otras Opciones</h4>
-                                    <div class="card">
-                                    <a href="form-venta.php" class="btn btn-success"> <i class="fa fa-newspaper"></i> Nuevo Documento de Venta</a>
+                                <form class="row g-3 needs-validation" method="post" action="../controller/registrar-nota-credito-anula.php">
+                                    <div class="card-body">
+                                        <div class="col-md-12">
+                                            <label for="input-nombre" class="form-label">Documento a Anular</label>
+                                            <input type="text" class="form-control" id="input-documento" value="<?php echo $Documento->getDescripcion() . " | " . $Venta->getSerie() . " - " . $Venta->getNumero()?>" readonly>
+                                            <input type="hidden" name="inputId" value="<?php echo $Venta->getIdventa()?>">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="input-documento" class="form-label">Cliente</label>
+                                            <input type="text" class="form-control" id="input-cliente" value="<?php echo $Cliente->getDocumento() . " - " . $Cliente->getNombre()?>" readonly>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="input-documento" class="form-label">Total</label>
+                                            <input type="text" class="form-control" id="input-total-venta" value="<?php echo $Venta->getTotal() ?>" readonly>
+                                        </div>
                                     </div>
-                                    <div class="card">
-                                    <a href="lista-boleta.php" class="btn btn-facebook"> <i class="fa fa-arrow-left"></i> Ver Boletas</a>
+                                    <div class="card-body">
+                                        <div class="col-md-12">
+                                            <label for="input-fecha" class="form-label">Fecha de Nota de Credito</label>
+                                            <input type="date" class="form-control" id="input-fecha" name="inputFecha" value="<?php echo date("Y-m-d")?>" required>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="input-documento" class="form-label">Documento</label>
+                                            <input type="text" class="form-control" value="NOTA DE CREDITO" readonly>
+                                        </div>
                                     </div>
-                                    <div class="card">
-                                    <a href="lista-boleta.php" class="btn btn-facebook"> <i class="fa fa-arrow-left"></i> Ver Facturas</a>
+                                    <div class="card-footer">
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Generar</button>
+                                        </div>
                                     </div>
-                                    <div class="card">
-                                    <a href="lista-boleta.php" class="btn btn-facebook"> <i class="fa fa-arrow-left"></i> Ver Nota de Ventas</a>
-                                    </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -146,7 +170,6 @@ $ventaid = filter_input(INPUT_GET, 'ventaid');
     <!--**********************************
         Content body end
     ***********************************-->
-
 </div>
 <!--**********************************
     Main wrapper end

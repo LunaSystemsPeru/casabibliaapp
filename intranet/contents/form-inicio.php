@@ -16,7 +16,7 @@
 
     <title>Fillow Saas Admin Dashboard</title>
 
-    <link rel="shortcut icon" type="image/png" href="../../assets/images/favicon.png"/>
+    <link rel="shortcut icon" type="image/png" href="../../assets/icons/logosbs.png"/>
     <link href="../../vendor/jquery-smartwizard/dist/css/smart_wizard.min.css" rel="stylesheet">
     <link href="../../vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
     <link href="../../assets/css/style.css" rel="stylesheet">

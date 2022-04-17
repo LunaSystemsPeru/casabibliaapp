@@ -127,6 +127,13 @@ private $conectar;
         return $this->conectar->ejecutar_idu($sql);
     }
 
+    public function eliminar()
+    {
+        $sql = "delete from productos_ventas 
+       where id_ventas = '$this->idventa'";
+        return $this->conectar->ejecutar_idu($sql);
+    }
+
     public function obtenerDatos()
     {
         $sql = "select * from productos_ventas 

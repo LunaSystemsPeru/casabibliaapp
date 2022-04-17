@@ -101,4 +101,14 @@ private $conectar;
             $this->numero = $fila['numero'];
         }
     }
+
+    public function obtenerNumero()
+    {
+        $sql = "select * from documentos_almacen
+        where id_tido = '$this->iddocumento' and id_almacen = '$this->idtienda' and serie = '$this->serie'";
+        $fila = $this->conectar->get_Row($sql);
+        if ($fila) {
+            $this->numero = $fila['numero'];
+        }
+    }
 }

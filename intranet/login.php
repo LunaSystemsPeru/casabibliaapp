@@ -36,7 +36,7 @@ if (filter_input(INPUT_GET, 'error')) {
     <title>Casa Biblia APP</title>
 
     <!-- FAVICONS ICON -->
-    <link rel="shortcut icon" type="image/png" href="../assets/images/favicon.png"/>
+    <link rel="shortcut icon" type="image/png" href="../assets/icons/logosbs.png"/>
     <link href="../assets/css/style.css" rel="stylesheet">
 </head>
 <body class="vh-100">
