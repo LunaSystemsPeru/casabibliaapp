@@ -403,5 +403,16 @@ class Venta
         return $this->conectar->get_Cursor($sql);
     }
 
+    public function verBoletasActivas ($inicialserie, $idempresa) {
+        $sql = "select v.fecha, v.id_tido, v.serie, v.numero, ds.abreviado, ds.cod_sunat , c.documento, c.nombre, v.estado, v.total, v.igv, a.nombre as ntienda, v.id_ventas 
+                from ventas as v 
+                inner join documentos_sunat ds on v.id_tido = ds.id_tido
+                inner join clientes c on v.id_cliente = c.id_cliente
+                inner join almacen a on v.id_almacen = a.id_almacen
+                inner join empresa e on a.id_empresa = e.id_empresa
+                where v.serie like '$inicialserie%' and v.fecha = '$this->fecha' and e.id_empresa = '$idempresa' and v.estado=1
+                order by v.fecha asc, v.numero desc";
+        return $this->conectar->get_Cursor($sql);
+    }
 
 }
