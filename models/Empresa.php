@@ -11,6 +11,10 @@ private $estado;
 private $condicion;
 private $usersol;
 private $clavesol;
+private $ubigeo;
+private $departamento;
+private $provincia;
+private $distrito;
 private $conectar;
 
     /**
@@ -149,6 +153,70 @@ private $conectar;
         $this->clavesol = $clavesol;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getUbigeo()
+    {
+        return $this->ubigeo;
+    }
+
+    /**
+     * @param mixed $ubigeo
+     */
+    public function setUbigeo($ubigeo): void
+    {
+        $this->ubigeo = $ubigeo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDepartamento()
+    {
+        return $this->departamento;
+    }
+
+    /**
+     * @param mixed $departamento
+     */
+    public function setDepartamento($departamento): void
+    {
+        $this->departamento = $departamento;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProvincia()
+    {
+        return $this->provincia;
+    }
+
+    /**
+     * @param mixed $provincia
+     */
+    public function setProvincia($provincia): void
+    {
+        $this->provincia = $provincia;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDistrito()
+    {
+        return $this->distrito;
+    }
+
+    /**
+     * @param mixed $distrito
+     */
+    public function setDistrito($distrito): void
+    {
+        $this->distrito = $distrito;
+    }
+
     public function obtenerId()
     {
         $sql = "select ifnull(max(id_empresa) + 1, 1) as codigo 
@@ -164,7 +232,13 @@ private $conectar;
                 '$this->razon',
                 '$this->direccion',
                 '$this->estado',
-                '$this->condicion')";
+                '$this->condicion',
+                '$this->usersol',
+                '$this->clavesol',
+                '$this->ubigeo',
+                '$this->departamento',
+                '$this->provincia',
+                '$this->distrito')";
         return $this->conectar->ejecutar_idu($sql);
     }
 
@@ -194,6 +268,10 @@ private $conectar;
             $this->condicion = $fila['condicion'];
             $this->usersol = $fila['usersol'];
             $this->clavesol = $fila['clavesol'];
+            $this->ubigeo = $fila['ubigeo'];
+            $this->departamento = $fila['departamento'];
+            $this->provincia = $fila['provincia'];
+            $this->distrito = $fila['distrito'];
         }
     }
 

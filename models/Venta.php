@@ -382,9 +382,6 @@ class Venta
                 inner join almacen a on v.id_almacen = a.id_almacen
                 where v.serie like '$inicialserie%' and v.fecha = '$this->fecha' and v.id_almacen = '$this->idalmacen' 
                 order by v.fecha asc, v.numero desc";
-
-
-        //where v.serie like '$inicialserie%' and v.fecha > '$this->fecha' and v.id_almacen = '$this->idalmacen'";
         return $this->conectar->get_Cursor($sql);
     }
 

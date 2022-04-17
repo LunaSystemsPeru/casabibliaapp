@@ -37,10 +37,10 @@ $Resumen = new SunatResumen();
 
 // Emisor
 $address = (new Address())
-    ->setUbigueo('23021')
-    ->setDepartamento('ANCASH')
-    ->setProvincia('SANTA')
-    ->setDistrito('CHIMBOTE')
+    ->setUbigueo($Empresa->getUbigeo())
+    ->setDepartamento($Empresa->getDepartamento())
+    ->setProvincia($Empresa->getProvincia())
+    ->setDistrito($Empresa->getDistrito())
     ->setUrbanizacion('-')
     ->setDireccion($Empresa->getDireccion())
     ->setCodLocal('0000'); // Codigo de establecimiento asignado por SUNAT, 0000 por defecto.

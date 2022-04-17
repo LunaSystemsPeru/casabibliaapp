@@ -1,18 +1,26 @@
 <?php
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 require '../fixed/SessionActiva.php';
 require '../../models/Venta.php';
+require '../../tools/Util.php';
+
 $Venta = new Venta();
+$Util = new Util();
+
 $Venta->setIdalmacen($_SESSION['tiendaid']);
+$empresaruc = $_SESSION['empresaruc'];
+
 $fecha_actual = date("Y-m-d");
 $fecha_busqueda = date("Y-m-d", strtotime($fecha_actual . "- 7 days"));
-$Venta->setFecha($fecha_busqueda);
+if (filter_input(INPUT_GET, 'inputFecha')) {
+    $fecha_actual = filter_input(INPUT_GET, 'inputFecha');
+}
+$Venta->setFecha($fecha_actual);
 $arrayventas = $Venta->verFilas("F");
 
+//fecha limite fe
+$fecha_actual = date("Y-m-d");
+$fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
+$a = strtotime($fecha_limite);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -129,6 +137,8 @@ $arrayventas = $Venta->verFilas("F");
                         <div class="tab-pane fade active show" id="AllStatus">
                             <?php
                             foreach ($arrayventas as $fila) {
+                                $nombre_xml = $empresaruc . "-" . $Util->zerofill($fila['cod_sunat'], 2) . "-" . $fila['serie'] . "-" . $fila['numero'];
+                                $b = strtotime($fila['fecha']);
                                 ?>
                             <div class="card">
                                 <div class="card-body">
@@ -157,8 +167,45 @@ $arrayventas = $Venta->verFilas("F");
                                         </div>
                                         <div class="col-xl-2  col-lg-6 col-sm-4 mb-sm-3 mb-3 text-end">
                                             <div class="d-flex justify-content-end project-btn">
-                                                <label class="btn bgl-success text-success fs-18 font-w600"><i class="fa fa-check"></i> Activo</label>
-                                                <label class="btn bgl-success text-success fs-18 font-w600"><i class="fa fa-check"></i> Enviado</label>
+                                                <?php
+                                                if ($fila['estado'] == 1) {
+                                                    ?>
+                                                    <label class="btn bgl-success text-success fs-18 font-w600"><i class="fa fa-check"></i> Activo</label>
+                                                    <?php
+                                                } else {
+                                                    ?>
+                                                    <label class="btn bgl-danger text-danger fs-18 font-w600"><i class="fa fa-arrow-down"></i> Anulado</label>
+                                                    <?php
+                                                }
+                                                ?>
+                                                <!-- <button class="btn bgl-info text-info fs-18 font-w600" type="button" onclick="abrirOpcioness('<?php echo $fila['id_ventas'] ?>')" ><i class="fa fa-mouse-pointer"></i> Opciones</button>-->
+
+                                                <div class="dropdown ms-4  mt-auto mb-auto">
+                                                    <div class="btn-link" data-bs-toggle="dropdown">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12Z" stroke="#737B8B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                            <path d="M18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12Z" stroke="#737B8B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                            <path d="M4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12Z" stroke="#737B8B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="../reportes/pdf-documento-venta-ticket.php?ventaid=<?php echo $fila['id_ventas'] ?>" target="_blank">Imprimir</a>
+                                                        <a class="dropdown-item" href="../../public/xml/<?php echo $nombre_xml ?>.xml" download="<?php echo $nombre_xml . ".xml" ?>">Ver XML</a>
+                                                        <?php
+                                                        if ($fila['estado'] == 1) {
+                                                            if ($b > $a) {
+                                                                ?>
+                                                                <a class="dropdown-item" href="../controller/anular-venta.php?tipo=f&id=<?php echo $fila['id_ventas'] ?>">dar de Baja</a>
+                                                                <?php
+                                                            } else {
+                                                                ?>
+                                                                <a class="dropdown-item" href="form-nota-credito-anula.php?tipo=f&id=<?php echo $fila['id_ventas'] ?>">Anular con Nota de Credito</a>
+                                                                <?php
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -170,6 +217,32 @@ $arrayventas = $Venta->verFilas("F");
                         </div>
                     </div>
                 </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="basicModal">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form method="get" action="lista-boleta.php">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Buscar</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-md-12">
+                                        <label for="input-fecha" class="form-label">Seleccionar Fecha</label>
+                                        <input type="date" class="form-control" id="input-fecha" name="inputFecha" value="<?php echo date("Y-m-d") ?>" >
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-success light" >Buscar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!--  end modal -->
             </div>
         </div>
     </div>
@@ -190,6 +263,12 @@ $arrayventas = $Venta->verFilas("F");
 <script src="../../assets/js/custom.min.js"></script>
 <script src="../../assets/js/dlabnav-init.js"></script>
 <script src="../../assets/js/demo.js"></script>
+<script>
+    function abrirBusqueda () {
+        $("#basicModal").modal("toggle");
+    }
+
+</script>
 </body>
 
 <!-- Mirrored from fillow.dexignlab.com/xhtml/empty-page.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Oct 2021 15:06:15 GMT -->
