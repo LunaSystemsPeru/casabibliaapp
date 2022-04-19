@@ -65,21 +65,25 @@ if ($Venta->getIdtido() == 6) {
 }
 $arrayProducto = $ProductoVenta->verFilas();
 
-$pdf = new FPDF('P', 'mm', array(80, 350));
-$pdf->SetMargins(8, 8, 8);
+$pdf = new FPDF('P', 'mm', array(76, 350));
+$pdf->SetMargins(6, 8, 6);
 $pdf->SetAutoPageBreak(true, 8);
 $pdf->AddPage();
 
 $altura_linea = 4;
 
-$pdf->SetFont('Arial', '', 9);
+$pdf->SetFont('Arial', '', 12);
 $pdf->SetTextColor(00, 00, 0);
-$pdf->MultiCell(64, $altura_linea, utf8_decode($Empresa->getRuc() . " | " . $Empresa->getRazon()), 0, 'C');
-$pdf->MultiCell(64, $altura_linea, utf8_decode($Tienda->getDireccion() . " - " . $Tienda->getDepartamento() . " - " . $Tienda->getProvincia() . " - " . $Tienda->getDistrito()), 0, 'C');
+$pdf->Cell(64, $altura_linea, "**** CASA DE LA BIBLIA ****", 0, 1, 'C');
+$pdf->SetFont('Arial', '', 8);
+$pdf->MultiCell(64, $altura_linea-1, utf8_decode($Empresa->getRuc() . " | " . $Empresa->getRazon()), 0, 'C');
+$pdf->MultiCell(64, $altura_linea-1, utf8_decode($Tienda->getDireccion() . " - " . $Tienda->getDepartamento() . " - " . $Tienda->getProvincia() . " - " . $Tienda->getDistrito()), 0, 'C');
+$pdf->SetFont('Arial', '', 9);
 $pdf->Cell(64, $altura_linea, $DocumentoSunat->getDescripcion() . " ELECTRONICA", 0, 1, 'C');
 $pdf->Cell(64, $altura_linea, $Venta->getSerie() . "-" . $Util->zerofill($Venta->getNumero(), 8), 0, 1, 'C');
 $pdf->MultiCell(64, $altura_linea, utf8_decode("CLIENTE: " . $Cliente->getNombre()), 0, 'L');
 $pdf->Cell(64, $altura_linea, "DNI / RUC: " . $Cliente->getDocumento(), 0, 1, 'L');
+$pdf->Cell(64, $altura_linea, "Fecha: " . $Venta->getFecha(), 0, 1, 'L');
 $pdf->Ln();
 
 if ($Venta->getIdtido() == 6) {
@@ -134,8 +138,8 @@ $pdf->MultiCell(64, $altura_linea, "SON: " . utf8_decode($NumeroLetras->to_word(
 
 $pdf->Ln(2);
 if ($SunatVenta->getNombreDocumento()) {
-    $pdf->Image('../../generate_qr/temp/' . $SunatVenta->getNombreDocumento() . '.png', $pdf->GetX(), $pdf->GetY(), 22, 22);
-    $pdf->Ln(25);
+    $pdf->Image('../../generate_qr/temp/' . $SunatVenta->getNombreDocumento() . '.png', $pdf->GetX(), $pdf->GetY(), 34, 34);
+    $pdf->Ln(35);
     $pdf->MultiCell(64, $altura_linea, "Hash: " . $SunatVenta->getHash(), 0, 'C');
     $pdf->Ln(3);
 }
