@@ -53,11 +53,14 @@ $company = (new Company())
 
 $Venta = new Venta();
 $Venta->setFecha(filter_input(INPUT_GET, 'fecha'));
+$fecha = $Venta->getFecha();
 $arrayBoletas = $Venta->verBoletasActivas('B', $Empresa->getIdempresa());
 
 $arrayDetalle = array();
+$nroitems = 0;
 // Summary
 foreach ($arrayBoletas as $fila) {
+    $nroitems++;
     $doccliente = $fila['documento'];
     $tipocliente = "1";
     if (strlen($doccliente) == "8") {
@@ -109,8 +112,8 @@ foreach ($arrayBoletas as $fila) {
 
 $sum = new Summary();
 // Fecha Generacion menor que Fecha Resumen
-$sum->setFecGeneracion(new DateTime())
-    ->setFecResumen(new DateTime())
+$sum->setFecGeneracion(\DateTime::createFromFormat('Y-m-d', $fecha))
+    ->setFecResumen(\DateTime::createFromFormat('Y-m-d', $fecha))
     ->setCorrelativo('001')
     ->setCompany($company)
     ->setDetails($arrayDetalle);
@@ -149,7 +152,7 @@ $Resumen->setNombre($sum->getName());
 $Resumen->setFechaenvio(date("Y-m-d"));
 $Resumen->setTikect($ticket);
 $Resumen->setTipo(1); //activos
-$Resumen->setCantidad(count($arrayBoletas));
+$Resumen->setCantidad($nroitems);
 $Resumen->obtenerId();
 
 $Resumen->insertar();

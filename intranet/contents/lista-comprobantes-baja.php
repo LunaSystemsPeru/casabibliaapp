@@ -1,3 +1,10 @@
+<?php
+require '../fixed/SessionActiva.php';
+require '../../models/VentaAnulada.php';
+$Anulada = new VentaAnulada();
+$idtienda = $_SESSION['tiendaid'];
+$arrayAnulados = $Anulada->verAnuladasTienda($idtienda);
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -110,19 +117,34 @@
                         <div class="tab-pane fade active show" id="AllStatus">
                             <div class="card">
                                 <div class="card-body">
-                                    <form class="row g-3 needs-validation" novalidate>
-                                        <div class="col-md-12">
-                                            <label for="input-nombre" class="form-label">Apellidos y Nombres</label>
-                                            <input type="text" class="form-control" id="input-nombre" value="Ingrese Apellidos y Nombres" required>
-                                        </div>
-                                        <div class="col-12">
-                                            <button class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
-                                        </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-body">
-
+                                    <table class="table table-responsive-md">
+                                        <thead>
+                                        <tr>
+                                            <th style="width:80px;"><strong>FECHA ANULADO</strong></th>
+                                            <th><strong>DOCUMENTO</strong></th>
+                                            <th><strong>Usuario</strong></th>
+                                            <th><strong>Enviado</strong></th>
+                                            <th><strong>Estado</strong></th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                        foreach ($arrayAnulados as $fila) {
+                                            ?>
+                                            <tr>
+                                                <td><strong><?php echo $fila['fecha_anulada'] ?></strong></td>
+                                                <td><?php echo $fila['abreviado']. " | ". $fila['serie'] . "-". $fila['numero'] ?></td>
+                                                <td><?php echo $fila['username'] ?></td>
+                                                <td><?php echo $fila['enviado_sunat'] ?></td>
+                                                <td><?php echo $fila['aceptado_sunat'] ?></td>
+                                                <td></td>
+                                            </tr>
+                                            <?php
+                                        }
+                                        ?>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>

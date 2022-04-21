@@ -167,6 +167,16 @@ class SunatResumen
                 '$this->tipo',
                 '$this->idempresa',
                 '$this->estado')";
+        echo $sql;
         return $this->conectar->ejecutar_idu($sql);
+    }
+
+    public function verEnvios()
+    {
+        $sql = "select sr.id, sr.fecha_envio, sr.ticket, sr.nombre, sr.cantidad, sr.tipo, e.razon, sr.estado
+                from sunat_resumen as sr
+                inner join empresa e on sr.id_empresa = e.id_empresa
+                where fecha_envio> date_sub(current_date(), interval 40 day) and sr.id_empresa = '$this->idempresa'";
+        return $this->conectar->get_Cursor($sql);
     }
 }

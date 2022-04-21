@@ -43,6 +43,7 @@ if ($Usuario->getIdusuario()) {
 
             $_SESSION['tiendaid'] = $Usuario->getIdalmacen();
             $_SESSION['empresaruc'] = $Empresa->getRuc();
+            $_SESSION['empresaid'] = $Empresa->getIdempresa();
             $_SESSION['usuarioid'] = $Usuario->getIdusuario();
             header("Location: ../contents/form-venta.php");
         } else {

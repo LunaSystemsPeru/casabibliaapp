@@ -1,3 +1,10 @@
+<?php
+require '../fixed/SessionActiva.php';
+require '../../models/SunatResumen.php';
+$Sunat = new SunatResumen();
+$Sunat->setIdempresa($_SESSION['empresaid']);
+$arrayTickets = $Sunat->verEnvios();
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -108,7 +115,7 @@
                 <div class="col-xl-12">
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="AllStatus">
-                            <div class="card">
+                            <!--<div class="card">
                                 <div class="card-body">
                                     <form class="row g-3 needs-validation" novalidate>
                                         <div class="col-md-12">
@@ -119,10 +126,45 @@
                                             <button class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
                                         </div>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="card">
                                 <div class="card-body">
-
+                                    <table class="table table-responsive-md">
+                                        <thead>
+                                        <tr>
+                                            <th style="width:80px;"><strong>FECHA ENVIO</strong></th>
+                                            <th><strong>TICKET</strong></th>
+                                            <th><strong>XML</strong></th>
+                                            <th><strong>CANTIDAD DOC</strong></th>
+                                            <th><strong>TIPO ENVIO</strong></th>
+                                            <th><strong>EMPRESA</strong></th>
+                                            <th><strong>ESTADO</strong></th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                        foreach ($arrayTickets as $fila) {
+                                            $tipo = "ACTIVOS";
+                                            if ($fila['tipo'] == 2) {
+                                                $tipo = "ANULADOS";
+                                            }
+                                            ?>
+                                            <tr>
+                                                <td><strong><?php echo $fila['fecha_envio'] ?></strong></td>
+                                                <td><?php echo $fila['ticket'] ?></td>
+                                                <td><?php echo $fila['nombre'] ?></td>
+                                                <td><?php echo $fila['cantidad'] ?></td>
+                                                <td><?php echo $tipo ?></td>
+                                                <td><?php echo $fila['razon'] ?></td>
+                                                <td><span class="badge light badge-success">Aceptado</span></td>
+                                                <td></td>
+                                            </tr>
+                                            <?php
+                                        }
+                                        ?>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>

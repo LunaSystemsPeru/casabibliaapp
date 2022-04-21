@@ -57,8 +57,10 @@ $fecha = filter_input(INPUT_GET, 'fecha');
 $arrayBoletas = $Anulada->verVentasAnuladas('B', $Empresa->getIdempresa(), $fecha);
 
 $arrayDetalle = array();
+$nroitems = 0;
 // Summary
 foreach ($arrayBoletas as $fila) {
+    $nroitems++;
     $doccliente = $fila['documento'];
     $tipocliente = "1";
     if (strlen($doccliente) == "8") {
@@ -112,7 +114,7 @@ $sum = new Summary();
 // Fecha Generacion menor que Fecha Resumen
 $sum->setFecGeneracion(\DateTime::createFromFormat('Y-m-d', $fecha))
     ->setFecResumen(\DateTime::createFromFormat('Y-m-d', $fecha))
-    ->setCorrelativo('002')
+    ->setCorrelativo('001')
     ->setCompany($company)
     ->setDetails($arrayDetalle);
 
@@ -147,10 +149,10 @@ file_put_contents("../../public/cdr/".'R-'.$sum->getName().'.zip', $res->getCdrZ
 
 $Resumen->setIdempresa($Empresa->getIdempresa());
 $Resumen->setNombre($sum->getName());
-$Resumen->setFechaenvio($fecha);
+$Resumen->setFechaenvio(date("Y-m-d"));
 $Resumen->setTikect($ticket);
-$Resumen->setTipo(1); //activos
-$Resumen->setCantidad(count($arrayBoletas));
+$Resumen->setTipo(2); //anulados
+$Resumen->setCantidad($nroitems);
 $Resumen->obtenerId();
 
 $Resumen->insertar();

@@ -110,7 +110,8 @@ class VentaAnulada
         return $this->conectar->ejecutar_idu($sql);
     }
 
-    public function verVentasAnuladas ($inicialserie, $idempresa, $fecha){
+    public function verVentasAnuladas($inicialserie, $idempresa, $fecha)
+    {
         $sql = "select v.fecha, v.id_tido, v.serie, v.numero, ds.abreviado, ds.cod_sunat , c.documento, c.nombre, v.estado, v.total, v.igv, a.nombre as ntienda, v.id_ventas 
                 from ventas_anuladas as va
                 inner join ventas v on va.id_ventas = v.id_ventas
@@ -120,6 +121,18 @@ class VentaAnulada
                 inner join empresa e on a.id_empresa = e.id_empresa
                 where v.serie like '$inicialserie%' and va.fecha_anulada = '$fecha' and e.id_empresa = '$idempresa' 
                 order by v.fecha asc, v.numero desc";
+        return $this->conectar->get_Cursor($sql);
+    }
+
+    public function verAnuladasTienda($idtienda)
+    {
+        $sql = "select va.fecha_anulada, va.id_ventas, va.enviado_sunat, va.aceptado_sunat, v.serie, v.numero, ds.abreviado, u.username
+                from ventas_anuladas as va
+                inner join ventas v on va.id_ventas = v.id_ventas
+                inner join documentos_sunat ds on v.id_tido = ds.id_tido
+                inner join usuarios u on v.id_usuarios = u.id_usuarios
+                where va.fecha_anulada > date_sub(current_date(), interval 7 day) and v.id_almacen = '$idtienda' 
+                order by va.fecha_anulada desc";
         return $this->conectar->get_Cursor($sql);
     }
 }
