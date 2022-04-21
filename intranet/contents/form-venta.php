@@ -294,7 +294,7 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
                                                 <div class="col-12">
                                                     <div class="skip-email text-center">
                                                         <p>Verificar datos antes de Grabar</p>
-                                                        <button class="btn btn-success" type="button" onclick="grabarVenta()"><i class="fa fa-save"></i> Generar Documento</button>
+                                                        <button class="btn btn-success" type="button" id="btn-grabar-venta" onclick="grabarVenta()"><i class="fa fa-save"></i> Generar Documento</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -402,7 +402,7 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
         var precio = $("#input-precio-venta").val();
         var cantidad = $("#input-cantidad").val();
         var costo = 0;
-        arrayProductos.push({'idproducto': idproducto, 'codexterno': codexterno, 'nombre': nombre, 'precio': precio, 'cantidad': cantidad, 'costo' : costo});
+        arrayProductos.push({'idproducto': idproducto, 'codexterno': codexterno, 'nombre': nombre, 'precio': precio, 'cantidad': cantidad, 'costo': costo});
         mostrarItemsProductos();
     }
 
@@ -452,7 +452,7 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
                 '<div class="col-xl-1 col-lg-1 col-sm-1 col-md-1 mb-sm-4 mb-0">' +
                 '<div class="d-flex project-image">' +
                 '<div>' +
-                '<button class="btn btn-danger" type="button" onclick="eliminaProducto('+arrayProductos[i].idproducto+')"><i class="fa fa-trash"></i> </button>' +
+                '<button class="btn btn-danger" type="button" onclick="eliminaProducto(' + arrayProductos[i].idproducto + ')"><i class="fa fa-trash"></i> </button>' +
                 '</div>' +
                 '</div>' +
                 '</div>' +
@@ -506,8 +506,8 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
             $("#input-add-direccion-cliente").val(jsonresultado.direccion);
             $("#input-add-telefono-cliente").focus();
         })
-            .fail(function(data) {
-                alert( data );
+            .fail(function (data) {
+                alert(data);
             });
     }
 
@@ -602,14 +602,24 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
         }
     }
 
-    function grabarVenta () {
+    function grabarVenta() {
         //validar cliente sea correcto
         var tidoid = $("#select_tipo_comprobante").val();
         var nrodoccliente = $("#input-nro-documento").val();
+        var idcliente = $("#hidden-id-cliente").val();
+        var nombrecliente = $("#input-nombre").val();
+       // console.log("idcliente:" + idcliente + ":hola");
+        //console.log("tidoid:" + tidoid);
         //si es factura debe ser ruc
-        if (tidoid == 4 && nrodoccliente.length != 11) {
-            alert("Cliente debe ser una empresa")
-            return false;
+        if (tidoid == 4) {
+            if (idcliente === "") {
+                alert("Debe seleccionar un cliente");
+                return false;
+            }
+            if (nrodoccliente.length != 11) {
+                alert("Cliente debe ser una empresa")
+                return false;
+            }
         }
 
         //si es boleta debe ser dni o 0
@@ -623,7 +633,7 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
 
         //validar existan prodctos
         if (arrayProductos.length == 0) {
-            alert ("No ha seleccionado productos");
+            alert("No ha seleccionado productos");
             return false;
         }
         //enviar datos
@@ -634,6 +644,7 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
             arrayProductos: JSON.stringify(arrayProductos)
         };
         alert("se registrata el comprobante, acepte y espere un momento");
+        $("#btn-grabar-venta").prop("disabled", true);
         $.post("../controller/registrar-venta.php", arraypost, function (data) {
             //alert(data);
             var jsonresultado = JSON.parse(data);

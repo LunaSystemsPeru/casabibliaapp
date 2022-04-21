@@ -128,7 +128,7 @@ $a = strtotime($fecha_limite);
                     <h3>Mis Facturas</h3>
                 </div>
                 <div class="mb-4">
-                    <a href="javascript:void(0);" class="btn btn-primary btn-rounded fs-18">Buscar acturas</a>
+                    <button onclick="abrirBusqueda()" class="btn btn-primary btn-rounded fs-18">Buscar Facturas</button>
                 </div>
             </div>
             <div class="row">
@@ -222,7 +222,7 @@ $a = strtotime($fecha_limite);
                 <div class="modal fade" id="basicModal">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
-                            <form method="get" action="lista-boleta.php">
+                            <form method="get" action="lista-factura.php">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Buscar</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal">
