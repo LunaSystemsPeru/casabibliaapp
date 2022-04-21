@@ -155,8 +155,38 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
                                             </div>
                                             <div class="col-xl-2  col-lg-6 col-sm-4 mb-sm-3 mb-3 text-end">
                                                 <div class="d-flex justify-content-end project-btn">
-                                                    <label class="btn bgl-success text-success fs-18 font-w600"><i class="fa fa-check"></i> Activo</label>
-                                                    <button class="btn bgl-info text-info fs-18 font-w600" type="button" onclick="abrirOpcioness()"><i class="fa fa-mouse-pointer"></i> Opciones</button>
+                                                    <?php
+                                                    if ($fila['estado'] == 1) {
+                                                        ?>
+                                                        <label class="btn bgl-success text-success fs-18 font-w600"><i class="fa fa-check"></i> Activo</label>
+                                                        <?php
+                                                    } else {
+                                                        ?>
+                                                        <label class="btn bgl-danger text-danger fs-18 font-w600"><i class="fa fa-arrow-down"></i> Anulado</label>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                    <!-- <button class="btn bgl-info text-info fs-18 font-w600" type="button" onclick="abrirOpcioness('<?php echo $fila['id_ventas'] ?>')" ><i class="fa fa-mouse-pointer"></i> Opciones</button>-->
+
+                                                    <div class="dropdown ms-4  mt-auto mb-auto">
+                                                        <div class="btn-link" data-bs-toggle="dropdown">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12Z" stroke="#737B8B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                <path d="M18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12Z" stroke="#737B8B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                <path d="M4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12Z" stroke="#737B8B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                            </svg>
+                                                        </div>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <a class="dropdown-item" href="../reportes/pdf-documento-venta-ticket.php?ventaid=<?php echo $fila['id_ventas'] ?>" target="_blank">Imprimir</a>
+                                                            <?php
+                                                            if ($fila['estado'] == 1) {
+                                                                    ?>
+                                                                    <a class="dropdown-item" href="../controller/anular-venta.php?tipo=f&id=<?php echo $fila['id_ventas'] ?>">dar de Baja</a>
+                                                                    <?php
+                                                            }
+                                                            ?>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

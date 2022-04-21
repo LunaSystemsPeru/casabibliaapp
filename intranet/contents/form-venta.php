@@ -32,6 +32,7 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
     <link href="../../vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
     <link href="../../assets/css/style.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" media="all"/>
 </head>
 <body data-primary="color_5">
 <!--*******************
@@ -334,7 +335,6 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
 <script src="../../assets/js/demo.js"></script>
 <script src="../../assets/js/styleSwitcher.js"></script>
 
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" media="all"/>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"
         integrity="sha256-6XMVI0zB8cRzfZjqKcD01PBsAy3FlDASrlC8SxCpInY="
         crossorigin="anonymous"></script>
@@ -496,6 +496,7 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
         alert("Cargando Datos espere un momento por favor");
         var arraypost = {documento: nrodocumento};
         $.post("../../ajax/obtener-datos-cliente.php", arraypost, function (data) {
+            console.log(data);
             var jsonresultado = JSON.parse(data);
             if (jsonresultado.success == "error") {
                 alert("Error en el dni o ruc");
@@ -504,7 +505,10 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
             $("#input-add-datos-cliente").val(jsonresultado.datos);
             $("#input-add-direccion-cliente").val(jsonresultado.direccion);
             $("#input-add-telefono-cliente").focus();
-        });
+        })
+            .fail(function(data) {
+                alert( data );
+            });
     }
 
     function guardarCliente() {
