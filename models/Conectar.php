@@ -13,8 +13,8 @@ class conectar
     private static $_instancia;
     private $_connection;
     private $_link;
-    private $_host = "localhost";
-    //private $_host = "artemisa.servidoresph.com";
+    //private $_host = "localhost";
+    private $_host = "artemisa.servidoresph.com";
     private $_user = "brunoasc_luis_bd";
     private $_pass = "C]6&TN4Bt@&I";
     // Almacenar una unica instancia

@@ -114,45 +114,55 @@ $sum = new Summary();
 // Fecha Generacion menor que Fecha Resumen
 $sum->setFecGeneracion(\DateTime::createFromFormat('Y-m-d', $fecha))
     ->setFecResumen(\DateTime::createFromFormat('Y-m-d', $fecha))
-    ->setCorrelativo('001')
+    ->setCorrelativo('002')
     ->setCompany($company)
     ->setDetails($arrayDetalle);
 
+if ($nroitems > 0) {
+
 // Envio a SUNAT.
-$res = $see->send($sum);
+    $res = $see->send($sum);
 // Guardar XML firmado digitalmente.
-file_put_contents("../../public/xml/".$sum->getName().'.xml',
-    $see->getFactory()->getLastXml());
+    file_put_contents("../../public/xml/" . $sum->getName() . '.xml',
+        $see->getFactory()->getLastXml());
 
-if (!$res->isSuccess()) {
-    print_r($res->getError());
-    return;
-}
+    $Resumen->setEstado(1);
+    if (!$res->isSuccess()) {
+        print_r($res->getError());
+        $Resumen->setEstado(0);
+        // return;
+    }
 
-/**@var $res SummaryResult */
-$ticket = $res->getTicket();
-echo 'Ticket :<strong>' . $ticket . '</strong>';
+    /**@var $res SummaryResult */
+    $ticket = $res->getTicket();
+    echo 'Ticket :<strong>' . $ticket . '</strong>';
 
-$res = $see->getStatus($ticket);
-$Resumen->setEstado(1);
-if (!$res->isSuccess()) {
-    print_r($res->getError());
-    $Resumen->setEstado(0);
-    return;
-}
 
-$cdr = $res->getCdrResponse();
+    $Resumen->setIdempresa($Empresa->getIdempresa());
+    $Resumen->setNombre($sum->getName());
+    $Resumen->setFechaenvio(date("Y-m-d"));
+    $Resumen->setTikect($ticket);
+    $Resumen->setTipo(2); //anulados
+    $Resumen->setCantidad($nroitems);
+    $Resumen->obtenerId();
+
+    $Resumen->insertar();
+
+    if ($Resumen->getEstado() == 0) {
+        return;
+    }
+
+    $res = $see->getStatus($ticket);
+    if (!$res->isSuccess()) {
+        print_r($res->getError());
+        $Resumen->setEstado(0);
+        return;
+    }
+
+    $cdr = $res->getCdrResponse();
 //$util->writeCdr($sum, $res->getCdrZip());
 // Guardamos el CDR
-file_put_contents("../../public/cdr/".'R-'.$sum->getName().'.zip', $res->getCdrZip());
+    file_put_contents("../../public/cdr/" . 'R-' . $sum->getName() . '.zip', $res->getCdrZip());
 //$util->showResponse($sum, $cdr);
 
-$Resumen->setIdempresa($Empresa->getIdempresa());
-$Resumen->setNombre($sum->getName());
-$Resumen->setFechaenvio(date("Y-m-d"));
-$Resumen->setTikect($ticket);
-$Resumen->setTipo(2); //anulados
-$Resumen->setCantidad($nroitems);
-$Resumen->obtenerId();
-
-$Resumen->insertar();
+}
