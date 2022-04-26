@@ -109,4 +109,4 @@ foreach ($arrayVentas as $fila) {
 $xlsx = SimpleXLSXGen::fromArray($books);
 $xlsx->saveAs($Empresa->getRuc()."-".$periodo.'.xlsx');
 
-echo "archivo generado";
+echo json_encode(['name'=> $Empresa->getRuc()."-".$periodo.'.xlsx']);

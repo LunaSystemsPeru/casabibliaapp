@@ -34,9 +34,9 @@
 
             </li>
 
-            <li><a href="lista-venta.php" aria-expanded="false">
+            <li><a href="form-libro-ventas.php" aria-expanded="false">
                     <i class="fas fa-search"></i>
-                    <span class="nav-text">Buscar Venta por cliente</span>
+                    <span class="nav-text">Reporte de Ventas Mensual</span>
                 </a>
 
             </li>
