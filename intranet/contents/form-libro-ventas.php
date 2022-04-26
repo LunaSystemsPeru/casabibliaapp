@@ -160,7 +160,9 @@ require '../fixed/SessionActiva.php';
         var empresaid = $('#selectEmpresa').val();
         $.get("../reportes/excel_ventas_rango_fechas.php", {fecha: fecha, empresa: empresaid})
             .done(function (data) {
-                alert(data);
+                jsondata = JSON.parse(data);
+                var archivo = jsondata.name;
+                window.location.href = "../reportes/" + archivo ;
             });
     }
 

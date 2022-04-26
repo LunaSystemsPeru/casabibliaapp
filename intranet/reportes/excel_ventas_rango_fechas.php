@@ -14,7 +14,7 @@ $fechaEntera = strtotime($fecha);
 $anio = date("Y", $fechaEntera);
 $mes = date("m", $fechaEntera);
 
-$periodo = $anio.$mes;
+$periodo = $anio . $mes;
 
 $Empresa->setIdempresa(1);
 $Empresa->obtenerDatos();
@@ -23,8 +23,8 @@ $Empresa->obtenerDatos();
 $books = array();
 
 $fila = [
-  'RUC',
-  $Empresa->getRuc()
+    'RUC',
+    $Empresa->getRuc()
 ];
 $books[] = $fila;
 
@@ -61,6 +61,10 @@ $fila = ['Item',
 $books[] = $fila;
 
 $nrofila = 0;
+$totalbase = 0;
+$totaligv = 0;
+$totalexonerado = 0;
+$totalgeneral = 0;
 foreach ($arrayVentas as $fila) {
     $clientesunat = "0";
     if (strlen($fila['documento']) == 11) {
@@ -88,6 +92,11 @@ foreach ($arrayVentas as $fila) {
     //print_r($fila);
     //echo "</pre>";
     $nrofila++;
+
+    $totalbase = $totalbase + $basegravado;
+    $totaligv = $totaligv + $igv;
+    $totalexonerado = $totalexonerado + $exonerado;
+    $totalgeneral = $totalgeneral + $total;
     $fila = [
         $nrofila,
         $fila['fecha'],
@@ -106,7 +115,27 @@ foreach ($arrayVentas as $fila) {
     ];
     $books[] = $fila;
 }
-$xlsx = SimpleXLSXGen::fromArray($books);
-$xlsx->saveAs($Empresa->getRuc()."-".$periodo.'.xlsx');
 
-echo json_encode(['name'=> $Empresa->getRuc()."-".$periodo.'.xlsx']);
+$fila = [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    number_format($totalbase, 2),
+    number_format($totalexonerado, 2),
+    number_format($totaligv, 2),
+    number_format($totalgeneral, 2),
+    ""
+];
+$books[] = $fila;
+
+
+$xlsx = SimpleXLSXGen::fromArray($books);
+$xlsx->saveAs($Empresa->getRuc() . "-" . $periodo . '.xlsx');
+
+echo json_encode(['name' => $Empresa->getRuc() . "-" . $periodo . '.xlsx']);
