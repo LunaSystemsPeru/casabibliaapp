@@ -72,9 +72,13 @@ $pdf->AddPage();
 
 $altura_linea = 4;
 
-$pdf->SetFont('Arial', '', 12);
-$pdf->SetTextColor(00, 00, 0);
-$pdf->Cell(64, $altura_linea, "**** CASA DE LA BIBLIA ****", 0, 1, 'C');
+$pdf->Image('../../assets/images/casabiblialogo.png', $pdf->GetX(), $pdf->GetY(), 64, 16);
+
+$pdf->Ln(18);
+
+//$pdf->SetFont('Arial', '', 12);
+//$pdf->SetTextColor(00, 00, 0);
+//$pdf->Cell(64, $altura_linea, "**** CASA DE LA BIBLIA ****", 0, 1, 'C');
 $pdf->SetFont('Arial', '', 8);
 $pdf->MultiCell(64, $altura_linea-1, utf8_decode($Empresa->getRuc() . " | " . $Empresa->getRazon()), 0, 'C');
 $pdf->MultiCell(64, $altura_linea-1, utf8_decode($Tienda->getDireccion() . " - " . $Tienda->getDepartamento() . " - " . $Tienda->getProvincia() . " - " . $Tienda->getDistrito()), 0, 'C');

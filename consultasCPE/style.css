@@ -14889,7 +14889,7 @@ ul {
 35. Demo Layout Thirty Two
 =========================================================================*/
 .fxt-template-layout32 {
-  background-color: #a93cd8;
+  background-color: #ffffff;
   min-height: 100vh;
   width: 100%;
   display: -webkit-box;
@@ -14904,7 +14904,7 @@ ul {
   padding: 60px 30px;
   position: inherit;
 }
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 900px) {
   .fxt-template-layout32 {
     padding: 40px 20px;
   }
@@ -14917,7 +14917,7 @@ ul {
 .fxt-template-layout32 .fxt-content-wrap {
   border: 1px solid #ffffff;
   display: inline-block;
-  max-width: 700px;
+  max-width: 900px;
   border-radius: 10px;
   padding: 120px 85px 100px;
   position: relative;
@@ -14963,7 +14963,7 @@ ul {
   }
 }
 .fxt-template-layout32 .fxt-content-wrap .fxt-main-title {
-  color: #ffffff;
+  color: #fa0000;
   font-size: 36px;
   font-weight: 700;
   margin-bottom: 5px;
@@ -15031,8 +15031,8 @@ ul {
 }
 .fxt-template-layout32 .fxt-content-wrap .fxt-modal-btn {
   display: inline-block;
-  color: #ffffff;
-  border: 1px solid #ffffff;
+  color: #ff0000;
+  border: 1px solid #ff0000;
   font-size: 20px;
   padding: 5px 20px;
   border-radius: 5px;
@@ -15051,8 +15051,8 @@ ul {
   }
 }
 .fxt-template-layout32 .fxt-content-wrap .fxt-modal-btn:hover {
-  color: #14133b;
-  background-color: #ffffff;
+  color: #ffffff;
+  background-color: #ff0000;
 }
 .fxt-template-layout32 .fxt-content-wrap .fxt-modal-btn:focus {
   outline: none;

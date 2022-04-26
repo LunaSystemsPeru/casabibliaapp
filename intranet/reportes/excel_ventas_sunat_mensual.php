@@ -7,7 +7,6 @@ $Venta = new Venta();
 $Empresa = new Empresa();
 
 $fecha = filter_input(INPUT_GET, 'fecha');
-$fecha = date("Y-m-d");
 $arrayVentas = $Venta->verDocumentosPLE($fecha);
 
 $fechaEntera = strtotime($fecha);
@@ -36,7 +35,7 @@ $books[] = $fila;
 
 $fila = [
     'Periodo:',
-    '202204'
+    $periodo
 ];
 $books[] = $fila;
 

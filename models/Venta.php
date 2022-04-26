@@ -425,4 +425,26 @@ class Venta
                 where year(v.fecha) = year('$fecha') and month(v.fecha) = month('$fecha') and v.id_tido != 2 and v.id_tido != 9";
         return $this->conectar->get_Cursor($sql);
     }
+
+    public function verVentasBanco($fechainicio, $fechafinal)
+    {
+        $sql = "select v.fecha, ds.abreviado, v.serie, v.numero, c.documento, c.nombre as ncliente, p.descripcion, pv.cantidad, pv.precio, a.nombre as ntienda
+                from productos_ventas as pv
+                         inner join productos p on pv.id_producto = p.id_producto
+                         inner join ventas v on pv.id_ventas = v.id_ventas
+                         inner join documentos_sunat ds on v.id_tido = ds.id_tido
+                         inner join clientes c on v.id_cliente = c.id_cliente
+                         inner join almacen a on v.id_almacen = a.id_almacen
+                where v.fecha between '$fechainicio' and '$fechafinal'  and v.estado = 1
+                order by v.fecha asc, v.numero asc";
+        return $this->conectar->get_Cursor($sql);
+    }
+
+    public function consultaCPE()
+    {
+        $sql = "select id_ventas
+                from ventas as v
+                where v.fecha = '$this->fecha' and v.id_tido = '$this->idtido' and v.serie = '$this->serie' and v.numero = '$this->numero' and v.total = '$this->total'";
+        $this->idventa = $this->conectar->get_valor_query($sql, 'id_ventas');
+    }
 }

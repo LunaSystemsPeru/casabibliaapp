@@ -132,6 +132,37 @@ require '../fixed/SessionActiva.php';
                         </div>
                     </div>
                 </div>
+
+                <div class="col-xl-6">
+                    <div class="tab-content">
+                        <div class="card">
+                            <div class="card-header">
+                                <p class="card-title">Excel Ventas Banco</p>
+                            </div>
+                            <div class="card-body">
+                                <form class="row g-3 needs-validation" novalidate>
+                                    <div class="col-md-12">
+                                        <label for="inputFechaInicio" class="form-label">Fecha Inicio</label>
+                                        <input type="date" class="form-control" id="inputFechaInicio" value="<?php echo date('Y-m-d') ?>" required>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="inputFechaFinal" class="form-label">Fecha Final</label>
+                                        <input type="date" class="form-control" id="inputFechaFinal" value="<?php echo date('Y-m-d') ?>" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="input-documento" class="form-label">Empresa</label>
+                                        <select class="form-control" id="selectEmpresa">
+                                            <option value="">Empresa 1</option>
+                                        </select>
+                                    </div>
+                                </form>
+                                <div class="col-12">
+                                    <button class="btn btn-primary" type="button" onclick="generarFileBanco()"><i class="fas fa-search"></i> Buscar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -158,7 +189,19 @@ require '../fixed/SessionActiva.php';
     function generarFile() {
         var fecha = $('#inputFecha').val();
         var empresaid = $('#selectEmpresa').val();
-        $.get("../reportes/excel_ventas_rango_fechas.php", {fecha: fecha, empresa: empresaid})
+        $.get("../reportes/excel_ventas_sunat_mensual.php", {fecha: fecha, empresa: empresaid})
+            .done(function (data) {
+                jsondata = JSON.parse(data);
+                var archivo = jsondata.name;
+                window.location.href = "../reportes/" + archivo ;
+            });
+    }
+
+    function generarFileBanco() {
+        var fechainicio = $('#inputFechaInicio').val();
+        var fechafinal = $('#inputFechaFinal').val();
+        var empresaid = $('#selectEmpresa').val();
+        $.get("../reportes/excel_ventas_rango_banco.php", {fechainicio: fechainicio, fechafinal: fechafinal})
             .done(function (data) {
                 jsondata = JSON.parse(data);
                 var archivo = jsondata.name;
