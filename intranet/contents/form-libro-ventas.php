@@ -124,9 +124,10 @@ require '../fixed/SessionActiva.php';
                                             <option value="">Empresa 1</option>
                                         </select>
                                     </div>
-                                    <div class="col-12">
-                                        <button class="btn btn-primary" type="button" onclick="generarFile()"><i class="fas fa-search"></i> Buscar</button>
-                                    </div>
+                                </form>
+                                <div class="col-12">
+                                    <button class="btn btn-primary" type="button" onclick="generarFile()"><i class="fas fa-search"></i> Buscar</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -157,7 +158,7 @@ require '../fixed/SessionActiva.php';
     function generarFile() {
         var fecha = $('#inputFecha').val();
         var empresaid = $('#selectEmpresa').val();
-        $.GET("../reportes/excel_ventas_rango_fechas.php", {fecha: fecha, empresa: empresaid})
+        $.get("../reportes/excel_ventas_rango_fechas.php", {fecha: fecha, empresa: empresaid})
             .done(function (data) {
                 alert(data);
             });
