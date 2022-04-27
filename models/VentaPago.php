@@ -105,6 +105,15 @@ class VentaPago
         $this->idcobro = $this->conectar->get_valor_query($sql, 'codigo');
     }
 
+    public function obtenerEfectivo($idalmacen)
+    {
+        $sql = "select sum(monto) as total  
+                from ventas_cobros 
+                inner join ventas v on ventas_cobros.id_ventas = v.id_ventas
+                where ventas_cobros.fecha = '$this->fecha' and tipo_pago = '$this->tipopago' and v.id_almacen= '$idalmacen'";
+        return $this->conectar->get_valor_query($sql, 'total');
+    }
+
     public function insertar()
     {
         $sql = "insert into ventas_cobros

@@ -6,11 +6,15 @@
                     <span class="nav-text">Inicio</span>
                 </a>
             </li>
+            <li><a href="lista-caja-diaria.php" aria-expanded="false">
+                    <i class="fas fa-money-bill"></i>
+                    <span class="nav-text">Caja Diaria</span>
+                </a>
+            </li>
             <li><a href="form-venta.php" aria-expanded="false">
                     <i class="fas fa-plus"></i>
                     <span class="nav-text">Agregar Documento Venta</span>
                 </a>
-
             </li>
             <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
                     <i class="fas fa-file-pdf"></i>

@@ -608,6 +608,8 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
         var nrodoccliente = $("#input-nro-documento").val();
         var idcliente = $("#hidden-id-cliente").val();
         var nombrecliente = $("#input-nombre").val();
+        var pagoEfectivo = $("#input-efectivo").val();
+        var pagoTarjeta = $("#input-tarjeta").val();
        // console.log("idcliente:" + idcliente + ":hola");
         //console.log("tidoid:" + tidoid);
         //si es factura debe ser ruc
@@ -641,6 +643,8 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
             inputFecha: $("#input-fecha").val(),
             inputTido: $("#select_tipo_comprobante").val(),
             inputClienteId: $("#hidden-id-cliente").val(),
+            pagoEfectivo: pagoEfectivo,
+            pagoTarjeta: pagoTarjeta,
             arrayProductos: JSON.stringify(arrayProductos)
         };
         alert("se registrata el comprobante, acepte y espere un momento");

@@ -4,12 +4,15 @@ require '../../models/Venta.php';
 $Venta = new Venta();
 $Venta->setIdalmacen($_SESSION['tiendaid']);
 $fecha_actual = date("Y-m-d");
+
+if (filter_input(INPUT_GET, 'inputFecha')) {
+    $fecha_actual = filter_input(INPUT_GET, 'inputFecha');
+}
 $Venta->setFecha($fecha_actual);
 $Venta->setIdtido(2);
 $arrayventas = $Venta->verNotas();
 
 //fecha limite fe
-$fecha_actual = date("Y-m-d");
 $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
 ?>
 <!DOCTYPE html>
@@ -118,7 +121,7 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
                     <h3>Mis Ventas - Ultima Semana</h3>
                 </div>
                 <div class="mb-4">
-                    <a href="javascript:void(0);" class="btn btn-primary btn-rounded fs-18">Buscar por Fecha</a>
+                    <button onclick="abrirBusqueda()" class="btn btn-primary btn-rounded fs-18">Buscar por Fecha</button>
                 </div>
             </div>
             <div class="row">
@@ -203,35 +206,21 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
             <div class="modal fade" id="basicModal">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <form method="post" action="#">
+                        <form method="get" action="lista-nota-venta.php">
                             <div class="modal-header">
-                                <h5 class="modal-title">Agregar nuevo Cliente</h5>
+                                <h5 class="modal-title">Buscar</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal">
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="mb-3 col-md-12">
-                                    <label for="input-nro-documento" class="form-label">Nro Documento</label>
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="Buscar por RUC, DNI o Nombre" id="input-add-nro-documento" minlength="8" maxlength="11">
-                                    </div>
-                                </div>
-                                <div class="mb-3 col-md-12">
-                                    <label class="form-label">Razon Social o Apellidos y Nombres *</label>
-                                    <input type="text" class="form-control" id="input-add-datos-cliente" required>
-                                </div>
-                                <div class="mb-3 col-md-12">
-                                    <label class="form-label">Direccion *</label>
-                                    <input type="text" class="form-control" id="input-add-direccion-cliente" required>
-                                </div>
-                                <div class="mb-3 col-md-12">
-                                    <label class="form-label">Telefono / Celular</label>
-                                    <input type="text" class="form-control" id="input-add-telefono-cliente">
+                                <div class="col-md-12">
+                                    <label for="input-fecha" class="form-label">Seleccionar Fecha</label>
+                                    <input type="date" class="form-control" id="input-fecha" name="inputFecha" value="<?php echo date("Y-m-d") ?>" >
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="button" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
+                                <button type="submit" class="btn btn-success light" >Buscar</button>
                             </div>
                         </form>
                     </div>
@@ -258,6 +247,11 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
 <script src="../../assets/js/dlabnav-init.js"></script>
 <script src="../../assets/js/demo.js"></script>
 <script src="../../assets/js/styleSwitcher.js"></script>
+<script>
+    function abrirBusqueda () {
+        $("#basicModal").modal("toggle");
+    }
+</script>
 </body>
 
 <!-- Mirrored from fillow.dexignlab.com/xhtml/empty-page.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Oct 2021 15:06:15 GMT -->

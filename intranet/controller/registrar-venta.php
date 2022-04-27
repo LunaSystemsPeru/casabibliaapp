@@ -64,7 +64,7 @@ if (filter_input(INPUT_POST, 'pagoEfectivo') > 0) {
 }
 
 if (filter_input(INPUT_POST, 'pagoTarjeta') > 0) {
-    $PagoVenta->setTipopago(1);
+    $PagoVenta->setTipopago(2);
     $PagoVenta->setMonto(filter_input(INPUT_POST, 'pagoTarjeta'));
     $PagoVenta->obtenerId();
     $PagoVenta->insertar();

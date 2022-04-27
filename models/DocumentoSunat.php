@@ -128,4 +128,14 @@ class DocumentoSunat
                 where id_tido = '$this->idtido' ";
         return $this->conectar->get_Cursor($sql);
     }
+
+    public function ventasDia($fecha)
+    {
+        $sql = "select ds.descripcion, ifnull(sum(v.total),0) as monto
+                from documentos_sunat as ds
+                left join ventas v on ds.id_tido = v.id_tido
+                and v.fecha = '$fecha'
+                group by ds.id_tido";
+        return $this->conectar->get_Cursor($sql);
+    }
 }
