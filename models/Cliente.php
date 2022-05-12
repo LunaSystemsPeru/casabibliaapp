@@ -182,9 +182,9 @@ class Cliente
                 '$this->direccion',   
                 '$this->telefono',
                 '$this->celular',
-                '$this->venta',     
-                '$this->pago',  
-                '$this->ultimaventa')";
+                '0',     
+                '0',  
+                '1000-01-01')";
         return $this->conectar->ejecutar_idu($sql);
     }
 

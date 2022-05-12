@@ -9,5 +9,4 @@ $Caja->setFecha(filter_input(INPUT_POST, 'inputfecha'));
 $Caja->setMapertura(filter_input(INPUT_POST, 'inputMonto'));
 $Caja->insertar();
 
-
 header("Location: ../contents/lista-caja-diaria.php");

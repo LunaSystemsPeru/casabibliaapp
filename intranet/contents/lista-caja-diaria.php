@@ -294,7 +294,7 @@ $totalefectivo = $mapertura + $mefectivo + $tototrosingreso - $tototrosretiros;
             <div class="modal fade" id="basicModalCaja">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <form method="post" action="../controller/registrar-movimiento-caja.php">
+                        <form method="post" action="../controller/registrar-apertura-caja.php">
                             <div class="modal-header">
                                 <h5 class="modal-title">apertura Caja</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal">
@@ -305,6 +305,9 @@ $totalefectivo = $mapertura + $mefectivo + $tototrosingreso - $tototrosretiros;
                                     <label for="inputMonto" class="form-label">Monto Apertura </label>
                                     <input type="text" class="form-control" id="inputMonto" name="inputMonto">
                                     <input type="hidden" name="inputfecha" value="<?php echo $fecha ?>">
+                                    <input type="hidden" name="optradio" value="1">
+                                    <input type="hidden" name="inputDescripcion" value="APERTURA CAJA">
+                                    <input type="hidden" name="optapertura" value="1">
                                 </div>
                             </div>
                             <div class="modal-footer">
