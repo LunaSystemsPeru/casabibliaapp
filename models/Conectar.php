@@ -14,11 +14,11 @@ class conectar
     private $_connection;
     private $_link;
     //private $_host = "localhost";
-    private $_host = "artemisa.servidoresph.com";
-    private $_user = "brunoasc_luis_bd";
-    private $_pass = "C]6&TN4Bt@&I";
+    private $_host = "174.138.2.254";
+    private $_user = "lspadmin";
+    private $_pass = ":18;t4BC9ZfjcF";
     // Almacenar una unica instancia
-    private $_db = "brunoasc_casabiblia_new";
+    private $_db = "casabiblia";
 
     /**
      * constructor de la clase Base de datos

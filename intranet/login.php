@@ -1,16 +1,5 @@
 <?php
-require '../tools/Zebra_Session.php';
-require_once '../models/Conectar.php';
-$conectar = Conectar::getInstancia();
-$link = $conectar->getLink();
-try {
-    $zebra = new Zebra_Session($link, 'sEcUr1tY_c0dE');
-    if (isset($_SESSION["tiendaid"])) {
-        header("location: index.php");
-    }
-} catch (Exception $e) {
-    echo $e;
-}
+//require 'SessionActiva.php';
 $error ="";
 if (filter_input(INPUT_GET, 'error')) {
     $error = filter_input(INPUT_GET, 'error');
@@ -121,7 +110,6 @@ if (filter_input(INPUT_GET, 'error')) {
 
 
         <!-- Form Steps -->
-        <script src="../vendor/jquery-smartwizard/dist/js/jquery.smartWizard.js"></script>
         <script src="../vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
 
         <script src="../assets/js/custom.min.js"></script>
