@@ -20,6 +20,8 @@ class conectar
     // Almacenar una unica instancia
     private $_db = "casabiblia";
 
+    //mysqldump -h artemisa.servidoresph.com -u brunoasc_luis_bd -p brunoasc_casabiblia_new > goempres_casabiblia.sql   C]6&TN4Bt@&I
+
     /**
      * constructor de la clase Base de datos
      */
