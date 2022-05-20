@@ -647,7 +647,7 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
             pagoTarjeta: pagoTarjeta,
             arrayProductos: JSON.stringify(arrayProductos)
         };
-        alert("se registrata el comprobante, acepte y espere un momento");
+        alert("se registrara el comprobante, acepte y espere un momento");
         $("#btn-grabar-venta").prop("disabled", true);
         $.post("../controller/registrar-venta.php", arraypost, function (data) {
             //alert(data);

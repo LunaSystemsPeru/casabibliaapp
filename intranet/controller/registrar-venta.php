@@ -70,7 +70,7 @@ if (filter_input(INPUT_POST, 'pagoTarjeta') > 0) {
     $PagoVenta->insertar();
 }
 
-$url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+$url = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
 $rutabase = dirname(dirname(dirname($url))) . DIRECTORY_SEPARATOR;
 $respuestaCurl = "";
 if ($Venta->getIdtido() == 5 || $Venta->getIdtido() == 4) {
@@ -78,6 +78,8 @@ if ($Venta->getIdtido() == 5 || $Venta->getIdtido() == 4) {
     if ($Venta->getIdtido() == 5) {
         $nombreXML = "boleta";
     }
+
+    //echo $rutabase . "composer/generateXML/" . $nombreXML . ".php?id=" . $Venta->getIdventa();
 
     $ch = curl_init($rutabase . "composer/generateXML/" . $nombreXML . ".php?id=" . $Venta->getIdventa());
 
