@@ -1,3 +1,9 @@
+<?php
+require '../fixed/SessionActiva.php';
+require '../../models/Inicio.php';
+$Inicio = new Inicio();
+$Inicio->setTiendaid($_SESSION['tiendaid']);
+?>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 <head>
@@ -87,63 +93,48 @@
                         <div class="col-xl-6 col-lg-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Vendedor 1</h4>
+                                    <h4 class="card-title">Ventas por Clasificacion este mes</h4>
                                 </div>
                                 <div class="card-body">
-                                    <div id="morris_donught" class="morris_chart_height"></div>
+                                    <table class="table table-striped table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th style="width:80px;"><strong>#</strong></th>
+                                            <th><strong>CLASIFICACION</strong></th>
+                                            <th><strong>TOTAL</strong></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                        $array_clasificacion = $Inicio->verVentasClasificacionTienda();
+                                        $item = 1;
+                                        foreach ($array_clasificacion as $fila) {
+                                            ?>
+                                            <tr>
+                                                <td><strong><?php echo $item ?></strong></td>
+                                                <td><?php echo $fila['nombre'] ?></td>
+                                                <td class="text-right"><?php echo number_format($fila['vendido'], 2) ?></td>
+                                            </tr>
+                                            <?php
+                                            $item++;
+                                        }
+                                        ?>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Vendedor 2</h4>
+                                    <h4 class="card-title">Ventas por Tiendas este mes</h4>
                                 </div>
                                 <div class="card-body p-0">
-                                    <div id="morris_line" class="morris_chart_height"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title">Vendedor 3</h4>
-                                </div>
-                                <div class="card-body">
                                     <div id="morris_bar" class="morris_chart_height"></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-6 col-lg-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title">Vendedor 4</h4>
-                                </div>
-                                <div class="card-body">
-                                    <div id="line_chart_2" class="morris_chart_height"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title">Venta por Tienda</h4>
-                                </div>
-                                <div class="card-body">
-                                    <div id="morris_bar_stalked" class="morris_chart_height"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title">Venta por Mes</h4>
-                                </div>
-                                <div class="card-body">
-                                    <div id="morris_area" class="morris_chart_height"></div>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -159,12 +150,67 @@
 <script src="../../assets/js/jquery_004.js"></script>
 <script src="../../assets/js/jquery_003.js"></script>
 <script src="../../assets/js/jquery_005.js"></script>
-<script src="../../assets/js/styleSwitcher.js"></script>
+<script src="../../vendor/raphael/raphael.min.js"></script>
+<script src="../../vendor/morris/morris.min.js"></script>
 <script>
     $(document).ready(function () {
         // SmartWizard initialize
-        $('#smartwizard').smartWizard();
+       // $('#smartwizard').smartWizard();
+        barChart();
     });
+
+    var barChart = function () {
+        if (jQuery('#morris_bar').length > 0) {
+            //bar chart
+            Morris.Bar({
+                element: 'morris_bar',
+                data: [{
+                    y: '2006',
+                    a: 100,
+                    b: 90,
+                    c: 60
+                }, {
+                    y: '2007',
+                    a: 75,
+                    b: 65,
+                    c: 40
+                }, {
+                    y: '2008',
+                    a: 50,
+                    b: 40,
+                    c: 30
+                }, {
+                    y: '2009',
+                    a: 75,
+                    b: 65,
+                    c: 40
+                }, {
+                    y: '2010',
+                    a: 50,
+                    b: 40,
+                    c: 30
+                }, {
+                    y: '2011',
+                    a: 75,
+                    b: 65,
+                    c: 40
+                }, {
+                    y: '2012',
+                    a: 100,
+                    b: 90,
+                    c: 40
+                }],
+                xkey: 'y',
+                ykeys: ['a'],
+                labels: ['A', 'B', 'C'],
+                barColors: ['#FFA7D7', '#ffaa2b', '#ff9f00'],
+                hideHover: 'auto',
+                gridLineColor: 'transparent',
+                resize: true,
+                barSizeRatio: 0.25,
+            });
+        }
+    }
 </script>
 </body>
 </html>

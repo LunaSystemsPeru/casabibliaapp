@@ -4,7 +4,7 @@
             <div class="collapse navbar-collapse justify-content-between">
                 <div class="header-left">
                     <div class="dashboard_bar">
-                        Ventas
+                        Ventas en <?php echo (isset($_SESSION['tiendanombre']) ? $_SESSION['tiendanombre'] : "") ?>
                     </div>
 
                 </div>

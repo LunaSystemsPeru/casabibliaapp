@@ -18,12 +18,12 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
     <meta name="keywords" content=""/>
     <meta name="author" content=""/>
     <meta name="robots" content=""/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , maximum-scale=1.0, user-scalable=1">
     <meta name="description" content="Fillow : Fillow Saas Admin  Bootstrap 5 Template"/>
     <meta property="og:title" content="Fillow : Fillow Saas Admin  Bootstrap 5 Template"/>
     <meta property="og:description" content="Fillow : Fillow Saas Admin  Bootstrap 5 Template"/>
     <meta property="og:image" content="social-image.png"/>
-    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="telephone=yes">
     <!-- PAGE TITLE HERE -->
     <title>Casa de la Biblia</title>
     <!-- FAVICONS ICON -->
@@ -130,12 +130,12 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
                                         </a></li>
                                 </ul>
                                 <div class="tab-content">
-                                    <div id="wizard_Service" class="tab-pane" role="tabpanel">
+                                    <div id="wizard_Service" class="tab-pane wizard_Service" role="tabpanel">
                                         <div class="row">
                                             <div class="col-lg-12 mb-2">
                                                 <div class="mb-3">
                                                     <label for="input-buscar-producto" class="text-label form-label">Buscar Producto</label>
-                                                    <input type="text" id="input-buscar-producto" class="form-control" placeholder="Nuevo Producto" required="">
+                                                    <input type="text" id="input-buscar-producto" class="form-control " placeholder="Nuevo Producto" required="">
                                                     <input type="hidden" id="input-id-producto">
                                                     <input type="hidden" id="input-nombre-producto">
                                                     <input type="hidden" id="input-codexterno-producto">
@@ -349,6 +349,13 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
 
         validarDocumentoSunat();
 
+        $("#input-buscar-producto").on('focus', function () {
+            var inputHeight = $(this).offset().top - 90;
+            console.log(inputHeight);
+            $("html, body").animate({scrollTop: inputHeight}, 400);
+            return false;
+        });
+
         //buscar prooductos
         $("#input-buscar-producto").autocomplete({
             source: "../../ajax/lista-productos.php",
@@ -365,6 +372,8 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
                 //$('#input_buscar_productos').val("");
             }
         });
+
+        // colocarFocus();
 
         //buscar clientes
         $("#input-nro-documento").autocomplete({
@@ -394,6 +403,7 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
             }
         });
     });
+
 
     function addProducto() {
         var idproducto = $("#input-id-producto").val();
@@ -610,7 +620,7 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
         var nombrecliente = $("#input-nombre").val();
         var pagoEfectivo = $("#input-efectivo").val();
         var pagoTarjeta = $("#input-tarjeta").val();
-       // console.log("idcliente:" + idcliente + ":hola");
+        // console.log("idcliente:" + idcliente + ":hola");
         //console.log("tidoid:" + tidoid);
         //si es factura debe ser ruc
         if (tidoid == 4) {

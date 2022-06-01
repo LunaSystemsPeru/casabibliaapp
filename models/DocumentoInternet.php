@@ -51,12 +51,12 @@ class DocumentoInternet
 
         //si es ruc
         if ($this->tipo_documento == 1) {
-            $direccion = "http://lunasystemsperu.com/apis/apiruc.php?ruc=" . $this->nro_documento;
+            $direccion = "https://lunasystemsperu.com/apis/apiruc.php?ruc=" . $this->nro_documento;
         }
 
         //si es dni
         if ($this->tipo_documento == 2) {
-            $direccion = "http://lunasystemsperu.com/apis/apidni.php?dni=" . $this->nro_documento;
+            $direccion = "https://lunasystemsperu.com/apis/apidni.php?dni=" . $this->nro_documento;
         }
 
 /*

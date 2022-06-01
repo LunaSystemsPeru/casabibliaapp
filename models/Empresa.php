@@ -277,8 +277,7 @@ private $conectar;
 
     public function verFilas()
     {
-        $sql = "select * from empresa 
-                where id_empresa = '$this->idempresa' ";
+        $sql = "select * from empresa  ";
         return $this->conectar->get_Cursor($sql);
     }
 

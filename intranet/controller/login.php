@@ -45,6 +45,7 @@ if ($Usuario->getIdusuario()) {
             $_SESSION['empresaruc'] = $Empresa->getRuc();
             $_SESSION['empresaid'] = $Empresa->getIdempresa();
             $_SESSION['usuarioid'] = $Usuario->getIdusuario();
+            $_SESSION['tiendanombre'] = $Tienda->getNombre();
             header("Location: ../contents/form-venta.php");
         } else {
             //usuario bloqueado

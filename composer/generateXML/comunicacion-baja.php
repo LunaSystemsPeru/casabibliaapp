@@ -51,47 +51,53 @@ $fecha = filter_input(INPUT_GET, 'fecha');
 $arrayComprobantes = $Anulada->verVentasAnuladas('F', $Empresa->getIdempresa(), $fecha);
 
 $arrayDetalle = array();
+$nroitems = 0;
 foreach ($arrayComprobantes as $fila) {
+    $nroitems++;
     $detalle = new VoidedDetail();
-    $detalle->setTipoDoc($Util->zerofill($fila['cod_sunat'],2))
+    $detalle->setTipoDoc($Util->zerofill($fila['cod_sunat'], 2))
         ->setSerie($fila['serie'])
         ->setCorrelativo($fila['numero'])
         ->setDesMotivoBaja('ERROR EN CÁLCULOS');
     array_push($arrayDetalle, $detalle);
 }
+if ($nroitems > 0) {
 
-$voided = new Voided();
-$voided->setCorrelativo('00001')
-    // Fecha Generacion menor que Fecha comunicacion
-    ->setFecGeneracion(\DateTime::createFromFormat('Y-m-d', $fecha))
-    ->setFecComunicacion(\DateTime::createFromFormat('Y-m-d', $fecha))
-    ->setCompany($company)
-    ->setDetails($arrayDetalle);
+    $voided = new Voided();
+    $voided->setCorrelativo('00001')
+        // Fecha Generacion menor que Fecha comunicacion
+        ->setFecGeneracion(\DateTime::createFromFormat('Y-m-d', $fecha))
+        ->setFecComunicacion(\DateTime::createFromFormat('Y-m-d', $fecha))
+        ->setCompany($company)
+        ->setDetails($arrayDetalle);
 
 
-// Envio a SUNAT.
-$res = $see->send($voided);
-// Guardar XML firmado digitalmente.
-file_put_contents("../../public/xml/".$voided->getName().'.xml',
-    $see->getFactory()->getLastXml());
+    // Envio a SUNAT.
+    $res = $see->send($voided);
+    // Guardar XML firmado digitalmente.
+    file_put_contents("../../public/xml/" . $voided->getName() . '.xml',
+        $see->getFactory()->getLastXml());
 
-if (!$res->isSuccess()) {
-    print_r($res->getError());
-    return;
+    if (!$res->isSuccess()) {
+        print_r($res->getError());
+        return;
+    }
+
+    /**@var $res SummaryResult */
+    $ticket = $res->getTicket();
+    echo 'Ticket :<strong>' . $ticket . '</strong>';
+
+    $res = $see->getStatus($ticket);
+    if (!$res->isSuccess()) {
+        print_r($res->getError());
+        return;
+    }
+
+    $cdr = $res->getCdrResponse();
+    //$util->writeCdr($sum, $res->getCdrZip());
+    // Guardamos el CDR
+    file_put_contents("../../public/cdr/" . 'R-' . $voided->getName() . '.zip', $res->getCdrZip());
+    //$util->showResponse($sum, $cdr);
+
+
 }
-
-/**@var $res SummaryResult */
-$ticket = $res->getTicket();
-echo 'Ticket :<strong>' . $ticket . '</strong>';
-
-$res = $see->getStatus($ticket);
-if (!$res->isSuccess()) {
-    print_r($res->getError());
-    return;
-}
-
-$cdr = $res->getCdrResponse();
-//$util->writeCdr($sum, $res->getCdrZip());
-// Guardamos el CDR
-file_put_contents("../../public/cdr/".'R-'.$voided->getName().'.zip', $res->getCdrZip());
-//$util->showResponse($sum, $cdr);

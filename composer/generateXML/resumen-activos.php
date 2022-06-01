@@ -110,14 +110,16 @@ foreach ($arrayBoletas as $fila) {
     array_push($arrayDetalle, $detalle);
 }
 
-$sum = new Summary();
-// Fecha Generacion menor que Fecha Resumen
-$sum->setFecGeneracion(\DateTime::createFromFormat('Y-m-d', $fecha))
-    ->setFecResumen(\DateTime::createFromFormat('Y-m-d', $fecha))
-    ->setCorrelativo('001')
-    ->setCompany($company)
-    ->setDetails($arrayDetalle);
 if ($nroitems > 0) {
+
+    $sum = new Summary();
+// Fecha Generacion menor que Fecha Resumen
+    $sum->setFecGeneracion(\DateTime::createFromFormat('Y-m-d', $fecha))
+        ->setFecResumen(\DateTime::createFromFormat('Y-m-d', $fecha))
+        ->setCorrelativo('001')
+        ->setCompany($company)
+        ->setDetails($arrayDetalle);
+
     // Envio a SUNAT.
     $res = $see->send($sum);
 // Guardar XML firmado digitalmente.

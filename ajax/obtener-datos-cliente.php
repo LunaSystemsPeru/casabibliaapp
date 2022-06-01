@@ -39,7 +39,7 @@ if ($c_internet->getTipoDocumento() == 2) {
         $resultado["documento"] = $respuesta["dni"];
         //$resultado["datos"] = $respuesta["apellidoPaterno"] . " " . $respuesta["apellidoMaterno"] . " " . $respuesta["nombres"];
         $resultado["datos"] = $respuesta["nombre"];
-        $resultado["direccion"] = "";
+        $resultado["direccion"] = "-";
     }
 }
 

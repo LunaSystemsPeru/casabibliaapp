@@ -110,6 +110,8 @@ foreach ($arrayBoletas as $fila) {
     array_push($arrayDetalle, $detalle);
 }
 
+if ($nroitems > 0) {
+
 $sum = new Summary();
 // Fecha Generacion menor que Fecha Resumen
 $sum->setFecGeneracion(\DateTime::createFromFormat('Y-m-d', $fecha))
@@ -118,7 +120,6 @@ $sum->setFecGeneracion(\DateTime::createFromFormat('Y-m-d', $fecha))
     ->setCompany($company)
     ->setDetails($arrayDetalle);
 
-if ($nroitems > 0) {
 
 // Envio a SUNAT.
     $res = $see->send($sum);
