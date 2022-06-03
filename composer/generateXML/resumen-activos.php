@@ -129,13 +129,14 @@ if ($nroitems > 0) {
 
     if (!$res->isSuccess()) {
         $Resumen->setEstado(0);
+        echo "<br> error al enviar ";
         print_r($res->getError());
         //  return;
     }
 
     /**@var $res SummaryResult */
     $ticket = $res->getTicket();
-    echo 'Ticket :<strong>' . $ticket . '</strong>';
+    echo '<br>Ticket :<strong>' . $ticket . '</strong><br>';
 
     $Resumen->setIdempresa($Empresa->getIdempresa());
     $Resumen->setNombre($sum->getName());
@@ -149,16 +150,18 @@ if ($nroitems > 0) {
     if ($Resumen->getEstado() == 0) {
         return;
     }
+
     $res = $see->getStatus($ticket);
     if (!$res->isSuccess()) {
+        echo "<br> error al obtener estado de ticket ";
         print_r($res->getError());
         $Resumen->setEstado(0);
         return;
     }
 
     $cdr = $res->getCdrResponse();
-//$util->writeCdr($sum, $res->getCdrZip());
-// Guardamos el CDR
+    //$util->writeCdr($sum, $res->getCdrZip());
+    // Guardamos el CDR
     file_put_contents("../../public/cdr/" . 'R-' . $sum->getName() . '.zip', $res->getCdrZip());
-//$util->showResponse($sum, $cdr);
+    //$util->showResponse($sum, $cdr);
 }
