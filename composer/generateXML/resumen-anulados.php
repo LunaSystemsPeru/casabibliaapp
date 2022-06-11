@@ -129,6 +129,7 @@ $sum->setFecGeneracion(\DateTime::createFromFormat('Y-m-d', $fecha))
 
     $Resumen->setEstado(1);
     if (!$res->isSuccess()) {
+        echo "<br> error al enviar ";
         print_r($res->getError());
         $Resumen->setEstado(0);
         // return;
@@ -155,6 +156,7 @@ $sum->setFecGeneracion(\DateTime::createFromFormat('Y-m-d', $fecha))
 
     $res = $see->getStatus($ticket);
     if (!$res->isSuccess()) {
+        echo "<br> error al obtener estado de ticket ";
         print_r($res->getError());
         $Resumen->setEstado(0);
         return;
