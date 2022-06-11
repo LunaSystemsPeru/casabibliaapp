@@ -190,7 +190,7 @@ require '../fixed/SessionActiva.php';
     function generarFile() {
         var fecha = $('#inputFecha').val();
         var tipo = $('#selectTipo').val();
-        console.log(tipo)
+       // console.log(tipo)
         if (tipo == "xls") {
             $.get("../reportes/excel_ventas_sunat_mensual.php", {fecha: fecha, empresa: empresaid})
                 .done(function (data) {
