@@ -118,17 +118,21 @@ require '../fixed/SessionActiva.php';
                                         <label for="input-nombre" class="form-label">Periodo</label>
                                         <input type="date" class="form-control" id="inputFecha" value="<?php echo date('Y-m-d') ?>" required>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label for="input-documento" class="form-label">Formato</label>
+                                    <div class="col-md-12">
+                                        <label for="selectTipo" class="form-label">Formato</label>
                                         <select class="form-control" id="selectTipo">
                                             <option value="pdf">PDF</option>
                                             <option value="xls">EXCEL</option>
                                         </select>
                                     </div>
+
+                                    <div class="col-6">
+                                        <button class="btn btn-primary" type="button" onclick="generarFile(1)"><i class="fas fa-search"></i> por Empresa</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button class="btn btn-primary" type="button" onclick="generarFile(2)"><i class="fas fa-file-pdf"></i> por Tienda</button>
+                                    </div>
                                 </form>
-                                <div class="col-12">
-                                    <button class="btn btn-primary" type="button" onclick="generarFile()"><i class="fas fa-search"></i> Buscar</button>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -187,24 +191,31 @@ require '../fixed/SessionActiva.php';
 <script src="../../assets/js/dlabnav-init.js"></script>
 <script src="../../assets/js/demo.js"></script>
 <script>
-    function generarFile() {
+    function generarFile(accion) {
         var fecha = $('#inputFecha').val();
         var tipo = $('#selectTipo').val();
-       // console.log(tipo)
-        if (tipo == "xls") {
-            $.get("../reportes/excel_ventas_sunat_mensual.php", {fecha: fecha, empresa: empresaid})
-                .done(function (data) {
-                    jsondata = JSON.parse(data);
-                    var archivo = jsondata.name;
-                    window.location.href = "../reportes/" + archivo;
-                });
+        if (accion == 1) {
+            // console.log(tipo)
+            if (tipo == "xls") {
+                $.get("../reportes/excel_ventas_sunat_mensual.php", {fecha: fecha, empresa: empresaid})
+                    .done(function (data) {
+                        jsondata = JSON.parse(data);
+                        var archivo = jsondata.name;
+                        window.location.href = "../reportes/" + archivo;
+                    });
+            }
+            if (tipo == "pdf") {
+                var win = window.open("../reportes/pdf-ventas-sunat-mensual.php?fecha=" + fecha, '_blank');
+                win.focus();
+                //window.location.href = "../reportes/pdf-ventas-sunat-mensual.php?fecha=" + fecha;
+            }
         }
-        if (tipo == "pdf") {
-            var win = window.open("../reportes/pdf-ventas-sunat-mensual.php?fecha=" + fecha, '_blank');
+        if (accion == 2) {
+            var win = window.open("../reportes/pdf-ventas-sunat-mensual-tiendas.php?fecha=" + fecha, '_blank');
             win.focus();
-            //window.location.href = "../reportes/pdf-ventas-sunat-mensual.php?fecha=" + fecha;
         }
     }
+
 
     function generarFileBanco() {
         var fechainicio = $('#inputFechaInicio').val();
