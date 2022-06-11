@@ -119,9 +119,10 @@ require '../fixed/SessionActiva.php';
                                         <input type="date" class="form-control" id="inputFecha" value="<?php echo date('Y-m-d') ?>" required>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="input-documento" class="form-label">Empresa</label>
-                                        <select class="form-control" id="selectEmpresa">
-                                            <option value="">Empresa 1</option>
+                                        <label for="input-documento" class="form-label">Formato</label>
+                                        <select class="form-control" id="selectTipo">
+                                            <option value="pdf">PDF</option>
+                                            <option value="xls">EXCEL</option>
                                         </select>
                                     </div>
                                 </form>
@@ -188,13 +189,21 @@ require '../fixed/SessionActiva.php';
 <script>
     function generarFile() {
         var fecha = $('#inputFecha').val();
-        var empresaid = $('#selectEmpresa').val();
-        $.get("../reportes/excel_ventas_sunat_mensual.php", {fecha: fecha, empresa: empresaid})
-            .done(function (data) {
-                jsondata = JSON.parse(data);
-                var archivo = jsondata.name;
-                window.location.href = "../reportes/" + archivo ;
-            });
+        var tipo = $('#selectTipo').val();
+        console.log(tipo)
+        if (tipo == "xls") {
+            $.get("../reportes/excel_ventas_sunat_mensual.php", {fecha: fecha, empresa: empresaid})
+                .done(function (data) {
+                    jsondata = JSON.parse(data);
+                    var archivo = jsondata.name;
+                    window.location.href = "../reportes/" + archivo;
+                });
+        }
+        if (tipo == "pdf") {
+            var win = window.open("../reportes/pdf-ventas-sunat-mensual.php?fecha=" + fecha, '_blank');
+            win.focus();
+            //window.location.href = "../reportes/pdf-ventas-sunat-mensual.php?fecha=" + fecha;
+        }
     }
 
     function generarFileBanco() {
@@ -205,7 +214,7 @@ require '../fixed/SessionActiva.php';
             .done(function (data) {
                 jsondata = JSON.parse(data);
                 var archivo = jsondata.name;
-                window.location.href = "../reportes/" + archivo ;
+                window.location.href = "../reportes/" + archivo;
             });
     }
 

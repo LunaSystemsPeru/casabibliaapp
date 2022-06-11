@@ -416,13 +416,14 @@ class Venta
 
     public function verDocumentosPLE($fecha)
     {
-        $sql = "select v.id_ventas, v.fecha, v.id_tido,ds.cod_sunat, ds.abreviado, v.serie, v.numero, c.documento, c.nombre, v.afecto_igv, v.igv, v.total, v.estado
+        $sql = "select v.id_ventas, v.fecha, v.id_tido,ds.cod_sunat, ds.abreviado, v.serie, LPAD(v.numero, 4, '0') as numero, c.documento, c.nombre, v.afecto_igv, v.igv, v.total, v.estado, a.nombre as ntienda
                 from ventas as v
                 inner join clientes c on v.id_cliente = c.id_cliente
                 inner join documentos_sunat ds on v.id_tido = ds.id_tido
                 inner join almacen a on v.id_almacen = a.id_almacen
                 inner join empresa e on a.id_empresa = e.id_empresa
-                where year(v.fecha) = year('$fecha') and month(v.fecha) = month('$fecha') and v.id_tido != 2 and v.id_tido != 9";
+                where year(v.fecha) = year('$fecha') and month(v.fecha) = month('$fecha') and v.id_tido != 2 and v.id_tido != 9 
+                order by v.fecha asc";
         return $this->conectar->get_Cursor($sql);
     }
 
