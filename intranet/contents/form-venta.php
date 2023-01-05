@@ -498,15 +498,23 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
 
     function obtenerDatosCliente() {
         var nrodocumento = $("#input-add-nro-documento").val();
-        /*if (nrodocumento.lenght != 8 && nrodocumento.lenght != 11) {
+        console.log("largo es: " + nrodocumento.length)
+
+        if (nrodocumento.length == 8) {
+
+        } else if (nrodocumento.length == 11) {
+
+        } else {
             alert("Nro de DNI o RUC incorrecto");
             $("#input-add-nro-documento").focus();
             return false;
-        }*/
+        }
+
+
         alert("Cargando Datos espere un momento por favor");
         var arraypost = {documento: nrodocumento};
         $.post("../../ajax/obtener-datos-cliente.php", arraypost, function (data) {
-            console.log(data);
+            //console.log("resultado " + data);
             var jsonresultado = JSON.parse(data);
             if (jsonresultado.success == "error") {
                 alert("Error en el dni o ruc");
@@ -637,7 +645,7 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
         //si es boleta debe ser dni o 0
         //si es mayor a 750 debe ser dni
         if (tidoid == 5) {
-            if (totalproductos > 700 && nrodoccliente.lenght != 8) {
+            if (totalproductos > 700 && nrodoccliente.length != 8) {
                 alert("Cliente debe tener DNI");
                 return false;
             }

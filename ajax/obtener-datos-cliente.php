@@ -37,8 +37,8 @@ if ($c_internet->getTipoDocumento() == 2) {
     } else {
         $resultado["success"] = "nuevo";
         $resultado["documento"] = $respuesta["dni"];
-        //$resultado["datos"] = $respuesta["apellidoPaterno"] . " " . $respuesta["apellidoMaterno"] . " " . $respuesta["nombres"];
-        $resultado["datos"] = $respuesta["nombre"];
+        $resultado["datos"] = $respuesta["apellidoPaterno"] . " " . $respuesta["apellidoMaterno"] . " " . $respuesta["nombres"];
+        //$resultado["datos"] = $respuesta["nombre"];
         $resultado["direccion"] = "-";
     }
 }

@@ -47,51 +47,28 @@ class DocumentoInternet
 
     public function validar()
     {
-        $direccion = "http://lunasystemsperu.com/apis/apidni.php?dni=";
+        $direccion = "";
 
         //si es ruc
         if ($this->tipo_documento == 1) {
-            $direccion = "https://lunasystemsperu.com/apis/apiruc.php?ruc=" . $this->nro_documento;
+            $direccion = "http://174.138.2.254/apis/public/consultaRUC.php?ruc=" . $this->nro_documento;
         }
 
         //si es dni
         if ($this->tipo_documento == 2) {
-            $direccion = "https://lunasystemsperu.com/apis/apidni.php?dni=" . $this->nro_documento;
+            $direccion = "http://174.138.2.254/apis/public/consultaDNI.php?dni=" . $this->nro_documento;
         }
 
-/*
-        $json = file_get_contents($direccion, FALSE);
-        // Check for errors
-        if ($json === FALSE) {
-            die('Error');
-        }
-*/
 
-//create a new cURL resource
-        $ch = curl_init($direccion);
-
-//setup request to send json via POST
-        $data = array(
-            'username' => 'codexworld',
-            'password' => '123456'
-        );
-        $payload = json_encode(array("user" => $data));
-
-//attach encoded JSON string to the POST fields
-       // curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-
-//set the content type to application/json
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        //curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-
-//return response instead of outputting
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $direccion);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-//execute the POST request
-        $result = curl_exec($ch);
-
-//close cURL resource
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        $data = curl_exec($ch);
         curl_close($ch);
-        return $result;
+
+       // print_r($data);
+
+        return $data;
     }
 }
