@@ -51,13 +51,14 @@ class DocumentoInternet
 
         //si es ruc
         if ($this->tipo_documento == 1) {
-            $direccion = "http://174.138.2.254/apis/public/consultaRUC.php?ruc=" . $this->nro_documento;
+            $direccion = "https://goempresarial.com/apis/peru-consult-api/public/api/v1/ruc/".$this->nro_documento."?token=abcxyz";
         }
 
         //si es dni
         if ($this->tipo_documento == 2) {
-            $direccion = "http://174.138.2.254/apis/public/consultaDNI.php?dni=" . $this->nro_documento;
+            $direccion = "https://goempresarial.com/apis/peru-consult-api/public/api/v1/dni/".$this->nro_documento."?token=abcxyz";
         }
+        //echo $direccion;
 
 
         $ch = curl_init();
@@ -67,7 +68,7 @@ class DocumentoInternet
         $data = curl_exec($ch);
         curl_close($ch);
 
-       // print_r($data);
+        //print_r($data);
 
         return $data;
     }

@@ -53,7 +53,7 @@ if ($c_internet->getTipoDocumento() == 1) {
         $resultado["success"] = "nuevo";
         $resultado["documento"] = $respuesta["ruc"];
         $resultado["datos"] = $respuesta["razonSocial"];
-        $resultado["direccion"] = $respuesta["direccion"];
+        $resultado["direccion"] = $respuesta["direccion"] . " " . $respuesta["departamento"] . " " . $respuesta["provincia"] . ' ' . $respuesta["distrito"];
     }
 }
 echo json_encode($resultado);
