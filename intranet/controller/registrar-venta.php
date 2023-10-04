@@ -70,32 +70,36 @@ if (filter_input(INPUT_POST, 'pagoTarjeta') > 0) {
     $PagoVenta->insertar();
 }
 
-$url = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
-$rutabase = dirname(dirname(dirname($url))) . DIRECTORY_SEPARATOR;
-$respuestaCurl = "";
-if ($Venta->getIdtido() == 5 || $Venta->getIdtido() == 4) {
-    $nombreXML = "factura";
-    if ($Venta->getIdtido() == 5) {
-        $nombreXML = "boleta";
-    }
-
-    //echo $rutabase . "composer/generateXML/" . $nombreXML . ".php?id=" . $Venta->getIdventa();
-
-    $ch = curl_init($rutabase . "composer/generateXML/" . $nombreXML . ".php?id=" . $Venta->getIdventa());
-
-    curl_setopt($ch, CURLOPT_HEADER, 0);
-    $result = curl_exec($ch);
-    $errorcurl = "";
-
-    if ($result === false) {
-        $erroremail = 'Curl error: ' . curl_error($ch);
-    } else {
-        $respuestaCurl = $result;
-    }
-    curl_close($ch);
-}
-
 if ($Venta->getIdventa()) {
+    $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+    $rutabase = dirname(dirname(dirname($url))) . DIRECTORY_SEPARATOR;
+    $respuestaCurl = "";
+    if ($Venta->getIdtido() == 5 || $Venta->getIdtido() == 4) {
+        $nombreXML = "factura";
+        if ($Venta->getIdtido() == 5) {
+            $nombreXML = "boleta";
+        }
+
+        //echo $rutabase . "composer/generateXML/" . $nombreXML . ".php?id=" . $Venta->getIdventa();
+
+        $ch = curl_init($rutabase . "composer/generateXML/" . $nombreXML . ".php?id=" . $Venta->getIdventa());
+
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        $result = curl_exec($ch);
+        $errorcurl = "";
+
+        if ($result === false) {
+            $erroremail = 'Curl error: ' . curl_error($ch);
+            $Venta->setEstado(2);
+            $Venta->cambiarVenta();
+            echo json_encode(["id" => 0, "respuesta" => false]);
+            return;
+        } else {
+            $respuestaCurl = $result;
+        }
+        curl_close($ch);
+    }
+
     echo json_encode(["id" => $Venta->getIdventa(), "respuesta" =>$respuestaCurl]);
 } else {
     echo json_encode(["id" => 0, "respuesta" => false]);

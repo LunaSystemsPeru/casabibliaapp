@@ -676,6 +676,8 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
                 location.href = "reporte-pdf-documento-venta.php?ventaid=" + jsonresultado.id;
             } else {
                 alert("error al registrar venta" + data)
+                alert("vuelva a emitir el comprobante")
+                location.href = "form-venta.php";
             }
         });
     }

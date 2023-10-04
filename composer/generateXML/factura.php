@@ -226,6 +226,6 @@ $SunatVenta->setRespuesta($observaciones);
 $SunatVenta->setHash($Config->getHash($invoice));
 $SunatVenta->insertar();
 
-if (!$aceptadosunat) {
+//if (!$aceptadosunat) {
     return json_encode(["aceptado" => $aceptadosunat, "observaciones" => $observaciones, "nombreDocumento" => $invoice->getName(), "codigoSunat" => $code]);
-}
+//}

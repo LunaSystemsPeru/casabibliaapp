@@ -1,6 +1,8 @@
 {
     "require": {
         "greenter/lite": "^4.3",
-        "greenter/report": "^4.3"
+        "greenter/report": "^4.3",
+      "ext-json": "*",
+      "ext-curl": "*"
     }
 }

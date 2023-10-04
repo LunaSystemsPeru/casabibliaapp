@@ -15,7 +15,7 @@ $VentaAnulada->setEnviadosunat(0);
 $VentaAnulada->insertar();
 
 $ProductoVenta->setIdventa($VentaAnulada->getIdventa());
-$ProductoVenta->eliminar();
+//$ProductoVenta->eliminar();
 
 $tipo = filter_input(INPUT_GET, 'tipo');
 if ($tipo == "b") {

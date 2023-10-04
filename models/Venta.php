@@ -322,6 +322,14 @@ class Venta
         return $this->conectar->ejecutar_idu($sql);
     }
 
+    public function cambiarVenta()
+    {
+        $sql = "update ventas set 
+                  estado = '$this->estado' 
+                where id_ventas = '$this->idventa'";
+        return $this->conectar->ejecutar_idu($sql);
+    }
+
     public function modificar()
     {
         $sql = "update ventas 
