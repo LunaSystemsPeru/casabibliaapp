@@ -1,4 +1,9 @@
 <?php
+/*ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+*/
+
 use Greenter\Model\Client\Client;
 use Greenter\Model\Company\Company;
 use Greenter\Model\Company\Address;
@@ -89,7 +94,7 @@ foreach ($arrayProductos as $item) {
         ->setCodProducto($item['id_producto'])
         ->setUnidad('NIU') // Unidad - Catalog. 03
         ->setCantidad($item['cantidad'])
-        ->setDescripcion( utf8_encode($item['descripcion']));
+        ->setDescripcion( htmlentities($item['descripcion']));
 
     $itemSinIGV = 0;
     $base = 0;
@@ -169,6 +174,8 @@ $generarQR->generar_qr();
 
 $result = $see->send($invoice);
 
+//var_dump($result);
+
 // Guardar XML firmado digitalmente.
 file_put_contents("../../public/xml/".$invoice->getName().'.xml',
     $see->getFactory()->getLastXml());
@@ -182,10 +189,11 @@ $code ="";
 if (!$result->isSuccess()) {
     $indiceaceptado = 3;
     // Mostrar error al conectarse a SUNAT.
-    $observaciones = 'Codigo Error: '.$result->getError()->getCode();
+    $observaciones = 'Codigo Error: '.$result->getError()->getMessage();
     $aceptadosunat = false;
     //echo 'Codigo Error: '.$result->getError()->getCode();
     //echo 'Mensaje Error: '.$result->getError()->getMessage();
+    echo json_encode(["aceptado" => $aceptadosunat, "observaciones" => $observaciones, "nombreDocumento" => $invoice->getName(), "codigoSunat" => $code]);
     exit();
 }
 
@@ -193,6 +201,8 @@ if (!$result->isSuccess()) {
 file_put_contents("../../public/cdr/".'R-'.$invoice->getName().'.zip', $result->getCdrZip());
 
 $cdr = $result->getCdrResponse();
+
+//print_r($cdr);
 
 $code = (int)$cdr->getCode();
 

@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 use Greenter\Model\Client\Client;
 use Greenter\Model\Company\Company;
 use Greenter\Model\Company\Address;
@@ -89,7 +93,7 @@ foreach ($arrayProductos as $item) {
         ->setCodProducto($item['id_producto'])
         ->setUnidad('NIU') // Unidad - Catalog. 03
         ->setCantidad($item['cantidad'])
-        ->setDescripcion( utf8_encode($item['descripcion']));
+        ->setDescripcion( htmlentities($item['descripcion']));
 
     $itemSinIGV = 0;
     $base = 0;
@@ -186,7 +190,10 @@ $SunatVenta->setEstadoAceptado($indiceaceptado);
 $SunatVenta->setNombreDocumento($invoice->getName());
 $SunatVenta->setRespuesta($observaciones);
 $SunatVenta->setHash($Config->getHash($invoice));
-$SunatVenta->insertar();
+$resultado = $SunatVenta->insertar();
 
-//echo json_encode(["aceptado" => $aceptadosunat, "observaciones" => $observaciones, "nombreDocumento" => $invoice->getName(), "codigoSunat" => $code]);
-
+/*
+if ($resultado) {
+echo json_encode(["aceptado" => $aceptadosunat, "observaciones" => $observaciones, "nombreDocumento" => $invoice->getName(), "codigoSunat" => $code]);
+}
+*/

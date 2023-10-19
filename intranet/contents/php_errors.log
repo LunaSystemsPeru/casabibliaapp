@@ -6,3 +6,4 @@
 [04-Apr-2023 16:41:11 America/Lima] PHP Warning:  Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\clientes\casabibliaapp\tools\Zebra_Session.php:281) in C:\xampp\htdocs\clientes\casabibliaapp\intranet\fixed\SessionActiva.php on line 10
 [04-Apr-2023 16:41:11 America/Lima] PHP Warning:  Undefined global variable $_SESSION in C:\xampp\htdocs\clientes\casabibliaapp\intranet\contents\form-venta.php on line 5
 [04-Apr-2023 16:41:11 America/Lima] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\clientes\casabibliaapp\intranet\contents\form-venta.php on line 5
+[19-Oct-2023 14:30:02 America/Lima] PHP Warning:  Undefined array key "tiendaid" in C:\xampp\htdocs\clientes\casabibliaapp\intranet\contents\form-venta.php on line 5

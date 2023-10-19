@@ -76,7 +76,7 @@ foreach ($arrayTiendas as $item) {
     $arrayVentas = $Venta->verDocumentosPLExTienda($fecha);
     foreach ($arrayVentas as $fila) {
         $doccliente = $fila['documento'];
-        $nomcliente = utf8_decode($fila['nombre']);
+        $nomcliente = htmlentities($fila['nombre']);
         $total = $fila['total'];
         $igv = $fila['igv'];
         $basegravado = $igv / 0.18;

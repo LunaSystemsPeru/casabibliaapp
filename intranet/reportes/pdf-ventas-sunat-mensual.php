@@ -55,7 +55,7 @@ $totalexonerado = 0;
 $totalgeneral = 0;
 foreach ($arrayVentas as $fila) {
     $doccliente = $fila['documento'];
-    $nomcliente = utf8_decode($fila['nombre']);
+    $nomcliente = htmlentities($fila['nombre']);
     $total = $fila['total'];
     $igv = $fila['igv'];
     $basegravado = $igv / 0.18;

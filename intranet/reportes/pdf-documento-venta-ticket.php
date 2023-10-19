@@ -80,12 +80,12 @@ $pdf->Ln(18);
 //$pdf->SetTextColor(00, 00, 0);
 //$pdf->Cell(64, $altura_linea, "**** CASA DE LA BIBLIA ****", 0, 1, 'C');
 $pdf->SetFont('Arial', '', 8);
-$pdf->MultiCell(64, $altura_linea-1, utf8_decode($Empresa->getRuc() . " | " . $Empresa->getRazon()), 0, 'C');
-$pdf->MultiCell(64, $altura_linea-1, utf8_decode($Tienda->getDireccion() . " - " . $Tienda->getDepartamento() . " - " . $Tienda->getProvincia() . " - " . $Tienda->getDistrito()), 0, 'C');
+$pdf->MultiCell(64, $altura_linea-1, htmlentities($Empresa->getRuc() . " | " . $Empresa->getRazon()), 0, 'C');
+$pdf->MultiCell(64, $altura_linea-1, htmlentities($Tienda->getDireccion() . " - " . $Tienda->getDepartamento() . " - " . $Tienda->getProvincia() . " - " . $Tienda->getDistrito()), 0, 'C');
 $pdf->SetFont('Arial', '', 9);
 $pdf->Cell(64, $altura_linea, $DocumentoSunat->getDescripcion() . " ELECTRONICA", 0, 1, 'C');
 $pdf->Cell(64, $altura_linea, $Venta->getSerie() . "-" . $Util->zerofill($Venta->getNumero(), 8), 0, 1, 'C');
-$pdf->MultiCell(64, $altura_linea, utf8_decode("CLIENTE: " . $Cliente->getNombre()), 0, 'L');
+$pdf->MultiCell(64, $altura_linea, htmlentities("CLIENTE: " . $Cliente->getNombre()), 0, 'L');
 $pdf->Cell(64, $altura_linea, "DNI / RUC: " . $Cliente->getDocumento(), 0, 1, 'L');
 $pdf->Cell(64, $altura_linea, "Fecha: " . $Venta->getFecha(), 0, 1, 'L');
 $pdf->Ln();
@@ -101,7 +101,7 @@ $totalBase = 0;
 foreach ($arrayProducto as $item) {
     $base = 0;
     $base = $item['cantidad'] * $item['precio'];
-    $pdf->MultiCell(64, $altura_linea, utf8_decode($item['descripcion']), 0, 'J');
+    $pdf->MultiCell(64, $altura_linea, htmlentities($item['descripcion']), 0, 'J');
     $pdf->SetX(30);
     $pdf->Cell(10, $altura_linea, $item['cantidad'] . "X", 0, 0, 'L');
     if ($item['afecto_igv'] == 0) {
@@ -138,7 +138,7 @@ $pdf->Cell(35, $altura_linea, "IMPORTE TOTAL: ", 0, 0, 'L');
 $pdf->Cell(5, $altura_linea, "S/", 0, 0, 'L');
 $pdf->Cell(24, $altura_linea, number_format($totalGeneral, 2), 0, 1, 'R');
 
-$pdf->MultiCell(64, $altura_linea, "SON: " . utf8_decode($NumeroLetras->to_word(number_format($totalGeneral, 2), "PEN")), 0, 'L');
+$pdf->MultiCell(64, $altura_linea, "SON: " . htmlentities($NumeroLetras->to_word(number_format($totalGeneral, 2), "PEN")), 0, 'L');
 
 $pdf->Ln(2);
 if ($SunatVenta->getNombreDocumento()) {

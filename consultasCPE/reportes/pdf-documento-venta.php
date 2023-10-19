@@ -132,15 +132,15 @@ $pdf->SetX(128);
 $pdf->Cell(32, 4, "MONEDA:", 0, 0, 'R');
 $pdf->Cell(40, 4, "PEN", 0, 0, 'C');
 $pdf->SetX(10);
-$pdf->MultiCell(118, 4, utf8_decode("CLIENTE: " . $Cliente->getNombre()));
+$pdf->MultiCell(118, 4, htmlentities("CLIENTE: " . $Cliente->getNombre()));
 
 $pdf->Cell(25, 4, "DIRECCION:", 0, 0, 'L');
-//$pdf->Cell(130, 5, utf8_decode($c_entidad->getDireccion()), 0, 0, 'L');
+//$pdf->Cell(130, 5, htmlentities($c_entidad->getDireccion()), 0, 0, 'L');
 $pdf->SetX(128);
 $pdf->Cell(32, 4, "FORMA DE PAGO:", 0, 0, 'R');
 $pdf->Cell(40, 4, "CONTADO", 0, 0, 'C');
 $pdf->SetX(35);
-$pdf->MultiCell(90, 4, utf8_decode(trim($Cliente->getDireccion())));
+$pdf->MultiCell(90, 4, htmlentities(trim($Cliente->getDireccion())));
 
 $pdf->Ln(1);
 
@@ -188,7 +188,7 @@ foreach ($arrayProducto as $item) {
     $pdf->Cell(20, 4, number_format($item['precio'], 2), 0, 0, 'R');
     $pdf->Cell(20, 4, number_format($base, 2), 0, 0, 'R');
     $pdf->SetX(25);
-    $pdf->MultiCell(135, 4, utf8_decode("UNIDAD | " . utf8_decode($item['descripcion'])), 0, 'L');
+    $pdf->MultiCell(135, 4, htmlentities("UNIDAD | " . htmlentities($item['descripcion'])), 0, 'L');
     //$pdf->Ln(2);
 }
 
@@ -228,7 +228,7 @@ $totalGeneral = $totalBaseIGV * 1.18 + $totalBase;
 $pdf->Cell(70, 4, "Importe en Letras", 0, 0, 'L');
 $pdf->Cell(100, 4, "IGV: ", 0, 0, 'R');
 $pdf->Cell(20, 4, number_format($totalBaseIGV * 0.18, 2), 0, 1, 'R');
-$pdf->Cell(120, 4, utf8_decode($NumeroLetras->to_word(number_format($totalGeneral, 2), "PEN")), 0, 0, 'L');
+$pdf->Cell(120, 4, htmlentities($NumeroLetras->to_word(number_format($totalGeneral, 2), "PEN")), 0, 0, 'L');
 $pdf->Cell(50, 4, "TOTAL: ", 0, 0, 'R');
 $pdf->Cell(20, 4, number_format($totalGeneral, 2), 0, 1, 'R');
 
@@ -237,8 +237,8 @@ $pdf->Ln(3);
 $y = $pdf->GetY();
 $pdf->Line(10, $y, 200, $y);
 $pdf->Ln(2);
-$pdf->MultiCell(190, 4, utf8_decode("Representacion Impresa de la " . $DocumentoSunat->getDescripcion() . " Electronica, esta puede ser consultada en www.casabibliachimbote.ga"), 0, 'C');
-$pdf->MultiCell(190, 4, utf8_decode("Resumen: " .$SunatVenta->getHash()), 0, 'C');
+$pdf->MultiCell(190, 4, htmlentities("Representacion Impresa de la " . $DocumentoSunat->getDescripcion() . " Electronica, esta puede ser consultada en www.casabibliachimbote.ga"), 0, 'C');
+$pdf->MultiCell(190, 4, htmlentities("Resumen: " .$SunatVenta->getHash()), 0, 'C');
 
 $nombrePDF = $Empresa->getRuc() . "-" . $DocumentoSunat->getAbreviado() . "-" . $Venta->getSerie() . "-" . $Venta->getNumero() . ".pdf";
 $pdf->Output('I', $nombrePDF);

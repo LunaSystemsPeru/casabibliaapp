@@ -108,7 +108,7 @@ foreach ($arrayProductos as $item) {
         ->setCodProducto($item['id_producto'])
         ->setUnidad('NIU') // Unidad - Catalog. 03
         ->setCantidad($item['cantidad'])
-        ->setDescripcion(utf8_encode($item['descripcion']));
+        ->setDescripcion(htmlentities($item['descripcion']));
 
     $itemSinIGV = 0;
     $base = 0;
