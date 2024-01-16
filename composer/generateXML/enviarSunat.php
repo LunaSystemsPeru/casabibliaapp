@@ -9,10 +9,10 @@ $rutabase = dirname($url) . DIRECTORY_SEPARATOR;
 
 //echo $rutabase;
 
-//$fecha = date("Y-m-d");
-//$fecha = date("Y-m-d",strtotime($fecha."- 1 days"));
+$fecha = date("Y-m-d");
+$fecha = date("Y-m-d",strtotime($fecha."- 1 days"));
 
-$fecha = filter_input(INPUT_GET, 'fecha');
+//$fecha = filter_input(INPUT_GET, 'fecha');
 //echo $rutabase;
 
 $aempresas = $Empresa->verFilas();

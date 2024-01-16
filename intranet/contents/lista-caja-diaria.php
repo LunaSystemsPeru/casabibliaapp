@@ -158,19 +158,19 @@ $totalefectivo = $mapertura + $mefectivo + $tototrosingreso - $tototrosretiros;
                             <div class="card-body">
                                 <ul class="list-group">
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Saldo Inicial <span class="badge badge-success badge-pill">S/ <?php echo number_format($mapertura, 2)?></span>
+                                        Saldo Inicial <span class="badge badge-success badge-pill">S/ <?php echo number_format($mapertura, 2) ?></span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Venta efectivo <span class="badge badge-success badge-pill"><?php echo number_format($mefectivo, 2)?></span>
+                                        Venta efectivo <span class="badge badge-success badge-pill"><?php echo number_format($mefectivo, 2) ?></span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Otros ingresos <span class="badge badge-success badge-pill"><?php echo number_format($tototrosingreso, 2)?></span>
+                                        Otros ingresos <span class="badge badge-success badge-pill"><?php echo number_format($tototrosingreso, 2) ?></span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Gastos <span class="badge badge-success badge-pill"><?php echo number_format($tototrosretiros, 2)?></span>
+                                        Gastos <span class="badge badge-success badge-pill"><?php echo number_format($tototrosretiros, 2) ?></span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Total efectivo <span class="badge badge-dark badge-pill"><?php echo number_format($totalefectivo, 2)?></span>
+                                        Total efectivo <span class="badge badge-dark badge-pill"><?php echo number_format($totalefectivo, 2) ?></span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         Total en tarjeta <span class="badge badge-dark badge-pill">0.00</span>

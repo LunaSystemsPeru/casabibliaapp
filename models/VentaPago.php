@@ -107,7 +107,7 @@ class VentaPago
 
     public function obtenerEfectivo($idalmacen)
     {
-        $sql = "select sum(monto) as total  
+        $sql = "select ifnull(sum(monto), 0) as total  
                 from ventas_cobros 
                 inner join ventas v on ventas_cobros.id_ventas = v.id_ventas
                 where ventas_cobros.fecha = '$this->fecha' and tipo_pago = '$this->tipopago' and v.id_almacen= '$idalmacen'";

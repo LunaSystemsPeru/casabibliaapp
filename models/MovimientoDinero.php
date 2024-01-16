@@ -147,7 +147,7 @@ class MovimientoDinero
         } else {
             $campo = "retira";
         }
-        $sql = "select sum($campo) as total from cajas_movimientos as cj 
+        $sql = "select ifnull(sum($campo), 0) as total from cajas_movimientos as cj 
                 where cj.fecha = '$this->fecha' and cj.id_almacen = '$this->idalmacen'";
         return $this->conectar->get_valor_query($sql, 'total');
     }
