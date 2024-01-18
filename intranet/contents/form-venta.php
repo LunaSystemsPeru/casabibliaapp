@@ -544,6 +544,7 @@ $fecha_limite = date("Y-m-d", strtotime($fecha_actual . "- 4 days"));
         };
 
         $.post("../controller/registrar-cliente.php", arraypost, function (data) {
+            console.log(data);
             var jsonresultado = JSON.parse(data);
             $("#hidden-id-cliente").val(jsonresultado.id);
             //mostrar client en form venta

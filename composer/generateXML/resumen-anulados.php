@@ -23,8 +23,14 @@ require '../../tools/Util.php';
 
 $Util = new Util();
 
+$empresaid = filter_input(INPUT_GET, 'empresaid');
+if (!$empresaid) {
+    echo "falta id de empresa";
+    return;
+}
+
 $Empresa = new Empresa();
-$Empresa->setIdempresa(filter_input(INPUT_GET, 'empresaid'));
+$Empresa->setIdempresa($empresaid);
 $Empresa->obtenerDatos();
 
 $Config = new Config();
@@ -53,8 +59,8 @@ $company = (new Company())
     ->setAddress($address);
 
 $Anulada = new VentaAnulada();
-$fecha = filter_input(INPUT_GET, 'fecha');
-$arrayBoletas = $Anulada->verVentasAnuladas('B', $Empresa->getIdempresa(), $fecha);
+$Anulada->setFechaanulada(filter_input(INPUT_GET, 'fecha'));
+$arrayBoletas = $Anulada->verVentasAnuladas('B', $Empresa->getIdempresa(), $Anulada->getFechaanulada());
 
 $arrayDetalle = array();
 $nroitems = 0;
@@ -107,23 +113,32 @@ foreach ($arrayBoletas as $fila) {
             ->setNroDoc($VReferencia->getSerie() . "-" . $VReferencia->getNumero()));
     }
 
+    $Anulada->setIdventa($fila['id_ventas']);
+    $Anulada->setAceptadosunat(1);
+    $Anulada->aceptacionSUNAT();
+
     array_push($arrayDetalle, $detalle);
 }
 
 if ($nroitems > 0) {
 
-$sum = new Summary();
-// Fecha Generacion menor que Fecha Resumen
-$sum->setFecGeneracion(\DateTime::createFromFormat('Y-m-d', $fecha))
-    ->setFecResumen(\DateTime::createFromFormat('Y-m-d', $fecha))
-    ->setCorrelativo('002')
-    ->setCompany($company)
-    ->setDetails($arrayDetalle);
+    $Resumen->setIdempresa($Empresa->getIdempresa());
+    $Resumen->setTipo(1); //anulados resumen
+    $Resumen->setFecharesumen($Anulada->getFechaanulada());
+    $Resumen->setFechaenvio(date("Y-m-d"));
+
+    $sum = new Summary();
+    // Fecha Generacion menor que Fecha Resumen
+    $sum->setFecGeneracion(\DateTime::createFromFormat('Y-m-d', $Anulada->getFechaanulada()))
+        ->setFecResumen(\DateTime::createFromFormat('Y-m-d', date('Y-m-d')))
+        ->setCorrelativo($Util->zerofill($Resumen->obtenerNroResumen(), 3))
+        ->setCompany($company)
+        ->setDetails($arrayDetalle);
 
 
-// Envio a SUNAT.
+    // Envio a SUNAT.
     $res = $see->send($sum);
-// Guardar XML firmado digitalmente.
+    // Guardar XML firmado digitalmente.
     file_put_contents("../../public/xml/" . $sum->getName() . '.xml',
         $see->getFactory()->getLastXml());
 
@@ -140,11 +155,8 @@ $sum->setFecGeneracion(\DateTime::createFromFormat('Y-m-d', $fecha))
     echo 'Ticket :<strong>' . $ticket . '</strong>';
 
 
-    $Resumen->setIdempresa($Empresa->getIdempresa());
     $Resumen->setNombre($sum->getName());
-    $Resumen->setFechaenvio(date("Y-m-d"));
     $Resumen->setTikect($ticket);
-    $Resumen->setTipo(2); //anulados
     $Resumen->setCantidad($nroitems);
     $Resumen->obtenerId();
 

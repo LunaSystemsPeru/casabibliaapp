@@ -1,9 +1,15 @@
 {
-    "require": {
-        "greenter/lite": "^4.3",
-        "greenter/report": "^4.3",
-      "ext-json": "*",
-      "ext-curl": "*",
-      "ext-gd": "*"
+  "require": {
+    "greenter/lite": "^4.3",
+    "greenter/report": "^4.3",
+    "ext-json": "*",
+    "ext-curl": "*",
+    "ext-gd": "*",
+    "guzzlehttp/guzzle": "^7.8"
+  },
+  "autoload": {
+    "psr-4": {
+      "SunatAPI\\": "src/Sunat/Api/"
     }
+  }
 }

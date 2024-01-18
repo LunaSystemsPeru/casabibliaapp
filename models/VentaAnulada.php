@@ -110,6 +110,16 @@ class VentaAnulada
         return $this->conectar->ejecutar_idu($sql);
     }
 
+    public function verVentasAnuladasFechas ($seriecomprobante, $fecha_inicio, $fecha_fin) {
+        $sql = "select va.fecha_anulada as fecha, v.fecha as fechadoc, a.id_empresa, count(*) as cantidad 
+                from ventas_anuladas as va 
+                inner join ventas v on va.id_ventas = v.id_ventas 
+                inner join almacen a on v.id_almacen = a.id_almacen 
+                where v.serie like '$seriecomprobante%' and va.fecha_anulada between  '$fecha_inicio' and '$fecha_fin'
+                group by va.fecha_anulada ";
+        return $this->conectar->get_Cursor($sql);
+    }
+
     public function verVentasAnuladas($inicialserie, $idempresa, $fecha)
     {
         $sql = "select v.fecha, v.id_tido, v.serie, v.numero, ds.abreviado, ds.cod_sunat , c.documento, c.nombre, v.estado, v.total, v.igv, a.nombre as ntienda, v.id_ventas 
@@ -134,5 +144,10 @@ class VentaAnulada
                 where va.fecha_anulada > date_sub(current_date(), interval 7 day) and v.id_almacen = '$idtienda' 
                 order by va.fecha_anulada desc";
         return $this->conectar->get_Cursor($sql);
+    }
+
+    public function aceptacionSUNAT () {
+        $sql ="update ventas_anuladas set aceptado_sunat = '$this->aceptadosunat' where id_ventas = '$this->idventa'";
+        return $this->conectar->ejecutar_idu($sql);
     }
 }

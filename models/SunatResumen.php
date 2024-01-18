@@ -5,6 +5,7 @@ class SunatResumen
 {
     private $id;
     private $fechaenvio;
+    private $fecharesumen;
     private $tikect;
     private $nombre;
     private $cantidad;
@@ -149,11 +150,37 @@ class SunatResumen
         $this->estado = $estado;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getFecharesumen()
+    {
+        return $this->fecharesumen;
+    }
+
+    /**
+     * @param mixed $fecharesumen
+     */
+    public function setFecharesumen($fecharesumen): void
+    {
+        $this->fecharesumen = $fecharesumen;
+    }
+
     public function obtenerId()
     {
         $sql = "select ifnull(max(id) + 1, 1) as codigo 
             from sunat_resumen";
         $this->id = $this->conectar->get_valor_query($sql, 'codigo');
+    }
+
+    public function obtenerNroResumen()
+    {
+        //tipo = 1 resumen boletas activas y anuladas
+        //tipo = 2 comprobantes baja
+        $sql = "select count(*)+1 as codigo 
+            from sunat_resumen 
+            where id_empresa = '$this->idempresa' and tipo = '$this->tipo' and fecha_envio = '$this->fechaenvio'";
+        return $this->conectar->get_valor_query($sql, 'codigo');
     }
 
     public function insertar()
@@ -166,8 +193,9 @@ class SunatResumen
                 '$this->cantidad',
                 '$this->tipo',
                 '$this->idempresa',
-                '$this->estado')";
-        echo $sql;
+                '$this->estado', 
+                '$this->fecharesumen')";
+        //echo $sql;
         return $this->conectar->ejecutar_idu($sql);
     }
 

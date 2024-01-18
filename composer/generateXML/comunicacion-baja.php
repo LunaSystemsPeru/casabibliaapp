@@ -13,10 +13,13 @@ require '../src/Config.php';
 
 require '../../models/Empresa.php';
 require '../../models/VentaAnulada.php';
+require '../../models/SunatResumen.php';
 
 require '../../tools/Util.php';
 
 $Util = new Util();
+
+$Resumen = new SunatResumen();
 
 $Empresa = new Empresa();
 $Empresa->setIdempresa(filter_input(INPUT_GET, 'empresaid'));
@@ -48,6 +51,7 @@ $company = (new Company())
 
 $Anulada = new VentaAnulada();
 $fecha = filter_input(INPUT_GET, 'fecha');
+$Anulada->setFechaanulada($fecha);
 $arrayComprobantes = $Anulada->verVentasAnuladas('F', $Empresa->getIdempresa(), $fecha);
 
 $arrayDetalle = array();
@@ -62,12 +66,16 @@ foreach ($arrayComprobantes as $fila) {
     array_push($arrayDetalle, $detalle);
 }
 if ($nroitems > 0) {
+    $Resumen->setIdempresa($Empresa->getIdempresa());
+    $Resumen->setTipo(2); //comunicacion baja
+    $Resumen->setFecharesumen($Anulada->getFechaanulada());
+    $Resumen->setFechaenvio(date("Y-m-d"));
 
     $voided = new Voided();
-    $voided->setCorrelativo('00001')
+    $voided->setCorrelativo($Util->zerofill($Resumen->obtenerNroResumen(), 5))
         // Fecha Generacion menor que Fecha comunicacion
-        ->setFecGeneracion(\DateTime::createFromFormat('Y-m-d', $fecha))
-        ->setFecComunicacion(\DateTime::createFromFormat('Y-m-d', $fecha))
+        ->setFecGeneracion(\DateTime::createFromFormat('Y-m-d', $Anulada->getFechaanulada()))
+        ->setFecComunicacion(\DateTime::createFromFormat('Y-m-d', date('Y-m-d')))
         ->setCompany($company)
         ->setDetails($arrayDetalle);
 
@@ -86,6 +94,14 @@ if ($nroitems > 0) {
     /**@var $res SummaryResult */
     $ticket = $res->getTicket();
     echo 'Ticket :<strong>' . $ticket . '</strong>';
+
+
+    $Resumen->setNombre($voided->getName());
+    $Resumen->setTikect($ticket);
+    $Resumen->setCantidad($nroitems);
+    $Resumen->obtenerId();
+
+    $Resumen->insertar();
 
     $res = $see->getStatus($ticket);
     if (!$res->isSuccess()) {

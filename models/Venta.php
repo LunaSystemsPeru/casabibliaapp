@@ -319,6 +319,7 @@ class Venta
         $sql = "update ventas set 
                   aceptadosunat = '$this->aceptadoSunat' 
                 where id_ventas = '$this->idventa'";
+        //echo $sql . "<br";
         return $this->conectar->ejecutar_idu($sql);
     }
 
@@ -417,8 +418,19 @@ class Venta
                 inner join clientes c on v.id_cliente = c.id_cliente
                 inner join almacen a on v.id_almacen = a.id_almacen
                 inner join empresa e on a.id_empresa = e.id_empresa
-                where v.serie like '$inicialserie%' and v.fecha = '$this->fecha' and e.id_empresa = '$idempresa'
+                where v.serie like '$inicialserie%' and v.fecha = '$this->fecha' and e.id_empresa = '$idempresa' and v.aceptadosunat = 0
                 order by v.fecha asc, v.numero desc";
+        return $this->conectar->get_Cursor($sql);
+    }
+
+    public function verFechasBoletasPendientesSunat($fechainicio, $fechafin)
+    {
+        $sql = "select v.fecha, a.id_empresa, count(*) as cantidad 
+                from ventas as v 
+                inner join almacen a on v.id_almacen = a.id_almacen
+                where v.fecha between '$fechainicio' and '$fechafin' and v.aceptadosunat = 0  
+                group by v.fecha, a.id_empresa";
+        //echo $sql;
         return $this->conectar->get_Cursor($sql);
     }
 
@@ -435,14 +447,27 @@ class Venta
 
     public function verDocumentosPLE($fecha)
     {
-        $sql = "select v.id_ventas, v.fecha, v.id_tido,ds.cod_sunat, ds.abreviado, v.serie, LPAD(v.numero, 4, '0') as numero, c.documento, c.nombre, v.afecto_igv, v.igv, v.total, v.estado, a.nombre as ntienda
+        $sql = "select v.id_ventas, v.fecha, v.id_tido,ds.cod_sunat, ds.abreviado, v.serie, LPAD(v.numero, 4, '0') as numero, c.documento, c.nombre, v.afecto_igv, v.igv, v.total, v.estado, v.aceptadosunat, a.nombre as ntienda, e.ruc
                 from ventas as v
                 inner join clientes c on v.id_cliente = c.id_cliente
                 inner join documentos_sunat ds on v.id_tido = ds.id_tido
                 inner join almacen a on v.id_almacen = a.id_almacen
                 inner join empresa e on a.id_empresa = e.id_empresa
-                where year(v.fecha) = year('$fecha') and month(v.fecha) = month('$fecha') and v.id_tido != 2 and v.id_tido != 9 
+                where year(v.fecha) = year('$fecha') and month(v.fecha) = month('$fecha') and v.id_tido in (4,5,6,7) 
                 order by v.fecha asc";
+        return $this->conectar->get_Cursor($sql);
+    }
+
+    public function verDocumentosPLExFechas($fechainicio, $fechafin)
+    {
+        $sql = "select e.ruc, ds.cod_sunat, v.serie, v.numero, v.fecha, v.total, v.estado, v.id_ventas, v.aceptadosunat  
+                    from ventas as v 
+                    inner join almacen a on v.id_almacen = a.id_almacen
+                    inner join empresa as e on e.id_empresa = a.id_empresa 
+                    inner join documentos_sunat ds on v.id_tido = ds.id_tido 
+                    where v.fecha between '$fechainicio' and '$fechafin' and v.id_tido in (4,5,6,7) 
+                    order by v.fecha";
+        //echo $sql;
         return $this->conectar->get_Cursor($sql);
     }
 

@@ -1,5 +1,8 @@
 <?php
 declare(strict_types=1);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 use Greenter\Model\Response\SummaryResult;
 use Greenter\Model\Sale\Document;
@@ -107,22 +110,31 @@ foreach ($arrayBoletas as $fila) {
             ->setNroDoc($VReferencia->getSerie() . "-" . $VReferencia->getNumero()));
     }
 
+    $Venta->setIdventa($fila['id_ventas']);
+    $Venta->setAceptadoSunat(1);
+    $Venta->aceptacionSunat();
+
     array_push($arrayDetalle, $detalle);
 }
 
 if ($nroitems > 0) {
+    $Resumen->setIdempresa($Empresa->getIdempresa());
+    $Resumen->setTipo(1); //activos resumen
+    $Resumen->setFecharesumen($Venta->getFecha());
+    $Resumen->setFechaenvio(date("Y-m-d"));
 
     $sum = new Summary();
 // Fecha Generacion menor que Fecha Resumen
     $sum->setFecGeneracion(\DateTime::createFromFormat('Y-m-d', $fecha))
-        ->setFecResumen(\DateTime::createFromFormat('Y-m-d', $fecha))
-        ->setCorrelativo('001')
+        ->setFecResumen(\DateTime::createFromFormat('Y-m-d', date('Y-m-d')))
+        ->setCorrelativo($Util->zerofill($Resumen->obtenerNroResumen(), 3))
         ->setCompany($company)
         ->setDetails($arrayDetalle);
 
     // Envio a SUNAT.
     $res = $see->send($sum);
-// Guardar XML firmado digitalmente.
+
+    // Guardar XML firmado digitalmente.
     file_put_contents("../../public/xml/" . $sum->getName() . '.xml',
         $see->getFactory()->getLastXml());
     $Resumen->setEstado(1);
@@ -138,15 +150,13 @@ if ($nroitems > 0) {
     $ticket = $res->getTicket();
     echo '<br>Ticket :<strong>' . $ticket . '</strong><br>';
 
-    $Resumen->setIdempresa($Empresa->getIdempresa());
     $Resumen->setNombre($sum->getName());
-    $Resumen->setFechaenvio(date("Y-m-d"));
     $Resumen->setTikect($ticket);
-    $Resumen->setTipo(1); //activos
     $Resumen->setCantidad($nroitems);
     $Resumen->obtenerId();
 
     $Resumen->insertar();
+
     if ($Resumen->getEstado() == 0) {
         return;
     }

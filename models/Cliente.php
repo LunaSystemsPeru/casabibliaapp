@@ -193,14 +193,19 @@ class Cliente
         $sql = "update clientes 
         set documento = '$this->documento',
             nombre = '$this->nombre', 
-            direccion = '$this->direccion'
-            telefono = '$this->telefono'
-            celular = '$this->celular'
-            venta = '$this->venta'
-            pago = '$this->pago'
-            ultima_venta = '$this->ultimaventa'
+            direccion = '$this->direccion',
+            telefono = '$this->telefono',
+            celular = '$this->celular',
+            venta = '0',
+            pago = '0',
+            ultima_venta = CURRENT_DATE()
         where id_cliente = '$this->idcliente'";
         return $this->conectar->ejecutar_idu($sql);
+    }
+
+    public function verificarDocumento () {
+        $sql = "select id_cliente from clientes where documento = '$this->documento'";
+        $this->idcliente = $this->conectar->get_valor_query($sql, 'id_cliente');
     }
 
     public function obtenerDatos()
